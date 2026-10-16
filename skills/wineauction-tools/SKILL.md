@@ -11,9 +11,10 @@ The tools come from the WineAuction connector. This page holds the conventions s
 
 - Every field ending in `_usd` is US dollars per 750 ml, buyer's premium included. `price` is the seller's own price, in its own currency, for `bottles` bottles; an auction `price` excludes the premium.
 - Discount = (1 − price per bottle / reference) × 100, one decimal. Positive means cheaper than the reference, negative dearer; null when either side is missing.
-- Times are ISO 8601 UTC.
+- Times are ISO 8601 UTC. Time inputs must end in `Z`, e.g. `2026-10-01T00:00:00Z`.
 - Paging: pass the previous page's `next_cursor` as `cursor`. A null `next_cursor` means there are no more pages.
-- `notice`, `resolved_wines`, `facets` and `vintages` appear only when they have content. Other fields are null when they have no value.
+- `notice`, `resolved_wines`, `reviews` and `vintages` appear only when they have content. Other fields are null when they have no value.
+- `search_wines`, `list_offers`, `evaluate_offers` and `list_retail_stores` need a signed-in WineAuction account; `list_auctions` and `list_restaurants` do not.
 - Errors come back as `{error: {code, message, fields}}`; `fields` names the bad inputs. A rejected request uses no quota.
 
 ## Reference views

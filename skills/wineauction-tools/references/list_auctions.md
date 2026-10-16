@@ -7,7 +7,7 @@ Auction events, not lots. Pass an `auction_slug` to `list_offers` for the lots.
 | `house` | as in `list_offers` | Auction house. |
 | `status` | live (default) / closed | Open or ended. |
 | `ending_within_hours` | positive number | live only. |
-| `ended_after`, `ended_before` | ISO time | closed only. |
+| `ended_after`, `ended_before` | ISO 8601 UTC ending in `Z` | closed only. |
 | `sort` | end_time_asc / end_time_desc | Default: live soonest first, closed newest first. |
 | `limit`, `offset` | 1–100, default 25 | Paging. |
 

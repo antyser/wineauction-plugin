@@ -9,8 +9,8 @@ Judge priced offers the user brings: a retail email, a price list, a restaurant 
 | `offers[].raw_wine_name` | text | The wine as written, vintage included. |
 | `offers[].lwin7` | 7 digits | Known LWIN; skips name matching. |
 | `offers[].vintage` | 1700–2099 | Vintage; when absent, the single year in `raw_wine_name`. |
-| `offers[].price`, `currency` | positive number, 3-letter code | The quoted price for `quantity` bottles. |
-| `offers[].quantity` | whole number 1–100,000 | Bottles the price covers; default 1. |
+| `offers[].price`, `currency` | positive number, 3-letter code; `price` required | The quoted price for `quantity` bottles. A row without a price rejects the whole request, uncharged. |
+| `offers[].quantity` | whole number 1–100,000 | Bottles the price covers. Restaurant rows default to 1; retail and other rows need it, else `unit_price` is `{reason: missing_quantity}`. |
 | `offers[].format_ml` | positive integer | Bottle size; when absent, read from the name (375ml, 1.5L), else 750. |
 | `offers[].buyers_premium` | 0–1, e.g. 0.25 | Pass when `price` is an auction hammer price; the unit price adds it. |
 | `offers[].is_mixed_lot` | boolean, default false | The price covers several wines (no per-bottle price). |

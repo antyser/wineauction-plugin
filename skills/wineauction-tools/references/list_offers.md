@@ -1,26 +1,27 @@
 # list_offers
 
-List offers: every offer for one wine (pass `wine_id`), or the offers in one place: an auction, an auction house, a retail store or a restaurant. Also use it for closed auction results. The two scopes combine, e.g. one wine's lots in one auction.
+List offers: every offer for one wine (pass `wine_id`) or for a few named wines (pass `wines`), or the offers in one place: an auction, an auction house, a retail store or a restaurant. Also use it for closed auction results. The two scopes combine, e.g. one wine's lots in one auction.
 
 | Input | Type / values | Meaning |
 |---|---|---|
-| `offer_type` | auction / retail / restaurant | Which offers. Required when listing a place; with `wine_id`, omit it for all types. |
+| `offer_type` | auction / retail / restaurant | Which offers. Required when listing a place alone; with `wine_id` or `wines`, omit it for all types. |
 | `wine_id`, `vintage` | UUID, year | Every offer for one wine, from `search_wines`, optionally one vintage. No place needed; sorted by price per bottle, lowest first. |
 | `auction_slug` | text | One auction, from `list_auctions`. |
 | `house` | sothebys / christies / klwines / acker / heritage / spectrum / unicorn / zachys / hdh / brentwood | Every auction of one house. |
 | `merchant_id` | UUID | One store or restaurant, from `list_retail_stores` or `list_restaurants`. |
 | `status` | live (default) / closed / all | Auctions: open, ended or both. |
 | `ending_within_hours` | positive number | Auctions ending within this many hours. |
-| `sold_after`, `sold_before` | ISO time | End-time window for closed auctions. |
+| `sold_after`, `sold_before` | ISO 8601 UTC ending in `Z` | End-time window for closed auctions. |
 | `wines` | list of ≤10 `{query` or `lwin7, vintage}` | Only these wines. |
 | `region`, `appellation`, `classification`, `color` | as in `search_wines` | Wine attributes. |
 | `min_discount_pct` | 0–100 | At least this much below the retail or the auction reference (either one). |
 | `min_price_usd`, `max_price_usd` | number | Price range per 750 ml. |
 | `mixed_lot` | include (default) / exclude / only | Auctions: lots of different wines. |
 | `bottle_size_ml` | integer, e.g. 375 / 750 / 1500 | Only this bottle size. |
-| `in_stock`, `pre_arrival` | boolean | Retail: in stock only; pre-arrival only or excluded. |
+| `in_stock` | boolean, default true | Retail: true keeps in-stock offers only; false also includes out-of-stock ones. |
+| `pre_arrival` | include (default) / only / exclude | Retail: pre-arrival offers. |
 | `serving` | bottle / glass | Restaurant: by the bottle or by the glass. |
-| `sort` | end_time / price_asc / price_desc / recent / discount_vs_retail / discount_vs_auction | end_time is for auctions; recent puts the latest sales first. |
+| `sort` | end_time / price_asc / price_desc / recent / discount_vs_retail / discount_vs_auction | end_time and recent are meant for auctions (recent puts the latest sales first); on other offers they order by listing expiry. Default: end_time for an auction place, otherwise price_asc. |
 | `limit`, `cursor` | 1–100, default 25 | Paging. |
 
 | Output | Meaning |
