@@ -1,0 +1,47 @@
+# Synthetic review fixture for checking the 30-row newsletter workflow.
+# The quoted prices below are illustrative supplied inputs, not actual merchant offers.
+# This fixture contains no retail or auction market references; obtain those only from WineAuction tool results.
+Merchant: Sample Cellar Newsletter
+Document: Fall Fine Wine Offer Sheet
+Observed: 2026-10-16
+Currency: USD
+
+Champagne
+Louis Roederer Cristal Brut 2015 — 750 ml × 1 — $369
+Charles Heidsieck Blanc des Millénaires 2006 — 750 ml × 1 — $249
+Egly-Ouriet Grand Cru Extra Brut NV — 750 ml × 1 — $189
+Bollinger La Grande Année 2014 — 750 ml × 1 — $209
+Dom Pérignon 2013 — 750 ml × 1 — $249
+
+White Burgundy
+Domaine Leflaive Puligny-Montrachet Les Pucelles 2020 — 750 ml × 1 — $525
+Domaine Roulot Meursault Perrières 2019 — 750 ml × 1 — $1,095
+Domaine des Comtes Lafon Meursault Charmes 2020 — 750 ml × 1 — $379
+Étienne Sauzet Puligny-Montrachet Les Combettes 2020 — 750 ml × 1 — $275
+Olivier Leflaive Corton-Charlemagne Grand Cru 2019 — 750 ml × 1 — $399
+
+Red Burgundy
+Domaine Armand Rousseau Chambertin Grand Cru 2018 — 750 ml × 1 — $4,950
+Domaine de la Romanée-Conti La Tâche Grand Cru 2018 — 750 ml × 1 — $6,200
+Domaine Dujac Clos de la Roche Grand Cru 2019 — 750 ml × 1 — $1,095
+Domaine Ponsot Clos de la Roche Cuvée Vieilles Vignes 2018 — 750 ml × 1 — $1,250
+Domaine Fourrier Gevrey-Chambertin Clos Saint-Jacques 2019 — 750 ml × 1 — $1,195
+Domaine Georges Roumier Chambolle-Musigny Les Amoureuses 2018 — 750 ml × 1 — $4,250
+Maison Joseph Drouhin Beaune Clos des Mouches Premier Cru 2020 — 750 ml × 1 — $159
+Maison Louis Jadot Gevrey-Chambertin Premier Cru 2019 — 750 ml × 1 — $129
+
+Bordeaux
+Château Lafite Rothschild Pauillac 2010 — 750 ml × 6 — $5,700
+Château Margaux 2015 — 750 ml × 1 — $1,150
+Château Mouton Rothschild Pauillac 2016 — 750 ml × 1 — $1,050
+Château Haut-Brion Pessac-Léognan 2016 — 750 ml × 1 — $850
+Château Cheval Blanc Saint-Émilion 2015 — 750 ml × 1 — $1,495
+Château d'Yquem Sauternes 2015 — 375 ml × 1 — $209
+
+Other regions
+Domaine Tempier Bandol Rosé 2023 — 750 ml × 1 — $34
+Vega Sicilia Único Ribera del Duero 2014 — 750 ml × 1 — $599
+Ornellaia Bolgheri Superiore 2019 — 750 ml × 1 — $239
+Tenuta San Guido Sassicaia Bolgheri Sassicaia 2020 — 750 ml × 1 — $289
+Giacomo Conterno Barolo Monfortino Riserva 2015 — 750 ml × 1 — $1,295
+Sine Qua Non Eleven Confessions Syrah 2018 — 750 ml × 1 — $299
