@@ -37,15 +37,15 @@
           "positive": [
             {
               "description": "Check offers · discover live auctions, then scan named-sale and house lots",
-              "prompt": "List the three live Acker wine auctions ending soonest. For the soonest sale, show up to 25 live lots from that sale, then show up to 25 live Acker-house lots at least 20% below retail. Label the sale results and house results separately and link each lot.",
+              "prompt": "List up to three live Acker wine auctions ending soonest. For the soonest sale, show up to 25 live lots from that sale, then show up to 25 live Acker-house lots at least 20% below retail. Label the sale results and house results separately and link each lot.",
               "tools_triggered": "list_auctions, list_offers",
               "expected_behavior": "Calls list_auctions with status live and house acker, then uses the selected sale slug and the house scope in list_offers. Returns current lots, price and reference discounts, and seller links; it does not imply that a bid was placed."
             },
             {
-              "description": "Check offers · discover a retailer and a restaurant, then list their wines",
-              "prompt": "Find K&L Wines stores in California and list up to five current Chablis offers from a matching store. Then find a restaurant in San Francisco and list up to five of its bottle offers.",
+              "description": "Check offers · dynamic directory discovery for retailers and restaurants, then list their wines",
+              "prompt": "Use WineAuction only. List up to five retail stores and up to five restaurants with current offers. Choose one returned retailer and one returned restaurant with offers, then show up to five current bottle offers from each. Keep the sellers separate. If a source is unavailable or access is restricted, say so explicitly instead of substituting external web listings.",
               "tools_triggered": "list_retail_stores, list_restaurants, list_offers",
-              "expected_behavior": "Uses list_retail_stores and list_restaurants to resolve merchant IDs, then calls list_offers with the correct retail or restaurant scope. Keeps the two sellers distinct and links the offers."
+              "expected_behavior": "Uses list_retail_stores and list_restaurants to resolve merchant IDs, then calls list_offers with the correct retail or restaurant scope. Shows only offers returned by WineAuction, keeps the two sellers distinct, and preserves no-data or plan-required states without inventing offers or substituting web listings."
             },
             {
               "description": "Find wine · filter a producer and region, then apply an offer price limit",
