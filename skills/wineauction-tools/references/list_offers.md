@@ -21,7 +21,7 @@ List offers: every offer for one wine (pass `wine_id`) or for a few named wines 
 | `in_stock` | boolean, default true | Retail: true keeps in-stock offers only; false also includes out-of-stock ones. |
 | `pre_arrival` | include (default) / only / exclude | Retail: pre-arrival offers. |
 | `serving` | bottle / glass | Restaurant: by the bottle or by the glass. |
-| `sort` | end_time / price_asc / price_desc / recent / discount_vs_retail / discount_vs_auction | end_time and recent are meant for auctions (recent puts the latest sales first); on other offers they order by listing expiry. Default: end_time for an auction place, otherwise price_asc. |
+| `sort` | end_time / price_asc / price_desc / recent / discount_vs_retail / discount_vs_auction | end_time and recent are for auctions (recent puts the latest sales first). They are rejected when `offer_type` is retail or restaurant; with `offer_type` omitted, non-auction offers follow by listing expiry. Default: end_time for an auction place, otherwise price_asc. |
 | `limit`, `cursor` | 1–100, default 25 | Paging. |
 
 | Output | Meaning |

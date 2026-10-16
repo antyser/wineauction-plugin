@@ -22,7 +22,8 @@ Find wines: price a list of named wines, follow a watch list, or find wines by r
 | `wines[].wine_id`, `wine_name`, `producer`, `vintage`, `region`, `appellation`, `color`, `lwin7` | The catalog wine. Pass `wine_id` to `list_offers` for every offer of the wine; pass `lwin7` to `evaluate_offers` or `list_offers`. |
 | `wines[].wineapp_url` | The wine's page on wineauction.ai for this vintage. |
 | `wines[].retail`, `wines[].auction` | The two reference views. |
-| `wines[].offer_count` | Current offers for this wine. |
+| `wines[].offer_count` | Current offers for this wine, counted before Wine-Searcher duplicates are hidden, so it can exceed what `list_offers` returns. |
+| `notice` | Present when there is something the caller should know, such as a skipped restaurant offer type or reviews that could not be loaded. |
 | `wines[].best_offers[]` | Up to 2 offer rows, largest discount first, without the wine fields and views already given above. |
 | `wines[].reviews[]` | Up to 3 newest critic reviews for this wine and vintage (currently from K&L): `{author, text, url}`. `author` is the critic (e.g. Decanter), `text` starts with the score and is cut at 500 characters, `url` is the merchant page that published it. `url` may be null. Absent when there are none. An entry without a vintage gets reviews from all vintages. |
 | `resolved_wines[]` | Only with `wines`: `{query, lwin7, status}`, status matched or not_found. |
