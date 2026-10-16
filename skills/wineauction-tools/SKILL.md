@@ -15,7 +15,7 @@ The tools come from the WineAuction connector. This page holds the conventions s
 - Paging: pass the previous page's `next_cursor` as `cursor`. A null `next_cursor` means there are no more pages.
 - `notice`, `resolved_wines`, `reviews` and `vintages` appear only when they have content. Other fields are null when they have no value.
 - `search_wines`, `list_offers`, `evaluate_offers` and `list_retail_stores` need a signed-in WineAuction account; `list_auctions` and `list_restaurants` do not.
-- Errors come back as `{error: {code, message, fields}}`; `fields` names the bad inputs. A rejected request uses no quota.
+- Errors come back as `{error: {code, message, fields}}`; `fields` names the bad inputs. A rejected request is not counted.
 
 ## Reference views
 
@@ -32,7 +32,7 @@ Each wine (wine plus vintage) carries two reference prices side by side. Either 
 | --- | --- | --- |
 | `search_wines` | Finding wines by name or attributes, with both references and up to 2 offers each | [references/search_wines.md](references/search_wines.md) |
 | `list_offers` | Every offer for one wine, or the offers in one auction, house, store or restaurant; also closed auction results. Defines the offer row | [references/list_offers.md](references/list_offers.md) |
-| `evaluate_offers` | Judging priced offers the user brings (metered) | [references/evaluate_offers.md](references/evaluate_offers.md) |
+| `evaluate_offers` | Judging priced offers the user brings (counted) | [references/evaluate_offers.md](references/evaluate_offers.md) |
 | `list_auctions` | Auction events, not lots | [references/list_auctions.md](references/list_auctions.md) |
 | `list_retail_stores` | Finding a store for `merchant_id` | [references/list_retail_stores.md](references/list_retail_stores.md) |
 | `list_restaurants` | Finding a restaurant for `merchant_id` | [references/list_restaurants.md](references/list_restaurants.md) |

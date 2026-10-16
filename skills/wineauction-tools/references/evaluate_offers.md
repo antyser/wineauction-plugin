@@ -1,6 +1,6 @@
 # evaluate_offers
 
-Judge priced offers the user brings: a retail email, a price list, a restaurant list or auction lots. Each row uses one monthly Wine Price Query (500 free); a batch larger than the remaining allowance is rejected whole and nothing is charged. Every row needs a price; to look up prices without one, use `search_wines`.
+Judge priced offers the user brings: a retail email, a price list, a restaurant list or auction lots. Each row counts as one Wine Price Query; there is no cap. Every row needs a price; to look up prices without one, use `search_wines`.
 
 | Input | Type / values | Meaning |
 |---|---|---|
@@ -34,4 +34,4 @@ Judge priced offers the user brings: a retail email, a price list, a restaurant 
 | `results[].hint` | What to pass next. |
 | `as_of` | Data time. |
 
-Show results to the user with the `wine-report` skill.
+Show results to the user with the `wine-report` skill; price-check renders its own report.

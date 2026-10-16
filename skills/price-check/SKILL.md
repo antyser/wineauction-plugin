@@ -16,29 +16,32 @@ The tools come from the WineAuction connector.
 - Photo or screenshot: read it as an image.
 - Pasted text: use it as is.
 
-Keep the section headings (Champagne, Burgundy, Reds, Half bottles and so on). They become the report's tabs.
+Keep the section headings (Champagne, Burgundy, Reds, Half bottles and so on). They become the report's tabs. Skip cover, introduction and by-the-glass pages. With a two-column layout, check the extracted text against the page images where columns might interleave.
 
 ## 2. Parse into rows
 
 Make one row per wine and bottle price. Keep what the source states, and do not guess missing facts:
 
-- `raw_wine_name`: producer, wine and appellation as written, plus the vintage.
+- `raw_wine_name`: producer first, then wine and appellation, then the vintage, for example "Louis Roederer Cristal Brut 2015". Restaurant rows have no `producer` field, so the producer goes in the name. Fix plain typos ("Louis Roeder" → "Louis Roederer") because they break matching; keep everything else as written.
 - `vintage`: the year, if the source gives it. Leave it out for NV.
 - `price`, `currency`: the bottle price. Use USD unless the source says otherwise.
 - `quantity`: the bottles the price covers. A case or 6-pack price covers 12 or 6.
-- `format_ml`: 375, 750, 1500 and so on. Read it from a "Half bottles" or "Magnum" heading or a size in the line; default 750.
+- `format_ml`: 375, 750, 1500 and so on. Read it from a "Half bottles" or "Magnum" heading or a size in the line; default 750. Send the list price as printed: the tool converts it to a price per 750 ml.
 - `offer_type`: `restaurant` for a wine list, `retail` for a shop, newsletter or price list.
-- Also keep, for the report only: the section heading (`group`) and the list's own line number or bin (`ref`).
+- `section`: the list heading, on restaurant rows only.
+- A line with several vintages becomes one row per vintage; a wine listed in two sizes becomes one row per size.
 
-Skip by-the-glass prices, coravin pours, flights, cocktails, beer, sake and spirits. Count what you skipped. Write the rows to `rows_in.json` before calling any tool, so a failed call can be retried without re-parsing.
+For the report only, keep each row's list line number or bin as `ref` in a separate file. The tool rejects any field it does not know, so send only the fields above (plus `producer` on retail rows).
+
+Skip by-the-glass prices, coravin pours, flights, cocktails, beer, sake and spirits. Also skip sherry, vermouth, port and dessert-wine sections when their prices are clearly per pour: a price far below any bottle on the list, or a section that gives a pour size. When unsure, keep the row and flag it. Count what you skipped, by kind. Write the rows to `rows_in.json` before calling any tool, so a failed call can be retried without re-parsing.
 
 ## 3. Evaluate
 
 1. Put where the rows came from in `source`: restaurant or merchant, document title and date.
-2. Call `evaluate_offers` with up to 100 rows per call, in order. Each row costs one Wine Price Query. If a batch is larger than the remaining allowance, the call is rejected and nothing is charged: stop, and tell the user how many rows were evaluated and how many remain.
+2. Call `evaluate_offers` with up to 100 rows per call, in order. Each row counts as one Wine Price Query. If a call fails, keep the results you already have, render a partial report from them, and tell the user how many rows were evaluated and how many remain.
 3. Read each result:
    - `outcome: unmatched`: list it under "not found" with the hint. Do not invent a price.
-   - `retail`: the retail reference. `live_offer_count` 0 means only past offers.
+   - `retail`: the retail reference. `live_offer_count` 0 means only past offers, and a reference taken from neighbouring vintages or from Wine-Searcher is an estimate: flag it.
    - `auction`: the exact-vintage auction reference, null when that vintage has no sales. Quote `sale_count` with it.
    - `discount_vs_retail_pct` and `discount_vs_auction_pct`: positive means cheaper than the reference. On a restaurant list both are usually negative; the negative of `discount_vs_retail_pct` is the markup over retail.
 4. Check every match against the line it came from: producer, wine and vintage must agree. When the match is a different wine or vintage, flag it in `flags` rather than trusting the discount.
@@ -66,13 +69,13 @@ Then run, from this skill's directory or with absolute paths:
 
 ```
 python3 scripts/render.py rows.json report.html \
-  --title "Macarena wine list: value check" \
-  --eyebrow "WineAuction · Macarena · restaurant list · 16 Oct 2026" \
+  --title "<Seller> wine list: value check" \
+  --eyebrow "WineAuction · <Seller> · restaurant list · <date>" \
   --lede "Every bottle on the list against retail and exact-vintage auction prices, per 750 ml." \
   --method "Markup is the list price over the lowest retail reference."
 ```
 
-The page has best-deal cards and a table with section tabs, a minimum-discount filter, a max price per bottle, sort, search and a "Show doubtful references" toggle. It flags by itself an auction price from 1–2 sales and references more than 3× apart. It needs no server and follows the viewer's light or dark mode. If the client can show an HTML artifact, show the page there; otherwise give the user the file.
+The page has best-deal cards and a table with section tabs, a minimum-discount filter, a max price per bottle, sort, search and a "Show doubtful references" toggle. It flags by itself an auction price from 1–2 sales and references more than 3× apart. It needs no server and follows the viewer's light or dark mode. If the client can show an HTML artifact, show the page there; otherwise give the user the file. When nothing matched, skip the page and give only the chat reply.
 
 ## 5. Reply in chat
 
