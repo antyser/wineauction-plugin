@@ -1,7 +1,7 @@
 interface:
-  display_name: "Price Check"
-  short_description: "Judge wine prices against market references"
-  default_prompt: "Is this wine list or merchant email priced fairly?"
+  display_name: "Find Offers"
+  short_description: "Find the best current offers for the wines you want"
+  default_prompt: "What is white Burgundy from Roulot going for right now?"
 dependencies:
   tools:
     - type: "mcp"

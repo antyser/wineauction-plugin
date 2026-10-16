@@ -12,7 +12,7 @@ Find wines: price a list of named wines, follow a watch list, or find wines by r
 | `appellation` | text | Village or vineyard, e.g. Meursault, Bienvenues-Bâtard-Montrachet. |
 | `classification` | text | e.g. Grand Cru, Premier Cru. |
 | `color` | red / white / rose / sparkling / dessert / fortified | Colour. |
-| `offer_types` | distinct values from auction / retail / restaurant; default auction and retail | Where `best_offers` come from. Restaurant needs a paid plan. |
+| `offer_types` | distinct values from auction / retail / restaurant; default auction and retail | Where `best_offers` come from. |
 | `limit` | 1–50, default 25 | Wines per page. |
 | `cursor` | text | Previous page's `next_cursor`. |
 

@@ -5,12 +5,9 @@ Check wine prices against market references, find deals in live auctions, and lo
 ## What it adds
 
 - **WineAuction connector** (`https://wineauction.ai/api/mcp`): you sign in with your WineAuction account the first time you use it.
-- **Skills:**
-  - `price-check`: judge prices you already have, from a merchant newsletter, a price list or a restaurant wine list.
-  - `auction-deals`: the best-value lots in one auction, filtered by region, colour or appellation.
-  - `wine-report`: renders any of the above as an HTML page in the WineAuction design, with best-deal cards and a filterable table.
-  - `wineauction-tools`: what every tool input and output field means. Short conventions plus one reference file per tool.
-  - `deal-watch`: wines, a producer or a region with market references and their best current offers, optionally checked on a schedule.
+- **Skills**, organised by what you want:
+  - `check-offers`: you already have offers. Bring a wine list, merchant newsletter, price list or pasted text, or name an auction, auction house, store or restaurant, and get the ones worth attention, with an HTML report for long lists.
+  - `find-offers`: you have no offers yet. Name wines, a producer, a region or a style and get market references with the best current offers, optionally rechecked on a schedule.
 
 ## Install
 
@@ -35,7 +32,7 @@ Claude (web and desktop) and Cowork: go to Customize > Plugins, add the marketpl
 
 ## Data
 
-The plugin does not collect anything itself. Each tool call sends your query (wine names, filters, or the prices you ask it to evaluate) to `https://wineauction.ai/api/mcp` and returns results. All tools are read-only. The `wine-report` page is generated locally and loads Google Fonts when viewed with network access; without it, system fonts are used. See the [privacy policy](https://wineauction.ai/privacy) and [terms](https://wineauction.ai/terms).
+The plugin does not collect anything itself. Each tool call sends your query (wine names, filters, or the prices you ask it to evaluate) to `https://wineauction.ai/api/mcp` and returns results. All tools are read-only. The HTML report is generated locally and loads Google Fonts when viewed with network access; without it, system fonts are used. See the [privacy policy](https://wineauction.ai/privacy) and [terms](https://wineauction.ai/terms).
 
 ## Support
 
@@ -44,5 +41,5 @@ Open an issue at [github.com/antyser/wineauction-plugin/issues](https://github.c
 ## Notes
 
 - Prices are USD per 750 ml. Auction prices include the buyer's premium.
-- `evaluate_offers` uses one Wine Price Query per row: free accounts get 500 per month.
+- `evaluate_offers` judges up to 25 rows per call in the skills; long lists are sent in batches.
 - The tools only read data. They cannot bid, buy or contact anyone.

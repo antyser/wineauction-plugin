@@ -1,7 +1,7 @@
 interface:
-  display_name: "Deal Watch"
-  short_description: "Show market prices and best offers for wines"
-  default_prompt: "What is white Burgundy from Roulot going for right now?"
+  display_name: "Check Offers"
+  short_description: "Find the offers worth attention in a list or auction"
+  default_prompt: "Check this wine list or merchant email and show me the best values."
 dependencies:
   tools:
     - type: "mcp"
