@@ -91,10 +91,10 @@ Write `not_found.json` as a list of `{name, hint}` for the rows still unmatched.
 ## B. Scan a named auction, house, store or restaurant
 
 1. Identify the place.
-   - Auction: call `list_auctions` (status `live`) and pick the sale by house and name; use its slug as `auction_slug`. If the user names only a house, use `house`.
+   - Auction: choose `status` from the request before resolving a named sale: use `live` for current or upcoming sales and `closed` for ended or historical sales. Call `list_auctions` with that status and identify the sale by house and name; use its slug as `auction_slug`. If the user names only a house, use `house` and the same status.
    - Store or restaurant: find its `merchant_id` with `list_retail_stores` or `list_restaurants`, and set `offer_type` to `retail` or `restaurant`.
 2. Call `list_offers` (fields in [references/list_offers.md](references/list_offers.md)) with:
-   - `offer_type` (`auction` for a sale or house) and `status: live` unless the user asks about past sales;
+   - `offer_type` (`auction` for a sale or house) and the status chosen in step 1;
    - the user's preferences as filters: `region`, `color`, `appellation`, `min_price_usd` / `max_price_usd` (per 750 ml); for auctions `mixed_lot: exclude` unless they want mixed lots;
    - `sort: discount_vs_retail` or `discount_vs_auction`, with `min_discount_pct` (20 is a sensible default);
    - `limit` 25, then page with `cursor` (the previous `next_cursor`) while the results stay interesting. Save each page to disk.

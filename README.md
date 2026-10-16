@@ -43,3 +43,21 @@ Open an issue at [github.com/antyser/wineauction-plugin/issues](https://github.c
 - Prices are USD per 750 ml. Auction prices include the buyer's premium.
 - `evaluate_offers` judges up to 25 rows per call in the skills; long lists are sent in batches.
 - The tools only read data. They cannot bid, buy or contact anyone.
+
+## Build and verify a release
+
+Both versioned manifests use the same release version. The portable package keeps `plugin.json`, `mcp.json`, `skills/` and `assets/` at the repository root; the Claude marketplace manifests remain available alongside them. The 30-row newsletter under `review/fixtures/` is synthetic supplied-price input for workflow review, not a set of real merchant offers or market references.
+
+After committing the release candidate, build the ZIP from tracked files with:
+
+```
+python3 scripts/build_release.py
+```
+
+The default output is `~/Downloads/wineauction-plugin-1.1.0.zip`. To verify a candidate commit and its packaged renderer, run:
+
+```
+scripts/local_ci.sh "$(git rev-parse HEAD)"
+```
+
+The local check requires a clean checkout at the supplied commit, validates the manifests and review cases, builds and inspects the ZIP, and exercises the renderer from the archive. It uses Python 3 and Node.js.
