@@ -1,0 +1,11 @@
+interface:
+  display_name: "Auction Deals"
+  short_description: "Find the best-value lots in a wine auction"
+  default_prompt: "Find the best white Burgundy deals in the live Acker auction."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "wineauction"
+      description: "WineAuction wine catalog, offers and price references"
+      transport: "streamable_http"
+      url: "https://wineauction.ai/api/mcp"

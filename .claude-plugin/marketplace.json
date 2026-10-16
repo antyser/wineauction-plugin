@@ -1,0 +1,17 @@
+{
+  "name": "wineauction",
+  "description": "WineAuction plugins: wine price checks, auction deals and deal watching.",
+  "owner": {
+    "name": "WineAuction",
+    "url": "https://wineauction.ai"
+  },
+  "plugins": [
+    {
+      "name": "wineauction",
+      "source": "./",
+      "description": "Wine price checks, auction deal finding and deal watching with WineAuction data.",
+      "category": "research",
+      "tags": ["wine", "auction", "pricing"]
+    }
+  ]
+}

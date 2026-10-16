@@ -1,0 +1,31 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "wineauction",
+  "version": "0.1.0",
+  "description": "Check wine prices against retail and auction references, find deals in live auctions, and watch wines or regions for good offers, using WineAuction data.",
+  "author": { "name": "WineAuction", "url": "https://wineauction.ai" },
+  "homepage": "https://wineauction.ai",
+  "repository": "https://github.com/antyser/wineauction-plugin",
+  "license": "MIT",
+  "keywords": ["wine", "auction", "pricing"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "WineAuction",
+        "shortDescription": "Check wine prices and find auction deals",
+        "longDescription": "Judge wine prices from a merchant email, price list or restaurant wine list against retail and auction references, find the best-value lots in live auctions, and watch wines, producers or regions for good offers. Read-only: it cannot bid, buy or contact anyone.",
+        "developerName": "WineAuction",
+        "category": "Lifestyle",
+        "capabilities": ["Read"],
+        "websiteURL": "https://wineauction.ai",
+        "privacyPolicyURL": "https://wineauction.ai/privacy",
+        "termsOfServiceURL": "https://wineauction.ai/terms",
+        "defaultPrompt": [
+          "Is $85 a good price for a 2015 Roulot Meursault Perrieres?",
+          "What are the best white Burgundy deals in the live Acker auction?",
+          "Check this restaurant wine list for overpriced bottles."
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "name": "wineauction",
+  "displayName": "WineAuction",
+  "version": "0.1.0",
+  "description": "Check wine prices against retail and auction references, find deals in live auctions, and watch wines or regions for good offers, using WineAuction data.",
+  "author": { "name": "WineAuction", "url": "https://wineauction.ai" },
+  "homepage": "https://wineauction.ai",
+  "repository": "https://github.com/antyser/wineauction-plugin",
+  "license": "MIT",
+  "keywords": ["wine", "auction", "pricing"]
+}

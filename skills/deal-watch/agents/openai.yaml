@@ -1,0 +1,11 @@
+interface:
+  display_name: "Deal Watch"
+  short_description: "Show market prices and best offers for wines"
+  default_prompt: "What is white Burgundy from Roulot going for right now?"
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "wineauction"
+      description: "WineAuction wine catalog, offers and price references"
+      transport: "streamable_http"
+      url: "https://wineauction.ai/api/mcp"

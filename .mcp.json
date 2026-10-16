@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "wineauction": {
+      "type": "http",
+      "url": "https://wineauction.ai/api/mcp"
+    }
+  }
+}
