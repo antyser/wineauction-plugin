@@ -53,12 +53,12 @@ Write the rows to `rows_in.json` before calling any tool, so a failed call can b
 3. If a call fails, keep the results you already have, render a partial report from them, and tell the user how many rows were evaluated and how many remain.
 4. Read each result:
    - `outcome: unmatched`: no wine was found. Retry once, in one batch at the end, any unmatched row whose name you can make fuller (full producer name, cuvée, appellation) or correct. List what is still unmatched under "not found". Do not invent a price.
-   - `wine`: `wine_id`, `display_name`, `producer`, `region`, `country`, `lwin7`, `lwin11`, `slug`. The matched vintage is the last four digits of `lwin11`; `wineapp_wine_url` ends with the vintage too.
+   - `wine`: `wine_id`, `display_name`, `producer`, `region`, `country`, `lwin7`, `lwin11`, `slug`, `color` and `vintage`.
    - `unit_price.amount`: the price per 750 ml in USD. A $99 half bottle shows as $198, and a $300 magnum as $150.
    - `retail`: the retail reference per 750 ml, with `live_offer_count` (0 means only past offers). `auction`: the exact-vintage auction median per 750 ml, with `sale_count`; null when that vintage has no sales.
    - `discount_vs_retail_pct`, `discount_vs_auction_pct`: positive means cheaper than the reference. On a restaurant list both are usually negative; the negative of `discount_vs_retail_pct` is the markup over retail.
 5. Check every match against the line it came from, and flag rather than trust it when:
-   - `display_name` names a different wine, cuvée or colour (a "Blanc" line matched to the red, a Chardonnay matched to the Pinot Noir), or a different vintage, or NV against a vintage;
+   - `display_name` or `color` names a different wine, cuvée or colour (a "Blanc" line matched to the red, a Chardonnay matched to the Pinot Noir), or a different vintage, or NV against a vintage;
    - the retail and auction references are more than 3× apart, or the retail reference is below a third of a retail list price;
    - a matched row has neither reference: report it as "no market data" instead of a discount;
    - the row is a half bottle or a large format: the references are for 750 ml bottles, so large formats normally cost more per 750 ml;
