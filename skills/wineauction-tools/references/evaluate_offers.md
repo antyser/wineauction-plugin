@@ -25,7 +25,7 @@ Judge priced offers the user brings: a retail email, a price list, a restaurant 
 | `results[]` | One per input row, in order. |
 | `results[].input` | The row as sent. |
 | `results[].outcome` | matched / unmatched (no such wine; read `hint`) / not_computed (identification failed; retry). |
-| `results[].wine` | The identified wine: `wine_id`, `display_name`, `producer`, `region`, `country`, `lwin7`, `lwin11`, `slug`, `color` (Red, Blanc, Rosé and so on, or null) and `vintage` (the submitted vintage, else the one in `lwin11`, else null). Check `color` against the line: a white listed in a red section is the usual wrong match. |
+| `results[].wine` | The identified wine: `wine_id`, `display_name`, `producer`, `region`, `country`, `lwin7`, `lwin11`, `slug`, `color` (Red, White, Rose and so on, or null) and `vintage` (the submitted vintage, else the one in `lwin11`, else null). Check `color` against the line: a white listed in a red section is the usual wrong match. |
 | `results[].wineapp_wine_url` | The wine's page on wineauction.ai for this vintage. |
 | `results[].unit_price` | `{amount, currency: USD, per_ml: 750, buyers_premium}`, or `{reason}` when it cannot be computed: missing_currency, missing_fx_rate, missing_quantity, missing_format_ml, mixed_lot, missing_buyers_premium. |
 | `results[].retail`, `auction` | The two views. Without a vintage, retail pools all vintages and auction is null. |
