@@ -15,6 +15,11 @@ def main() -> None:
     parser.add_argument("--eyebrow", default="WineAuction")
     parser.add_argument("--lede", default="")
     parser.add_argument("--method", default="")
+    parser.add_argument(
+        "--not-found",
+        help="JSON file with a list of {name, hint} for rows that matched no wine",
+    )
+    parser.add_argument("--skipped", default="", help="one line on what was skipped")
     args = parser.parse_args()
     try:
         rows = json.loads(Path(args.rows).read_text())
@@ -29,6 +34,9 @@ def main() -> None:
     if not isinstance(rows, list):
         sys.exit(f"Rows file {args.rows} must hold a JSON list of row objects.")
     data = json.dumps(rows, ensure_ascii=False).replace("</", "<\\/")
+    not_found = json.loads(Path(args.not_found).read_text()) if args.not_found else []
+    not_found_data = json.dumps(not_found, ensure_ascii=False).replace("</", "<\\/")
+    skipped_data = json.dumps(args.skipped, ensure_ascii=False).replace("</", "<\\/")
     page = TEMPLATE.read_text()
     for key, value in (
         ("__TITLE__", args.title),
@@ -37,6 +45,7 @@ def main() -> None:
         ("__METHOD__", args.method),
     ):
         page = page.replace(key, html.escape(value))
+    page = page.replace("__NOT_FOUND__", not_found_data).replace("__SKIPPED__", skipped_data)
     Path(args.output).write_text(page.replace("__DATA__", data))
 
 

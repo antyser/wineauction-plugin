@@ -66,7 +66,8 @@ h2 { font-family: var(--font-display); font-weight: 600; font-size: 24px; margin
 .b.r { background: var(--bad-bg); color: var(--bad-fg); border-color: var(--bad-bd); }
 .b.flag { background: var(--warn-bg); color: var(--warn-fg); border-color: transparent; }
 .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
-.seg { display: inline-flex; background: var(--muted); border-radius: var(--radius); padding: 3px; }
+.seg { display: inline-flex; flex-wrap: wrap; max-width: 100%; background: var(--muted); border-radius: var(--radius); padding: 3px; }
+.seg button { white-space: nowrap; }
 .seg button { font: inherit; font-size: 13px; border: 0; background: transparent; color: var(--muted-fg); padding: 5px 12px; border-radius: calc(var(--radius) - 2px); cursor: pointer; }
 .seg button[aria-pressed="true"] { background: var(--card); color: var(--foreground); box-shadow: 0 1px 2px rgba(0,0,0,.06); }
 .seg button:focus-visible, label:focus-within, input:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
@@ -108,8 +109,8 @@ input[type="number"] { width: 96px; }
   </header>
 
   <section id="picksSection">
-    <h2>Best deals</h2>
-    <p class="method">Cheaper than both references by 20% or more, and neither reference looks doubtful.</p>
+    <h2>Best values</h2>
+    <p class="method">The rows furthest below, or closest to, their market references. Rows with a doubtful reference are left out.</p>
     <div class="picks" id="picks"></div>
   </section>
 
@@ -124,7 +125,7 @@ input[type="number"] { width: 96px; }
       <label class="ctl">Sort
         <select id="sort"><option value="deal">Best deal</option><option value="price">Price, low first</option><option value="ends">Ending soonest</option><option value="name">Name</option></select>
       </label>
-      <label class="chk"><input type="checkbox" id="showDoubt"> Show doubtful references</label>
+      <label class="chk"><input type="checkbox" id="showDoubt" checked> Show doubtful references</label>
       <input type="search" id="q" placeholder="Filter by producer or wine" aria-label="Filter by producer or wine">
       <span class="count" id="count"></span>
     </div>
@@ -140,11 +141,19 @@ input[type="number"] { width: 96px; }
     </div>
   </section>
 
+  <section id="notFoundSection" hidden>
+    <h2>Not found</h2>
+    <p class="method" id="skipped"></p>
+    <ul class="method" id="notFound"></ul>
+  </section>
+
   <p class="method">__METHOD__</p>
 </div>
 
 <script>
 const DATA = __DATA__;
+const NOT_FOUND = __NOT_FOUND__;
+const SKIPPED = __SKIPPED__;
 const usd = n => n == null ? '–' : '$' + Math.round(n).toLocaleString('en-US');
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const rows = DATA.map(r => {
@@ -152,7 +161,7 @@ const rows = DATA.map(r => {
   if (r.auction_usd != null && r.auction_sales != null && r.auction_sales <= 2) flags.push('Auction price from ' + r.auction_sales + ' sale' + (r.auction_sales > 1 ? 's' : ''));
   if (r.retail_usd && r.auction_usd && Math.max(r.retail_usd, r.auction_usd) / Math.min(r.retail_usd, r.auction_usd) > 3) flags.push('Retail and auction differ >3×');
   const ds = [r.discount_vs_retail_pct, r.discount_vs_auction_pct].filter(x => x != null);
-  return {...r, flags, doubt: flags.length > 0, best: ds.length ? Math.max(...ds) : null, both: ds.length === 2 ? Math.min(...ds) : null, text: (r.name + ' ' + (r.vintage || '') + ' ' + (r.seller || '')).toLowerCase()};
+  return {...r, flags, doubt: flags.length > 0, best: r.discount_vs_retail_pct ?? r.discount_vs_auction_pct ?? null, both: ds.length === 2 ? Math.min(...ds) : null, text: (r.name + ' ' + (r.vintage || '') + ' ' + (r.seller || '')).toLowerCase()};
 });
 function size(r){ if (!r.bottles) return ''; const s = r.size_ml && r.size_ml !== 750 ? (r.size_ml === 1500 ? ' magnum' : ' ' + r.size_ml + 'ml') : ''; return r.bottles + ' bottle' + (r.bottles > 1 ? 's' : '') + s; }
 function badge(p){ if (p == null) return '<span class="b">–</span>'; const c = p >= 30 ? 'g3' : p >= 10 ? 'g2' : p <= -10 ? 'r' : ''; return `<span class="b ${c}">${p >= 0 ? p + '% below' : Math.abs(p) + '% above'}</span>`; }
@@ -160,7 +169,10 @@ function ends(r){ if (!r.ends_at) return ''; const d = new Date(r.ends_at); retu
 function link(r, label){ const u = r.url || r.wineapp_url; return u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${label}</a>` : label; }
 function title(r){ return esc((r.vintage ? r.vintage + ' ' : '') + r.name); }
 
-const picks = rows.filter(r => r.both != null && r.both >= 20 && !r.doubt).sort((a, b) => b.both - a.both).slice(0, 12);
+const picks = rows.filter(r => r.best != null && !r.doubt).sort((a, b) => b.best - a.best).slice(0, 12);
+document.getElementById('notFoundSection').hidden = NOT_FOUND.length === 0 && !SKIPPED;
+document.getElementById('skipped').textContent = SKIPPED;
+document.getElementById('notFound').innerHTML = NOT_FOUND.map(n => `<li>${esc(n.name)}${n.hint ? ' · ' + esc(n.hint) : ''}</li>`).join('');
 document.getElementById('picksSection').hidden = picks.length === 0;
 document.getElementById('picks').innerHTML = picks.map(r => `<div class="pick">
   ${link(r, `<span class="nm">${title(r)}</span>`)}
