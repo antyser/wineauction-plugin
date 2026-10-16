@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root {
+  --background: #fbf8f1; --foreground: #231a1c; --card: #ffffff;
+  --primary: #c2452a; --secondary: #efe7d8; --muted: #f2ebdd; --muted-fg: #7a6e66;
+  --border: #ece3d3; --input: #dcd2c2;
+  --good-bg: rgba(111,175,79,.2); --good-fg: #3d7028; --good-bd: rgba(111,175,79,.4);
+  --ok-bg: rgba(111,175,79,.12); --ok-fg: #4d8a35; --ok-bd: rgba(111,175,79,.3);
+  --bad-bg: rgba(196,74,58,.12); --bad-fg: #a03020; --bad-bd: rgba(196,74,58,.3);
+  --warn-bg: #fbf0e8; --warn-fg: #9a4a1b;
+  --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
+  --font-mono: 'Geist Mono', ui-monospace, Menlo, monospace;
+  --radius: .5rem;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --background: oklch(0.14 0.012 28); --foreground: oklch(0.96 0.008 75); --card: oklch(0.2 0.012 28);
+  --primary: oklch(0.7 0.13 32); --secondary: oklch(0.275 0.012 28); --muted: oklch(0.275 0.012 28); --muted-fg: oklch(0.698 0.008 32);
+  --border: oklch(1 0 0 / 9%); --input: oklch(1 0 0 / 12%);
+  --good-bg: rgba(111,175,79,.15); --good-fg: #8fd06e; --good-bd: rgba(111,175,79,.3);
+  --ok-bg: rgba(111,175,79,.1); --ok-fg: #7dc05a; --ok-bd: rgba(111,175,79,.25);
+  --bad-bg: rgba(196,74,58,.15); --bad-fg: #e06858; --bad-bd: rgba(196,74,58,.3);
+  --warn-bg: oklch(0.275 0.03 50); --warn-fg: #e8a070; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --background: oklch(0.14 0.012 28); --foreground: oklch(0.96 0.008 75); --card: oklch(0.2 0.012 28);
+  --primary: oklch(0.7 0.13 32); --secondary: oklch(0.275 0.012 28); --muted: oklch(0.275 0.012 28); --muted-fg: oklch(0.698 0.008 32);
+  --border: oklch(1 0 0 / 9%); --input: oklch(1 0 0 / 12%);
+  --good-bg: rgba(111,175,79,.15); --good-fg: #8fd06e; --good-bd: rgba(111,175,79,.3);
+  --ok-bg: rgba(111,175,79,.1); --ok-fg: #7dc05a; --ok-bd: rgba(111,175,79,.25);
+  --bad-bg: rgba(196,74,58,.15); --bad-fg: #e06858; --bad-bd: rgba(196,74,58,.3);
+  --warn-bg: oklch(0.275 0.03 50); --warn-fg: #e8a070; color-scheme: dark; }
+body { background: var(--background); color: var(--foreground); font-family: var(--font-sans); font-size: 14px; line-height: 1.5; }
+.wrap { max-width: 1180px; margin: 0 auto; padding-block: 32px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
+h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(30px, 5vw, 42px); line-height: 1.05; margin: 0; text-wrap: balance; }
+h2 { font-family: var(--font-display); font-weight: 600; font-size: 24px; margin: 0; }
+.eyebrow { text-transform: uppercase; letter-spacing: .08em; font-size: 11px; color: var(--muted-fg); font-weight: 500; }
+.lede { color: var(--muted-fg); max-width: 70ch; margin: 6px 0 0; }
+.head { display: grid; gap: 6px; }
+.sales { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
+.sale { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 10px 14px; min-width: 0; }
+.sale b { display: block; font-weight: 500; }
+.sale span { color: var(--muted-fg); font-size: 12px; font-variant-numeric: tabular-nums; }
+.picks { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+.pick { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; display: grid; gap: 8px; min-width: 0; }
+.pick a { color: var(--foreground); text-decoration: none; }
+.pick a:hover { color: var(--primary); }
+.pick a.note { color: var(--muted-fg); font-size: 12px; }
+.pick .nm { font-weight: 500; text-decoration: none; color: var(--foreground); }
+.pick .nm:hover { color: var(--primary); }
+.pick .meta { color: var(--muted-fg); font-size: 12px; }
+.pick .nums { display: flex; gap: 14px; flex-wrap: wrap; font-variant-numeric: tabular-nums; font-size: 13px; }
+.pick .nums div { display: grid; }
+.pick .nums small { color: var(--muted-fg); font-size: 11px; }
+.pick .note { font-size: 12px; color: var(--muted-fg); }
+.badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.b { display: inline-flex; align-items: center; height: 20px; padding: 0 6px; border-radius: 6px; font-size: 11px; font-weight: 500; border: 1px solid var(--border); background: var(--muted); color: var(--muted-fg); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.b.g3 { background: var(--good-bg); color: var(--good-fg); border-color: var(--good-bd); }
+.b.g2 { background: var(--ok-bg); color: var(--ok-fg); border-color: var(--ok-bd); }
+.b.r { background: var(--bad-bg); color: var(--bad-fg); border-color: var(--bad-bd); }
+.b.flag { background: var(--warn-bg); color: var(--warn-fg); border-color: transparent; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.seg { display: inline-flex; background: var(--muted); border-radius: var(--radius); padding: 3px; }
+.seg button { font: inherit; font-size: 13px; border: 0; background: transparent; color: var(--muted-fg); padding: 5px 12px; border-radius: calc(var(--radius) - 2px); cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--card); color: var(--foreground); box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+.seg button:focus-visible, label:focus-within, input:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+label.chk { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--muted-fg); cursor: pointer; }
+input[type="search"] { font: inherit; font-size: 13px; padding: 6px 10px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--card); color: var(--foreground); min-width: 0; width: 220px; max-width: 100%; }
+.count { font-size: 12px; color: var(--muted-fg); margin-left: auto; font-variant-numeric: tabular-nums; }
+.tablebox { overflow-x: auto; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th { text-align: left; font-weight: 500; color: var(--muted-fg); font-size: 12px; padding: 10px 12px; border-bottom: 1px solid var(--border); white-space: nowrap; background: var(--card); position: sticky; top: 0; }
+th.n, td.n { text-align: right; }
+td { padding: 9px 12px; border-bottom: 1px solid var(--border); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+td .sub { color: var(--muted-fg); font-size: 12px; }
+td a { color: var(--foreground); text-decoration: none; }
+td a:hover { color: var(--primary); text-decoration: underline; }
+.lotno { font-family: var(--font-mono); font-size: 12px; color: var(--muted-fg); white-space: nowrap; }
+.more { display: flex; justify-content: center; padding: 12px; }
+.more button { font: inherit; font-size: 13px; border: 1px solid var(--input); background: var(--card); color: var(--foreground); padding: 6px 14px; border-radius: var(--radius); cursor: pointer; }
+.issues { display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); }
+.issue { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 16px; min-width: 0; }
+.issue h3 { margin: 0 0 4px; font-size: 14px; font-weight: 600; }
+.issue p { margin: 0; color: var(--muted-fg); font-size: 13px; }
+.method { color: var(--muted-fg); font-size: 12px; max-width: 80ch; }
+section { display: grid; gap: 12px; }
+select, input[type="number"] { font: inherit; font-size: 13px; padding: 5px 8px; border: 1px solid var(--input); border-radius: var(--radius); background: var(--card); color: var(--foreground); }
+input[type="number"] { width: 96px; }
+.ctl { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--muted-fg); }
+.empty { padding: 24px; text-align: center; color: var(--muted-fg); }
+@media (max-width: 640px) { .count { margin-left: 0; width: 100%; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="head">
+    <div class="eyebrow">__EYEBROW__</div>
+    <h1>__TITLE__</h1>
+    <p class="lede">__LEDE__</p>
+  </header>
+
+  <section id="picksSection">
+    <h2>Best deals</h2>
+    <p class="method">Cheaper than both references by 20% or more, and neither reference looks doubtful.</p>
+    <div class="picks" id="picks"></div>
+  </section>
+
+  <section>
+    <h2>All wines</h2>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Group" id="groups"></div>
+      <label class="ctl">Min discount
+        <select id="minDisc"><option value="">Any</option><option value="0">0%</option><option value="10">10%</option><option value="20">20%</option><option value="30">30%</option><option value="50">50%</option></select>
+      </label>
+      <label class="ctl">Max $/btl <input type="number" id="maxPrice" min="0" step="10" inputmode="numeric"></label>
+      <label class="ctl">Sort
+        <select id="sort"><option value="deal">Best deal</option><option value="price">Price, low first</option><option value="ends">Ending soonest</option><option value="name">Name</option></select>
+      </label>
+      <label class="chk"><input type="checkbox" id="showDoubt"> Show doubtful references</label>
+      <input type="search" id="q" placeholder="Filter by producer or wine" aria-label="Filter by producer or wine">
+      <span class="count" id="count"></span>
+    </div>
+    <div class="tablebox">
+      <table>
+        <thead><tr>
+          <th>Ref</th><th>Wine</th><th class="n">Price / btl</th><th class="n">Retail</th><th class="n">Auction</th><th>vs Retail</th><th>vs Auction</th><th>Notes</th>
+        </tr></thead>
+        <tbody id="tb"></tbody>
+      </table>
+      <div class="empty" id="empty" hidden>No wines match these filters.</div>
+      <div class="more"><button type="button" id="more">Show 100 more</button></div>
+    </div>
+  </section>
+
+  <p class="method">__METHOD__</p>
+</div>
+
+<script>
+const DATA = __DATA__;
+const usd = n => n == null ? '–' : '$' + Math.round(n).toLocaleString('en-US');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const rows = DATA.map(r => {
+  const flags = [...(r.flags || [])];
+  if (r.auction_usd != null && r.auction_sales != null && r.auction_sales <= 2) flags.push('Auction price from ' + r.auction_sales + ' sale' + (r.auction_sales > 1 ? 's' : ''));
+  if (r.retail_usd && r.auction_usd && Math.max(r.retail_usd, r.auction_usd) / Math.min(r.retail_usd, r.auction_usd) > 3) flags.push('Retail and auction differ >3×');
+  const ds = [r.discount_vs_retail_pct, r.discount_vs_auction_pct].filter(x => x != null);
+  return {...r, flags, doubt: flags.length > 0, best: ds.length ? Math.max(...ds) : null, both: ds.length === 2 ? Math.min(...ds) : null, text: (r.name + ' ' + (r.vintage || '') + ' ' + (r.seller || '')).toLowerCase()};
+});
+function size(r){ if (!r.bottles) return ''; const s = r.size_ml && r.size_ml !== 750 ? (r.size_ml === 1500 ? ' magnum' : ' ' + r.size_ml + 'ml') : ''; return r.bottles + ' bottle' + (r.bottles > 1 ? 's' : '') + s; }
+function badge(p){ if (p == null) return '<span class="b">–</span>'; const c = p >= 30 ? 'g3' : p >= 10 ? 'g2' : p <= -10 ? 'r' : ''; return `<span class="b ${c}">${p >= 0 ? p + '% below' : Math.abs(p) + '% above'}</span>`; }
+function ends(r){ if (!r.ends_at) return ''; const d = new Date(r.ends_at); return 'ends ' + d.toLocaleString(undefined, {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}); }
+function link(r, label){ const u = r.url || r.wineapp_url; return u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${label}</a>` : label; }
+function title(r){ return esc((r.vintage ? r.vintage + ' ' : '') + r.name); }
+
+const picks = rows.filter(r => r.both != null && r.both >= 20 && !r.doubt).sort((a, b) => b.both - a.both).slice(0, 12);
+document.getElementById('picksSection').hidden = picks.length === 0;
+document.getElementById('picks').innerHTML = picks.map(r => `<div class="pick">
+  ${link(r, `<span class="nm">${title(r)}</span>`)}
+  <div class="meta">${esc([r.seller, r.ref, size(r), ends(r)].filter(Boolean).join(' · '))}</div>
+  <div class="nums"><div><small>Price / btl</small>${usd(r.price_usd)}</div><div><small>Retail</small>${usd(r.retail_usd)}</div><div><small>Auction${r.auction_sales ? ' (' + r.auction_sales + ')' : ''}</small>${usd(r.auction_usd)}</div></div>
+  <div class="badges">${badge(r.discount_vs_retail_pct)} ${badge(r.discount_vs_auction_pct)}</div>
+  ${r.wineapp_url ? `<a class="note" href="${esc(r.wineapp_url)}" target="_blank" rel="noopener">Price history on WineAuction</a>` : ''}
+</div>`).join('');
+
+const groups = [...new Set(rows.map(r => r.group).filter(Boolean))];
+const state = {group: '', shown: 100};
+const gEl = document.getElementById('groups');
+if (groups.length < 2) gEl.hidden = true;
+gEl.innerHTML = ['', ...groups].map(g => `<button type="button" data-group="${esc(g)}" aria-pressed="${g === '' ? 'true' : 'false'}">${g === '' ? 'All' : esc(g)}</button>`).join('');
+gEl.addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; state.group = b.dataset.group; gEl.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b ? 'true' : 'false')); state.shown = 100; render(); });
+['minDisc', 'maxPrice', 'sort', 'showDoubt', 'q'].forEach(id => document.getElementById(id).addEventListener('input', () => { state.shown = 100; render(); }));
+document.getElementById('more').addEventListener('click', () => { state.shown += 100; render(); });
+
+function render(){
+  const min = document.getElementById('minDisc').value, max = parseFloat(document.getElementById('maxPrice').value);
+  const sort = document.getElementById('sort').value, showDoubt = document.getElementById('showDoubt').checked, q = document.getElementById('q').value.trim().toLowerCase();
+  const list = rows.filter(r => (!state.group || r.group === state.group) && (showDoubt || !r.doubt) && (!q || r.text.includes(q))
+    && (min === '' || (r.best != null && r.best >= +min)) && (isNaN(max) || (r.price_usd != null && r.price_usd <= max)));
+  const by = {deal: (a, b) => (b.best ?? -1e9) - (a.best ?? -1e9), price: (a, b) => (a.price_usd ?? 1e12) - (b.price_usd ?? 1e12), ends: (a, b) => (a.ends_at || '9').localeCompare(b.ends_at || '9'), name: (a, b) => a.name.localeCompare(b.name)};
+  list.sort(by[sort]);
+  document.getElementById('count').textContent = list.length.toLocaleString('en-US') + ' of ' + rows.length.toLocaleString('en-US');
+  document.getElementById('empty').hidden = list.length > 0;
+  document.getElementById('more').parentElement.hidden = list.length <= state.shown;
+  document.getElementById('tb').innerHTML = list.slice(0, state.shown).map(r => `<tr>
+    <td class="lotno">${esc(r.ref || '')}</td>
+    <td>${link(r, title(r))}<div class="sub">${esc([r.seller, size(r), ends(r)].filter(Boolean).join(' · '))}</div></td>
+    <td class="n">${usd(r.price_usd)}</td>
+    <td class="n">${usd(r.retail_usd)}${r.retail_live ? `<div class="sub">${r.retail_live} on sale</div>` : ''}</td>
+    <td class="n">${usd(r.auction_usd)}${r.auction_sales ? `<div class="sub">${r.auction_sales} sale${r.auction_sales > 1 ? 's' : ''}</div>` : ''}</td>
+    <td>${badge(r.discount_vs_retail_pct)}</td><td>${badge(r.discount_vs_auction_pct)}</td>
+    <td><div class="badges">${r.flags.map(f => `<span class="b flag">${esc(f)}</span>`).join('')}${r.wineapp_url ? `<a class="sub" href="${esc(r.wineapp_url)}" target="_blank" rel="noopener">history</a>` : ''}</div></td>
+  </tr>`).join('');
+}
+render();
+</script>
+</body>
+</html>
