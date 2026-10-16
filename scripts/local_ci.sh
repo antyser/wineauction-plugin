@@ -26,4 +26,4 @@ python3 scripts/build_release.py --output "$archive" --expected-head "$candidate
 
 printf 'LOCAL CI SUMMARY: PASS\n'
 printf 'Head: %s\n' "$candidate_head"
-printf 'Checks: portable manifests and versions; OAuth DCR; five positive and three negative cases; tracked ZIP completeness and reproducibility; packaged renderer behavior.\n'
+printf 'Checks: portable manifests and versions; OAuth DCR; review case metadata (five positive and three negative); tracked ZIP completeness and reproducibility; packaged renderer behavior.\n'
