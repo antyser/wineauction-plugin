@@ -1,5 +1,5 @@
 interface:
-  display_name: "Find Offers"
+  display_name: "Find Wine"
   short_description: "Find the best current offers for the wines you want"
   default_prompt: "What is white Burgundy from Roulot going for right now?"
 dependencies:

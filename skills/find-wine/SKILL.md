@@ -1,9 +1,9 @@
 ---
-name: find-offers
+name: find-wine
 description: The user has no offers yet and wants offers for the wines they want: named wines, a producer, a region or appellation, or a style. Shows market references and the best current offers; can repeat on a schedule. Use for "any good Bienvenues-Batard-Montrachet out there", "what is Roulot going for", "check Rousseau weekly".
 ---
 
-# Find offers
+# Find wine
 
 The user has no offers; find offers for what they want. The tools come from the WineAuction connector. If they already hold offers (a list, a newsletter, a named auction or store), use the check-offers skill instead.
 

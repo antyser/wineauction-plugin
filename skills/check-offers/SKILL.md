@@ -5,7 +5,7 @@ description: The user already has offers and wants the ones worth attention. Tak
 
 # Check offers
 
-The user already has offers. Find the ones worth attention. The tools come from the WineAuction connector. If the user has no offers and wants them found for particular wines, use the find-offers skill instead.
+The user already has offers. Find the ones worth attention. The tools come from the WineAuction connector. If the user has no offers and wants them found for particular wines, use the find-wine skill instead.
 
 Pick the source:
 

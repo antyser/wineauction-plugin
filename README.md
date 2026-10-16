@@ -7,7 +7,7 @@ Check wine prices against market references, find deals in live auctions, and lo
 - **WineAuction connector** (`https://wineauction.ai/api/mcp`): you sign in with your WineAuction account the first time you use it.
 - **Skills**, organised by what you want:
   - `check-offers`: you already have offers. Bring a wine list, merchant newsletter, price list or pasted text, or name an auction, auction house, store or restaurant, and get the ones worth attention, with an HTML report for long lists.
-  - `find-offers`: you have no offers yet. Name wines, a producer, a region or a style and get market references with the best current offers, optionally rechecked on a schedule.
+  - `find-wine`: you have no offers yet. Name wines, a producer, a region or a style and get market references with the best current offers, optionally rechecked on a schedule.
 
 ## Install
 
