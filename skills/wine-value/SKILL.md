@@ -1,6 +1,6 @@
 ---
 name: wine-value
-description: "Look up what a wine is worth: retail and auction reference prices, past auction sales, vintage-by-vintage prices and available critic reviews. Use when the user asks what a named wine, producer, vintage, region or appellation costs or sells for, how vintages compare on price, what a named wine fetched at auction, or what critics said, without bringing a price of their own."
+description: "Price and critic research for a named wine: its retail and auction reference prices, past auction sales, vintage-by-vintage prices and available critic reviews, such as \"what does 2019 Roulot Meursault Perrières go for, and what did critics say?\" Use when the user asks what a wine, producer, vintage, region or appellation costs or sells for, how vintages compare on price, what a named wine fetched at auction, or what critics said about it, without bringing a price of their own."
 ---
 
 # Wine value

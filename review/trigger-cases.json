@@ -3,12 +3,12 @@
   "positive": [
     {
       "case": "restaurant-wine-list",
-      "prompt": "Here is the wine list from the restaurant I'm at tonight. Which bottles have the smallest markup over retail?",
+      "prompt": "Here is the wine list from the restaurant I'm at tonight: 2015 Ridge Monte Bello $420; 2018 Opus One $380; 2016 Tenuta San Guido Sassicaia $290. Which bottle has the smallest markup over retail?",
       "expected_skill": "restaurant-wine-list"
     },
     {
       "case": "merchant-newsletter-chinese",
-      "prompt": "请帮我看看这封酒商促销邮件里的葡萄酒价格，和零售及拍卖市场价格比较一下。",
+      "prompt": "酒商刚发来促销邮件：2019 Domaine Roulot Meursault 每瓶 $165；2016 Château Léoville Barton 每箱 12 瓶 $1,500。帮我和零售及拍卖市场价格比较一下，值不值。",
       "expected_skill": "merchant-offer-check"
     },
     {
@@ -23,7 +23,7 @@
     },
     {
       "case": "cellar-list-chinese",
-      "prompt": "这是我酒窖里的酒的清单，帮我估一下现在总共值多少钱。",
+      "prompt": "我酒窖里有：2010 Château Lafite Rothschild 6 瓶，2005 Château Margaux 3 瓶，2016 Sassicaia 12 瓶。帮我估一下现在总共值多少钱。",
       "expected_skill": "cellar-valuation"
     },
     {
