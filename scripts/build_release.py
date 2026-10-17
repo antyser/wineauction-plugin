@@ -19,7 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "wineauction-plugin/"
-VERSION = "1.1.0"
+VERSION = "1.1.1"
 FIXTURE_ATTACHMENT = (
     "https://github.com/antyser/wineauction-plugin/releases/download/"
     "v1.1.0/newsletter-30-rows.txt"
@@ -99,7 +99,7 @@ def check_manifest(files: dict[str, bytes]) -> None:
     portable = read_json(files, "plugin.json")
     claude = read_json(files, ".claude-plugin/plugin.json")
     require(portable.get("name") == "wineauction", "portable package identity changed")
-    require(portable.get("version") == VERSION, "portable manifest version is not 1.1.0")
+    require(portable.get("version") == VERSION, f"portable manifest version is not {VERSION}")
     require(claude.get("name") == portable["name"], "Claude and portable package identities differ")
     require(claude.get("version") == portable["version"], "versioned manifests are out of sync")
     require(portable.get("author", {}).get("name") == "LemonCube LLC", "publisher is not LemonCube LLC")
@@ -129,7 +129,7 @@ def check_manifest(files: dict[str, bytes]) -> None:
     cases = review.get("test_cases", {})
     positive = cases.get("positive", [])
     negative = cases.get("negative", [])
-    require(len(positive) == 5 and len(negative) == 3, "review cases must contain five positive and three negative cases")
+    require(len(positive) == 5 and len(negative) == 3, "review cases must contain five workflow positives and three negatives")
     tools = {
         tool.strip()
         for case in positive
@@ -166,6 +166,15 @@ def check_fixture(files: dict[str, bytes]) -> None:
     require("no retail or auction market references" in lowered, "fixture must not supply market references")
 
 
+def check_trigger_cases(files: dict[str, bytes]) -> None:
+    cases = read_json(files, "review/trigger-cases.json")
+    positive = cases.get("positive", [])
+    negative = cases.get("negative", [])
+    require(len(positive) == 6 and len(negative) == 3, "trigger matrix must contain six positive and three negative cases")
+    require(all(case.get("prompt") and case.get("expected_skill") in {"check-offers", "find-wine"} for case in positive), "positive trigger cases need prompts and expected skills")
+    require(all(case.get("prompt") and case.get("expected_skill") is None for case in negative), "negative trigger cases need prompts and a null expected skill")
+
+
 def check_archive(archive_path: Path, revision: str) -> None:
     expected = set(git("ls-tree", "-r", "--name-only", revision).splitlines())
     with zipfile.ZipFile(archive_path) as archive:
@@ -192,6 +201,7 @@ def check_archive(archive_path: Path, revision: str) -> None:
         "skills/find-wine/references/search_wines.md",
         "assets/logo.png",
         "review/fixtures/newsletter-30-rows.txt",
+        "review/trigger-cases.json",
         "scripts/build_release.py",
         "scripts/test_renderer.mjs",
         "scripts/local_ci.sh",
@@ -203,6 +213,7 @@ def check_archive(archive_path: Path, revision: str) -> None:
         require(SECRET.search(content) is None, f"secret-like material found in {path}")
     check_manifest(files)
     check_fixture(files)
+    check_trigger_cases(files)
     exercise_renderer(files)
 
 
