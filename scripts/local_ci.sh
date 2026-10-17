@@ -21,7 +21,7 @@ fi
 
 tmp_dir=$(mktemp -d "${TMPDIR:-/tmp}/wineauction-local-ci.XXXXXX")
 trap 'rm -rf "$tmp_dir"' EXIT
-archive="$tmp_dir/wineauction-plugin-1.1.1.zip"
+archive="$tmp_dir/wineauction-plugin-1.1.2.zip"
 python3 scripts/build_release.py --output "$archive" --expected-head "$candidate_head"
 
 printf 'LOCAL CI SUMMARY: PASS\n'
