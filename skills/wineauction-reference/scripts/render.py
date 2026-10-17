@@ -46,6 +46,32 @@ def normalize(row: dict) -> dict:
         out["wineapp_url"] = first(row.get("wineapp_url"), row.get("wineapp_wine_url"))
     if not out.get("group"):
         out["group"] = first(row.get("appellation"), row.get("region"), wine.get("region"))
+    offer_type = first(row.get("offer_type"), inp.get("offer_type"))
+    status = row.get("auction_status")
+    out.setdefault("quoted_price", first(row.get("price"), inp.get("price")))
+    out.setdefault("quoted_currency", first(row.get("currency"), inp.get("currency")))
+    out.setdefault("premium_pct", row.get("auction_buyers_premium_pct"))
+    out.setdefault("estimate_low", row.get("auction_estimate_low"))
+    out.setdefault("estimate_high", row.get("auction_estimate_high"))
+    out.setdefault("status", status)
+    if status == "sold":
+        out.setdefault("sold_at", row.get("auction_end_time"))
+    out.setdefault("serving", first(row.get("restaurant_serving"), inp.get("serving_type")))
+    out.setdefault("pre_arrival", first(row.get("retail_pre_arrival"), inp.get("is_pre_arrival")))
+    if "retail_in_stock" in row:
+        out.setdefault("in_stock", row["retail_in_stock"])
+    elif "is_out_of_stock" in inp:
+        out.setdefault("in_stock", not inp["is_out_of_stock"])
+    out.setdefault("mixed_items", row.get("auction_lot_items"))
+    if not out.get("price_label"):
+        if offer_type == "auction":
+            out["price_label"] = {"live": "Current or opening bid", "sold": "Hammer incl. premium"}.get(status)
+        elif offer_type == "restaurant":
+            out["price_label"] = "List price"
+        elif offer_type == "retail" and row.get("price") is not None:
+            out["price_label"] = "Price"
+        elif inp:
+            out["price_label"] = "Quoted price"
     return out
 
 
@@ -77,6 +103,7 @@ def main() -> None:
         "--not-found",
         help="JSON file with a list of {name, hint} for rows that matched no wine",
     )
+    parser.add_argument("--markup", action="store_true", help="show markup over each reference instead of discount")
     parser.add_argument("--skipped", default="", help="one line on what was skipped")
     args = parser.parse_args()
     try:
@@ -104,6 +131,7 @@ def main() -> None:
         ("__METHOD__", args.method),
     ):
         page = page.replace(key, html.escape(value))
+    page = page.replace("__MARKUP__", "true" if args.markup else "false")
     page = page.replace("__NOT_FOUND__", not_found_data).replace("__SKIPPED__", skipped_data)
     Path(args.output).write_text(page.replace("__DATA__", data))
 

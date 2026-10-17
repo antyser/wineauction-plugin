@@ -32,5 +32,16 @@ Write `rows.json` with one object per matched row that has a unit price:
 | `discount_vs_retail_pct`, `discount_vs_auction_pct` | as returned |
 | `wineapp_url` | `wineapp_wine_url` |
 | `flags` | short strings for every doubt, and "Printed $99 for 375 ml" on half bottles and large formats |
+| `price_label` | text above the price; "Quoted price", or "List price" for restaurant rows |
+| `quoted_price`, `quoted_currency` | `price` and `currency` as sent; shown when `bottles` > 1, `size_ml` is not 750 or the currency is not USD |
+| `premium_pct` | buyer's premium, shown "+25% premium" |
+| `estimate_low`, `estimate_high` | house estimate in `quoted_currency` |
+| `status` | live / sold / unsold / withdrawn; badge for the last three |
+| `sold_at` | ISO date of a closed lot, shown "sold Oct 3" |
+| `serving` | glass / half / magnum; badge unless bottle |
+| `pre_arrival`, `in_stock` | booleans; "Out of stock" shows only when `in_stock` is false |
+| `mixed_items` | list of `{name, vintage, bottles, bottle_size_ml}`; "Mixed lot" badge and the items under the title |
+
+Optional keys left out are filled from the result's `input` (`price`, `currency`, `serving_type`, `is_pre_arrival`, `is_out_of_stock`).
 
 Write `not_found.json` as a list of `{name, hint}` for the rows still unmatched. Then present with [report.md](report.md).

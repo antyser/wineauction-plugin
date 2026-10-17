@@ -1,15 +1,15 @@
 ---
 name: wine-info
-description: "Look up a wine: its retail and auction reference prices, past auction sales, vintage-by-vintage prices, available critic reviews, and where it is currently offered, such as \"what does 2019 Roulot Meursault Perrières go for, what did critics say, and who has it?\" Use when the user asks about a named wine, producer, vintage, region or appellation (what it costs or sells for, how vintages compare, what it fetched at auction, its reviews, or where it is available now) without bringing a price or list of their own."
+description: "Look up one wine or many at once: their retail and auction reference prices, past auction sales, vintage-by-vintage prices, available critic reviews, and where it is currently offered, such as \"what does 2019 Roulot Meursault Perrières go for, what did critics say, and who has it?\" Use when the user asks about a named wine, producer, vintage, region or appellation (what it costs or sells for, how vintages compare, what it fetched at auction, its reviews, or where it is available now) without bringing a price or list of their own."
 ---
 
 # Wine info
 
-Answer what the user asked about the wine; fetch only the parts the question needs.
+The user may ask about one wine or a list of many (a watch list, several vintages, a whole producer). Answer what they asked for every wine; fetch only the parts the question needs.
 
 ## Steps
 
-1. Turn the request into wine filters: names or `lwin7`, `producer`, `region`, `appellation`, `color`, vintage or vintage range. Up to 10 named wines go in one `wines` list. `search_wines` filters only on wine attributes, never on price or seller ([fields](../wineauction-reference/references/tools/search_wines.md)).
+1. Turn the request into wine filters: names or `lwin7`, `producer`, `region`, `appellation`, `color`, vintage or vintage range. Up to 10 named wines go in one `wines` list; send a longer list in batches of 10, one call after another. `search_wines` filters only on wine attributes, never on price or seller ([fields](../wineauction-reference/references/tools/search_wines.md)).
 2. Call `search_wines`. Each wine carries both references, `reviews[]` when available, and a two-offer sample. Page with `cursor` when more wines are wanted. Check `resolved_wines` and say which names were not found.
 3. Where it is offered: call `list_offers` ([fields](../wineauction-reference/references/tools/list_offers.md)) with the wine's `wine_id` and `vintage`, or, for a producer, region or colour request ("white Burgundy under $200"), with those attributes as filters. Leave `offer_type` out for every type or set it to what the user wants, and add their filters: `max_price_usd`, `bottle_size_ml`, `in_stock`, `pre_arrival`. For a value or deal question, add `min_discount_pct` and sort by `discount_vs_retail` or `discount_vs_auction` with `offer_type` set; with no threshold given, 20 is a reasonable default and say you used it.
 4. Past sales: call `list_offers` with the wine's `wine_id`, `offer_type: auction`, `status: closed`, `sort: recent`, and `vintage` when asked. Only `auction_status: sold` rows are sales. Give the date, house, `price_per_bottle_usd` (per 750 ml, premium included; `price` is the lot's hammer without premium) and the lot link.

@@ -266,6 +266,35 @@ def exercise_renderer(files: dict[str, bytes]) -> None:
                         "flags": ["No market data returned"],
                     },
                     {
+                        "name": "Six-bottle lot",
+                        "vintage": 2015,
+                        "ref": "Lot 12",
+                        "bottles": 6,
+                        "size_ml": 750,
+                        "price_usd": 950,
+                        "quoted_price": 5700,
+                        "quoted_currency": "USD",
+                        "price_label": "Hammer incl. premium",
+                        "premium_pct": 25,
+                        "status": "sold",
+                        "sold_at": "2026-10-03T18:00:00Z",
+                        "retail_usd": 1200,
+                        "discount_vs_retail_pct": 21,
+                        "flags": [],
+                    },
+                    {
+                        "name": "Mixed Bordeaux case",
+                        "mixed_items": [
+                            {"name": "Latour <b>", "vintage": 2010, "bottles": 3, "bottle_size_ml": 750},
+                            {"name": "Mouton", "vintage": 2009, "bottles": 3, "bottle_size_ml": 750},
+                        ],
+                        "bottles": 6,
+                        "price_usd": 400,
+                        "retail_usd": 300,
+                        "discount_vs_retail_pct": -33,
+                        "flags": [],
+                    },
+                    {
                         "name": "No reference sample",
                         "vintage": 2020,
                         "price_usd": 80,
@@ -298,7 +327,24 @@ def exercise_renderer(files: dict[str, bytes]) -> None:
         )
         rendered = report_path.read_text(encoding="utf-8")
         require("Renderer &lt;script&gt;alert(&#x27;x&#x27;)&lt;/script&gt;" in rendered, "renderer failed to escape report title")
-        subprocess.run([node, str(root / "scripts/test_renderer.mjs"), str(report_path)], check=True)
+        subprocess.run([node, str(root / "scripts/test_renderer.mjs"), str(report_path), "discount"], check=True)
+        markup_path = Path(directory) / "report-markup.html"
+        subprocess.run(
+            [
+                sys.executable,
+                str(root / "skills/wineauction-reference/scripts/render.py"),
+                str(rows_path),
+                str(markup_path),
+                "--title",
+                "Markup",
+                "--markup",
+                "--not-found",
+                str(not_found_path),
+            ],
+            check=True,
+            cwd=root,
+        )
+        subprocess.run([node, str(root / "scripts/test_renderer.mjs"), str(markup_path), "markup"], check=True)
 
 
 def main() -> None:

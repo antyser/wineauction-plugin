@@ -4,7 +4,7 @@
 
 ## Rows from list_offers or search_wines
 
-Build `rows.json` with one row per offer (rows from `evaluate_offers` are described in [evaluate.md](evaluate.md)). Leave mixed lots out and mention notable ones in the reply.
+Build `rows.json` with one row per offer (rows from `evaluate_offers` are described in [evaluate.md](evaluate.md)). Multi-bottle lots, cases and mixed lots are rows like any other; their per-750 price is shown beside the quoted lot total.
 
 | key | from |
 | --- | --- |
@@ -20,6 +20,17 @@ Build `rows.json` with one row per offer (rows from `evaluate_offers` are descri
 | `wineapp_url` | the offer's `wineapp_url`, else the wine's |
 | `ends_at` | `auction_end_time` |
 | `flags` | doubts, such as "Retail from 2008 vintage" |
+| `price_label` | text above the price: "Current or opening bid", "Hammer incl. premium", "List price", "Quoted price", "Low estimate" |
+| `quoted_price`, `quoted_currency` | the price as quoted for the whole row (lot, case or bottle); shown when `bottles` > 1, `size_ml` is not 750 or the currency is not USD |
+| `premium_pct` | buyer's premium, shown "+25% premium" |
+| `estimate_low`, `estimate_high` | house estimate in `quoted_currency` |
+| `status` | live / sold / unsold / withdrawn; badge for the last three |
+| `sold_at` | ISO date of a closed lot, shown "sold Oct 3" |
+| `serving` | glass / half / magnum; badge unless bottle |
+| `pre_arrival`, `in_stock` | booleans; "Out of stock" shows only when `in_stock` is false |
+| `mixed_items` | list of `{name, vintage, bottles, bottle_size_ml}`; "Mixed lot" badge and the items under the title |
+
+All the keys from `price_label` on are optional; an absent key renders as nothing. The renderer fills them from raw `list_offers` fields (`price`, `currency`, `auction_buyers_premium_pct`, `auction_estimate_*`, `auction_status`, `restaurant_serving`, `retail_pre_arrival`, `retail_in_stock`, `auction_lot_items`).
 
 The renderer also accepts raw `list_offers` offers, `evaluate_offers` results and `search_wines` wines (one row per best offer) and fills these keys itself. Build the rows yourself when you have extra context (`ref`, `group`, `flags`).
 
@@ -36,6 +47,8 @@ python3 ../wineauction-reference/scripts/render.py rows.json report.html \
   --not-found not_found.json \
   --skipped "Skipped 12 by-the-glass, 140 spirits, 10 cocktails."
 ```
+
+`--markup` shows markup over each reference (+N%, green at 0 or below, amber to 100%, red above) instead of discount: the badge columns, the filter, the best-value cards and their text all switch. Use it for restaurant lists.
 
 `--not-found` and `--skipped` are optional. The page has best-value cards, a table with group tabs, a minimum-discount filter, a maximum price, sort, search, a doubtful-reference toggle and the not-found list. It flags an auction price from 1–2 sales and references more than 3× apart by itself, needs no server, and follows light or dark mode. When nothing matched, skip the page. Follow [design-system.md](design-system.md) for any other HTML view.
 

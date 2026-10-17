@@ -1,11 +1,11 @@
 ---
 name: auction-lots
-description: "Check wine auction lots against retail and auction reference prices. Use when the user shares an auction sheet, catalog, lot list or a hammer price (PDF, photo, link or pasted text) and asks whether the estimates or prices are good, names a wine auction or auction house (Acker, Sotheby's, Christie's, Zachys, K&L and others) and asks which lots are below market, ending soon or what a sale's lots sold for, or wants a recurring watch on upcoming sales. Past sales of one named wine belong to wine-info."
+description: "Check wine auction lots, one or hundreds, each of one or many bottles, against retail and auction reference prices. Use when the user shares an auction sheet, catalog, lot list or a hammer price (PDF, photo, link or pasted text) and asks whether the estimates or prices are good, names a wine auction or auction house (Acker, Sotheby's, Christie's, Zachys, K&L and others) and asks which lots are below market, ending soon or what a sale's lots sold for, or wants a recurring watch on upcoming sales. Past sales of one named wine belong to wine-info."
 ---
 
 # Auction lots
 
-The user's own input comes first. When they bring a sheet or lots, evaluate exactly those; look a sale up in WineAuction only when they name one without bringing it.
+A lot often holds several bottles (6, 12, a mixed case) and a sheet can hold hundreds of lots. The user's own input comes first. When they bring a sheet or lots, evaluate exactly those; look a sale up in WineAuction only when they name one without bringing it.
 
 ## A sheet or lots the user brings
 

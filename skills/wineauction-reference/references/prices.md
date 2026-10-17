@@ -27,10 +27,11 @@ The references are market prices, not offers. Never say a wine is in stock or ca
 - On a merchant's own list, the retail discount is exactly 0: the merchant's listing may be the reference itself. Rank by the auction discount instead.
 - A matched row has neither reference: report "no market data", not a discount.
 
-## Units
+## Units and quantities
 
 - `_usd` fields are per 750 ml. Auction prices include the buyer's premium.
-- A case, OWC or 6-pack price covers 12 or 6 bottles. A price for several bottles is divided before comparing.
+- Offers are rarely a single bottle. A case, OWC or 6-pack price covers 12 or 6 bottles, an auction lot covers its `bottles` of `bottle_size_ml`, and a mixed lot covers several wines. Compare per 750 ml, but always show the quantity and the price as quoted next to it: "6 × 750 ml, $5,700 lot ($950 per bottle)".
+- A mixed lot has no per-bottle price. Show its wines (`auction_lot_items[]`) and the lot price; do not quote a discount for it.
 
 ## Links
 

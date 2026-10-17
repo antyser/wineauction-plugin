@@ -1,6 +1,6 @@
 ---
 name: cellar-valuation
-description: "Value a collection of wines the user owns, bottle by bottle and in total, from retail and auction reference prices. Use when the user shares a cellar list, inventory spreadsheet, CellarTracker or Vivino export, or a list of bottles they own and asks what it is worth, for insurance, resale or estate purposes."
+description: "Value a collection of wines the user owns, any number of wines and bottles each, per wine and in total, from retail and auction reference prices. Use when the user shares a cellar list, inventory spreadsheet, CellarTracker or Vivino export, or a list of bottles they own and asks what it is worth, for insurance, resale or estate purposes."
 ---
 
 # Cellar valuation

@@ -1,6 +1,6 @@
 ---
 name: restaurant-wine-list
-description: "Compare the bottles on a restaurant wine list with retail and auction prices to show the markup on each. Use when the user shares a restaurant wine list (photo, PDF, link or pasted text), names a restaurant and asks about its list, asks whether one bottle's price on a restaurant list is fair, or asks which bottle on a list is the best value or least marked up."
+description: "Compare every bottle on a restaurant wine list, from one to hundreds, with retail and auction prices to show the markup on each. Use when the user shares a restaurant wine list (photo, PDF, link or pasted text), names a restaurant and asks about its list, asks whether one bottle's price on a restaurant list is fair, or asks which bottle on a list is the best value or least marked up."
 ---
 
 # Restaurant wine list
@@ -13,7 +13,7 @@ The question is markup: how far each bottle's list price sits above what the sam
    - A list the user brings: parse it with [parse-list.md](../wineauction-reference/references/parse-list.md), `offer_type: restaurant`, keeping sections. Then evaluate it with [evaluate.md](../wineauction-reference/references/evaluate.md).
    - A restaurant named without its list: find its `id` with `list_restaurants` ([fields](../wineauction-reference/references/tools/list_restaurants.md)), then call `list_offers` with `offer_type: restaurant`, `merchant_id`, `serving: bottle` and any preference the user gave (colour, region, maximum price). Sort `discount_vs_retail` so the smallest markups come first. Page with `cursor` and save each page.
 2. Read prices with [prices.md](../wineauction-reference/references/prices.md). Markup is the negative of `discount_vs_retail_pct`.
-3. Present with [report.md](../wineauction-reference/references/report.md), `--method "Markup is the list price over the retail reference, per 750 ml."`.
+3. Present with [report.md](../wineauction-reference/references/report.md), with `--markup` and `--method "Markup is the list price over the retail reference, per 750 ml."`.
 
 ## In chat
 
