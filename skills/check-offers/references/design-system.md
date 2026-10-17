@@ -33,3 +33,5 @@ Type:
 Layout:
 - One column, max width 1180px, radius 8px, 1px borders, no shadows.
 - Order: picks as cards, then one table with the filters above it.
+
+Image handling: the current report template has no wine-image field and stays text-only. For generated cards or custom HTML, use text only by default; show an image only from a real source URL when it loads. Otherwise, remove the image and its space; never show an empty or placeholder frame.

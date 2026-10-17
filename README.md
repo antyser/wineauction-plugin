@@ -9,7 +9,7 @@ Compare presented wine offers with retail and auction market prices, and find wi
   - `check-offers`: use when an offer is presented in a retail promotion, merchant newsletter, restaurant wine list, offer sheet, auction lot, or quoted price. Compare it with retail and auction market prices, with an HTML report for long lists.
   - `find-wine`: use when someone wants information about a wine, producer, vintage, region, or appellation, including market prices, historical auction sales, available offers, and professional reviews when returned by WineAuction.
 
-Version 1.1.1 broadens these request types and lets market, sale-history, and review answers stand on their own without requiring a discount threshold.
+Version 1.1.2 clarifies that HTML offer reports treat wine images as optional and omit empty image slots.
 
 ## Install
 
@@ -58,7 +58,7 @@ After committing the release candidate, build the ZIP from tracked files with:
 python3 scripts/build_release.py
 ```
 
-The default output is `~/Downloads/wineauction-plugin-1.1.1.zip`. To verify a candidate commit and its packaged renderer, run:
+The default output is `~/Downloads/wineauction-plugin-1.1.2.zip`. To verify a candidate commit and its packaged renderer, run:
 
 ```
 scripts/local_ci.sh "$(git rev-parse HEAD)"

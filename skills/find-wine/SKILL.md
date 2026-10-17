@@ -37,6 +37,8 @@ python3 ../check-offers/scripts/render.py rows.json report.html --title "..." --
 | `url`, `wineapp_url`, `ends_at` | the seller's page, the wine's (`wineapp_wine_url`) or offer's (`wineapp_url`) wineauction.ai page, `auction_end_time` |
 | `flags` | doubts |
 
+Follow [the report design system](../check-offers/references/design-system.md) for layout and optional-image handling.
+
 For a market-information request, report the requested references and relevant offers without filtering by discount. For a deal assessment, include the offers that meet the user's threshold or the 20% default, with the price, both references, and link; add totals. Say that a live auction discount is measured at the current or opening bid.
 
 ## Scheduling
