@@ -1,35 +1,35 @@
 {
-  "purpose": "Natural-language routing examples for the two WineAuction skills. These cases are evaluated with the local Claude Code CLI and the plugin loaded from this checkout; they are separate from the OpenAI connector workflow review cases.",
+  "purpose": "Natural-language routing examples: one per WineAuction task skill, plus prompts that should trigger none. These cases are evaluated with the local Claude Code CLI and the plugin loaded from this checkout; they are separate from the OpenAI connector workflow review cases.",
   "positive": [
     {
       "case": "restaurant-wine-list",
-      "prompt": "Could you check this restaurant wine list against retail and auction market prices?",
-      "expected_skill": "check-offers"
+      "prompt": "Here is the wine list from the restaurant I'm at tonight. Which bottles have the smallest markup over retail?",
+      "expected_skill": "restaurant-wine-list"
     },
     {
       "case": "merchant-newsletter-chinese",
       "prompt": "请帮我看看这封酒商促销邮件里的葡萄酒价格，和零售及拍卖市场价格比较一下。",
-      "expected_skill": "check-offers"
+      "expected_skill": "merchant-offer-check"
     },
     {
-      "case": "quoted-price",
-      "prompt": "A shop quoted me $185 for a bottle of 2019 Roulot Meursault Perrières. How does that compare with retail and auction prices?",
-      "expected_skill": "check-offers"
+      "case": "auction-house-lots",
+      "prompt": "Which live Acker lots are at least 20% below the auction median right now?",
+      "expected_skill": "auction-lots"
     },
     {
-      "case": "professional-review",
-      "prompt": "What professional reviews are available for 2019 Roulot Meursault Perrières?",
-      "expected_skill": "find-wine"
+      "case": "wine-value-and-reviews",
+      "prompt": "What does 2019 Roulot Meursault Perrières go for at retail and at auction, and what did critics say about it?",
+      "expected_skill": "wine-value"
     },
     {
-      "case": "historical-auction-sales",
-      "prompt": "Show me recent historical auction sales for Château Lafite Rothschild 2010, including sale dates and prices.",
-      "expected_skill": "find-wine"
+      "case": "cellar-list-chinese",
+      "prompt": "这是我酒窖里的酒的清单，帮我估一下现在总共值多少钱。",
+      "expected_skill": "cellar-valuation"
     },
     {
-      "case": "market-price-and-offers-chinese",
-      "prompt": "我想了解 Chablis 的零售和拍卖市场价格、历史成交记录，以及目前有哪些在售报价。",
-      "expected_skill": "find-wine"
+      "case": "where-to-buy",
+      "prompt": "Where can I find 2010 Château Lafite Rothschild right now, and who has the lowest price?",
+      "expected_skill": "where-to-buy"
     }
   ],
   "negative": [

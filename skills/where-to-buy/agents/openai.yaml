@@ -1,0 +1,11 @@
+interface:
+  display_name: "Where to Buy"
+  short_description: "Current offers for a wine, by price"
+  default_prompt: "Where can I find 2010 Château Lafite Rothschild right now?"
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "wineauction"
+      description: "WineAuction wine catalog, offers and price references"
+      transport: "streamable_http"
+      url: "https://wineauction.ai/api/mcp"

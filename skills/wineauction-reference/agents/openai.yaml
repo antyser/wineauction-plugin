@@ -1,0 +1,5 @@
+interface:
+  display_name: "WineAuction Reference"
+  short_description: "Shared tool and price reference"
+policy:
+  allow_implicit_invocation: false

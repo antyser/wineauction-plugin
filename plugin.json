@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "wineauction",
-  "version": "1.1.2",
-  "description": "Compare presented wine offers with market prices, and find wine prices, auction sales, available offers and reviews.",
+  "version": "1.2.0",
+  "description": "Wine price research with retail and auction market references: restaurant lists, merchant offers, auction lots, wine values, cellar valuations and current offers.",
   "author": {
     "name": "LemonCube LLC",
     "url": "https://wineauction.ai"
@@ -10,16 +10,22 @@
   "homepage": "https://wineauction.ai",
   "repository": "https://github.com/antyser/wineauction-plugin",
   "license": "MIT",
-  "keywords": ["wine", "auction", "pricing"],
+  "keywords": [
+    "wine",
+    "auction",
+    "pricing"
+  ],
   "extensions": {
     "com.openai": {
       "interface": {
         "displayName": "WineAuction",
         "shortDescription": "Wine offers, prices, reviews",
-        "longDescription": "Check a presented wine offer from a promotion, newsletter, restaurant list, offer sheet, auction lot or quoted price against retail and auction market references. Find retail and auction prices, current offers, closed auction sales and available professional reviews for wines, producers, vintages and regions. Results use returned WineAuction data and link to seller pages. The connector is research-only: it cannot bid, buy, list, message sellers or move money. A WineAuction account is required; sign in with OAuth.",
+        "longDescription": "Wine market price research across retail and auction data. Check a restaurant wine list's markup, judge a merchant's quoted prices, scan auction lots against market references, look up a wine's retail and auction value, past sales and available critic reviews, value a cellar list, and see where a wine is currently offered. Results use returned WineAuction data and link to seller pages. The connector is research-only: it cannot bid, buy, list, message sellers or move money. A WineAuction account is required; sign in with OAuth.",
         "developerName": "LemonCube LLC",
         "category": "Data & Analytics",
-        "capabilities": ["Read"],
+        "capabilities": [
+          "Read"
+        ],
         "websiteURL": "https://wineauction.ai",
         "supportURL": "https://wineauction.ai/contact",
         "privacyPolicyURL": "https://wineauction.ai/privacy",
@@ -36,31 +42,31 @@
         "test_cases": {
           "positive": [
             {
-              "description": "Check offers · discover live auctions, then scan named-sale and house lots",
+              "description": "Auction lots · discover live auctions, then scan named-sale and house lots",
               "prompt": "List up to three live Acker wine auctions ending soonest. For the soonest sale, show up to 25 live lots from that sale, then show up to 25 live Acker-house lots at least 20% below retail. Label the sale results and house results separately and link each lot.",
               "tools_triggered": "list_auctions, list_offers",
               "expected_behavior": "Calls list_auctions with status live and house acker, then uses the selected sale slug and the house scope in list_offers. Returns current lots, price and reference discounts, and seller links; it does not imply that a bid was placed."
             },
             {
-              "description": "Check offers · dynamic directory discovery for retailers and restaurants, then list their wines",
+              "description": "Merchant offer check · dynamic directory discovery for retailers and restaurants, then list their wines",
               "prompt": "Use WineAuction only. List up to five retail stores and up to five restaurants with current offers. Choose one returned retailer and one returned restaurant with offers, then show up to five current bottle offers from each. Keep the sellers separate. If a source is unavailable or access is restricted, say so explicitly instead of substituting external web listings.",
               "tools_triggered": "list_retail_stores, list_restaurants, list_offers",
               "expected_behavior": "Uses list_retail_stores and list_restaurants to resolve merchant IDs, then calls list_offers with the correct retail or restaurant scope. Shows only offers returned by WineAuction, keeps the two sellers distinct, and preserves no-data or plan-required states without inventing offers or substituting web listings."
             },
             {
-              "description": "Find wine · filter a producer and region, then apply an offer price limit",
+              "description": "Where to buy · filter a producer and region, then apply an offer price limit",
               "prompt": "Find white Burgundy from producer Roulot, then show its current offers priced at no more than $600 per 750 ml. Include the market references and seller links.",
               "tools_triggered": "search_wines, list_offers",
               "expected_behavior": "Uses search_wines for producer, region and color filters, then list_offers for matched wine IDs with max_price_usd 600. Explains when no offers or reference data are available."
             },
             {
-              "description": "Check offers · evaluate a six-bottle Lafite 2010 quote",
+              "description": "Merchant offer check · evaluate a six-bottle Lafite 2010 quote",
               "prompt": "Is $5,700 for six 750 ml bottles of Château Lafite Rothschild 2010 a good price?",
               "tools_triggered": "evaluate_offers",
               "expected_behavior": "Evaluates one row with quantity 6, format 750 ml and a total quoted price of $5,700, showing $950 per bottle. Uses returned retail and auction references when present and reports a missing reference as unavailable rather than inventing one."
             },
             {
-              "description": "Check offers · batch a 30-row newsletter into one flagged HTML report",
+              "description": "Merchant offer check · batch a 30-row newsletter into one flagged HTML report",
               "prompt": "Evaluate every row in the attached synthetic newsletter fixture. The quoted prices are test inputs, not actual merchant offers. Call evaluate_offers in batches of 25 and 5, use only tool-returned market references, and produce one HTML report with match flags and every not-found row. Do not estimate or invent reference prices.",
               "tools_triggered": "evaluate_offers",
               "expected_behavior": "Evaluates all 30 supplied-price rows using exactly two calls (25 rows and 5 rows), reports unmatched wines, carries row-quality flags into one self-contained HTML report, and derives all market references from tool results.",
@@ -89,8 +95,10 @@
         "commerce_description": "Research data and citations only. The plugin cannot bid, buy, check out or initiate a transaction. Links go to the seller's own page."
       },
       "publication": {
-        "countries": ["US"],
-        "release_notes": "Version 1.1.2 clarifies that HTML offer reports must treat wine images as optional and omit empty image slots."
+        "countries": [
+          "US"
+        ],
+        "release_notes": "Version 1.2.0 reorganises the skills by use case (restaurant wine list, merchant offer check, auction lots, wine value, cellar valuation, where to buy) over one shared reference skill. The tools are unchanged."
       }
     }
   }

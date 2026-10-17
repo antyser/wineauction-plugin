@@ -1,0 +1,11 @@
+interface:
+  display_name: "Wine Value"
+  short_description: "Wine prices, past sales and reviews"
+  default_prompt: "What does 2019 Roulot Meursault Perrières sell for at retail and auction?"
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "wineauction"
+      description: "WineAuction wine catalog, offers and price references"
+      transport: "streamable_http"
+      url: "https://wineauction.ai/api/mcp"

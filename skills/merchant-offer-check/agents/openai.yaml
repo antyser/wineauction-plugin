@@ -1,0 +1,11 @@
+interface:
+  display_name: "Merchant Offer Check"
+  short_description: "Judge a merchant's quoted wine prices"
+  default_prompt: "Check this merchant email against retail and auction prices."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "wineauction"
+      description: "WineAuction wine catalog, offers and price references"
+      transport: "streamable_http"
+      url: "https://wineauction.ai/api/mcp"

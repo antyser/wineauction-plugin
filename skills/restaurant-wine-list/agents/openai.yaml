@@ -1,0 +1,11 @@
+interface:
+  display_name: "Restaurant Wine List"
+  short_description: "Markup on each bottle of a wine list"
+  default_prompt: "Which bottles on this wine list have the smallest markup over retail?"
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "wineauction"
+      description: "WineAuction wine catalog, offers and price references"
+      transport: "streamable_http"
+      url: "https://wineauction.ai/api/mcp"
