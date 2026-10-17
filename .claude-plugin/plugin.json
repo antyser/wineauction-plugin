@@ -2,7 +2,7 @@
   "name": "wineauction",
   "displayName": "WineAuction",
   "version": "1.2.0",
-  "description": "Wine price research with retail and auction references: restaurant lists, merchant offers, auction lots, wine values, cellar valuations and current offers, using WineAuction data.",
+  "description": "Wine price research with retail and auction references: restaurant lists, merchant offers, auction sheets and lots, wine information with reviews and current offers, and cellar valuations, using WineAuction data.",
   "author": { "name": "LemonCube LLC", "url": "https://wineauction.ai" },
   "homepage": "https://wineauction.ai",
   "repository": "https://github.com/antyser/wineauction-plugin",

@@ -37,9 +37,8 @@ TASK_SKILLS = {
     "restaurant-wine-list",
     "merchant-offer-check",
     "auction-lots",
-    "wine-value",
+    "wine-info",
     "cellar-valuation",
-    "where-to-buy",
 }
 ROW = re.compile(r"^.+ — \d+ ml × \d+ — \$[\d,]+(?:\.\d{2})?$")
 
@@ -179,7 +178,7 @@ def check_trigger_cases(files: dict[str, bytes]) -> None:
     positive = cases.get("positive", [])
     negative = cases.get("negative", [])
     require(len(positive) == 6 and len(negative) == 3, "trigger matrix must contain six positive and three negative cases")
-    require({case.get("expected_skill") for case in positive} == TASK_SKILLS, "trigger matrix must cover every task skill once")
+    require({case.get("expected_skill") for case in positive} == TASK_SKILLS, "trigger matrix must cover every task skill")
     require(all(case.get("prompt") and case.get("expected_skill") in TASK_SKILLS for case in positive), "positive trigger cases need prompts and expected skills")
     require(all(case.get("prompt") and case.get("expected_skill") is None for case in negative), "negative trigger cases need prompts and a null expected skill")
 
@@ -204,12 +203,10 @@ def check_archive(archive_path: Path, revision: str) -> None:
         "skills/merchant-offer-check/agents/openai.yaml",
         "skills/auction-lots/SKILL.md",
         "skills/auction-lots/agents/openai.yaml",
-        "skills/wine-value/SKILL.md",
-        "skills/wine-value/agents/openai.yaml",
+        "skills/wine-info/SKILL.md",
+        "skills/wine-info/agents/openai.yaml",
         "skills/cellar-valuation/SKILL.md",
         "skills/cellar-valuation/agents/openai.yaml",
-        "skills/where-to-buy/SKILL.md",
-        "skills/where-to-buy/agents/openai.yaml",
         "skills/wineauction-reference/SKILL.md",
         "skills/wineauction-reference/agents/openai.yaml",
         "skills/wineauction-reference/assets/report.html",

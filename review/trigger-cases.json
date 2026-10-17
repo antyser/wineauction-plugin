@@ -1,5 +1,5 @@
 {
-  "purpose": "Natural-language routing examples: one per WineAuction task skill, plus prompts that should trigger none. These cases are evaluated with the local Claude Code CLI and the plugin loaded from this checkout; they are separate from the OpenAI connector workflow review cases.",
+  "purpose": "Natural-language routing examples: at least one per WineAuction task skill, plus prompts that should trigger none. These cases are evaluated with the local Claude Code CLI and the plugin loaded from this checkout; they are separate from the OpenAI connector workflow review cases.",
   "positive": [
     {
       "case": "restaurant-wine-list",
@@ -17,9 +17,9 @@
       "expected_skill": "auction-lots"
     },
     {
-      "case": "wine-value-and-reviews",
+      "case": "wine-info-prices-and-reviews",
       "prompt": "What does 2019 Roulot Meursault Perrières go for at retail and at auction, and what did critics say about it?",
-      "expected_skill": "wine-value"
+      "expected_skill": "wine-info"
     },
     {
       "case": "cellar-list-chinese",
@@ -27,9 +27,9 @@
       "expected_skill": "cellar-valuation"
     },
     {
-      "case": "where-to-buy",
+      "case": "wine-info-current-offers",
       "prompt": "Where can I find 2010 Château Lafite Rothschild right now, and who has the lowest price?",
-      "expected_skill": "where-to-buy"
+      "expected_skill": "wine-info"
     }
   ],
   "negative": [

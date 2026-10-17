@@ -2,7 +2,7 @@
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "wineauction",
   "version": "1.2.0",
-  "description": "Wine price research with retail and auction market references: restaurant lists, merchant offers, auction lots, wine values, cellar valuations and current offers.",
+  "description": "Wine price research with retail and auction market references: restaurant lists, merchant offers, auction sheets and lots, wine information with reviews and current offers, and cellar valuations.",
   "author": {
     "name": "LemonCube LLC",
     "url": "https://wineauction.ai"
@@ -16,7 +16,7 @@
       "interface": {
         "displayName": "WineAuction",
         "shortDescription": "Wine offers, prices, reviews",
-        "longDescription": "Wine market price research across retail and auction data. Check a restaurant wine list's markup, judge a merchant's quoted prices, scan auction lots against market references, look up a wine's retail and auction value, past sales and available critic reviews, value a cellar list, and see where a wine is currently offered. Results use returned WineAuction data and link to seller pages. The connector is research-only: it cannot bid, buy, list, message sellers or move money. A WineAuction account is required; sign in with OAuth.",
+        "longDescription": "Wine market price research across retail and auction data. Check a restaurant wine list's markup, judge a merchant's quoted prices, check an auction sheet or a sale's lots against market references, look up a wine's retail and auction prices, past sales, critic reviews and current offers, and value a cellar list. Results use returned WineAuction data and link to seller pages. The connector is research-only: it cannot bid, buy, list, message sellers or move money. A WineAuction account is required; sign in with OAuth.",
         "developerName": "LemonCube LLC",
         "category": "Data & Analytics",
         "capabilities": ["Read"],
@@ -48,7 +48,7 @@
               "expected_behavior": "Uses list_retail_stores and list_restaurants to resolve merchant IDs, then calls list_offers with the correct retail or restaurant scope. Shows only offers returned by WineAuction, keeps the two sellers distinct, and preserves no-data or plan-required states without inventing offers or substituting web listings."
             },
             {
-              "description": "Where to buy · filter a producer and region, then apply an offer price limit",
+              "description": "Wine info · filter a producer and region, then apply an offer price limit",
               "prompt": "Find white Burgundy from producer Roulot, then show its current offers priced at no more than $600 per 750 ml. Include the market references and seller links.",
               "tools_triggered": "search_wines, list_offers",
               "expected_behavior": "Uses search_wines for producer, region and color filters, then list_offers for matched wine IDs with max_price_usd 600. Explains when no offers or reference data are available."
@@ -90,7 +90,7 @@
       },
       "publication": {
         "countries": ["US"],
-        "release_notes": "Version 1.2.0 reorganises the skills by use case (restaurant wine list, merchant offer check, auction lots, wine value, cellar valuation, where to buy) over one shared reference skill. The tools are unchanged."
+        "release_notes": "Version 1.2.0 reorganises the skills by use case (restaurant wine list, merchant offer check, auction lots, wine info, cellar valuation) over one shared reference skill. The tools are unchanged."
       }
     }
   }

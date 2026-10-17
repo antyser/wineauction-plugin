@@ -6,12 +6,11 @@ Compare presented wine offers with retail and auction market prices, and find wi
 
 - **WineAuction connector** (`https://wineauction.ai/api/mcp`): you sign in with your WineAuction account the first time you use it.
 - **Skills**, one per use case:
-  - `restaurant-wine-list`: a restaurant wine list (photo, PDF, link or text) or a named restaurant. Shows the markup of each bottle over retail and auction prices.
+  - `restaurant-wine-list`: a restaurant wine list you bring (photo, PDF, link or text), or a named restaurant. Shows the markup of each bottle over retail and auction prices.
   - `merchant-offer-check`: a merchant email, newsletter, futures offer, price list or a single quoted price. Judges each price against the market.
-  - `auction-lots`: a named auction or auction house. Lots below market, lots ending soon, past results, and a recurring watch.
-  - `wine-value`: what a wine, producer, vintage or region sells for at retail and auction, past sales and available critic reviews.
+  - `auction-lots`: an auction sheet or lots you bring, or a named auction or house. Lots below market, lots ending soon, sale results, and a recurring watch.
+  - `wine-info`: a wine, producer, vintage or region: retail and auction prices, past sales, critic reviews and where it is currently offered.
   - `cellar-valuation`: a list of bottles you own. Value per bottle and in total, at auction and at retail.
-  - `where-to-buy`: where a specific wine is currently offered, cheapest first.
   - `wineauction-reference`: shared tool fields, price-reading rules, list parsing and the HTML report renderer that the skills above link to.
 
 Version 1.2.0 reorganises the skills by use case. The tools are unchanged.

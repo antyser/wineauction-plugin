@@ -9,7 +9,7 @@
     {
       "name": "wineauction",
       "source": "./",
-      "description": "Wine price research with WineAuction retail and auction data: wine lists, merchant offers, auction lots, wine values, cellars and current offers.",
+      "description": "Wine price research with WineAuction retail and auction data: wine lists, merchant offers, auction lots, wine information and cellars.",
       "category": "research",
       "tags": ["wine", "auction", "pricing"]
     }

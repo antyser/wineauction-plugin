@@ -1,7 +1,7 @@
 interface:
-  display_name: "Wine Value"
-  short_description: "Wine prices, past sales and reviews"
-  default_prompt: "What does 2019 Roulot Meursault Perrières sell for at retail and auction?"
+  display_name: "Wine Info"
+  short_description: "Prices, past sales, reviews, offers"
+  default_prompt: "What does 2019 Roulot Meursault Perrières go for, and what did critics say?"
 dependencies:
   tools:
     - type: "mcp"
