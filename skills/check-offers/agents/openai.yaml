@@ -1,6 +1,6 @@
 interface:
   display_name: "Check Offers"
-  short_description: "Find the offers worth attention in a list or auction"
+  short_description: "Compare wine offers with retail and auction prices"
   default_prompt: "Check this wine list or merchant email and show me the best values."
 dependencies:
   tools:

@@ -1,8 +1,8 @@
 {
   "name": "wineauction",
   "displayName": "WineAuction",
-  "version": "1.1.0",
-  "description": "Check offers you already have against retail and auction references, and find the best current offers for wines, producers or regions, using WineAuction data.",
+  "version": "1.1.1",
+  "description": "Compare presented wine offers with market prices, and find wine prices, auction sales, available offers and reviews using WineAuction data.",
   "author": { "name": "LemonCube LLC", "url": "https://wineauction.ai" },
   "homepage": "https://wineauction.ai",
   "repository": "https://github.com/antyser/wineauction-plugin",

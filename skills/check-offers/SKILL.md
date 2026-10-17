@@ -1,11 +1,11 @@
 ---
 name: check-offers
-description: The user already has offers and wants the ones worth attention. Takes a wine list, newsletter, price list or pasted text (PDF, photo, URL) and judges every row, or scans a named auction, house, store or restaurant list for deals. Use for "check this wine list", "is this newsletter any good", "is $85 fair for this wine", "best deals in the Acker sale".
+description: "Use when a wine offer is presented: a retail promotion letter, merchant newsletter, restaurant wine list, wine offer sheet, auction lot, or quoted price. Analyze the offers against retail and auction market prices."
 ---
 
 # Check offers
 
-The user already has offers. Find the ones worth attention. The tools come from the WineAuction connector. If the user has no offers and wants them found for particular wines, use the find-wine skill instead.
+Use this skill when the user provides an offer or asks you to scan a named auction, store, or restaurant list. Assess those offers against retail and auction references. For information about a wine without an offer to assess—including market prices, historical sales, or reviews—use the find-wine skill. When a request includes both a supplied offer and a review question, assess the offer here and use `search_wines` for any requested review data.
 
 Pick the source:
 
@@ -150,6 +150,6 @@ Never claim a wine is in stock or can be bought at the reference price. The refe
 
 - `_usd` fields are US dollars per 750 ml; auction prices include the buyer's premium.
 - Discount: positive means cheaper than the reference. Always say which reference you quote. On a restaurant list both are usually negative; the negative of `discount_vs_retail_pct` is the markup.
-- `retail` and `auction` are the two references; either is null when there is no data. `auction` is this exact vintage only, so null means it never sold.
+- `retail` and `auction` are the two references; either is null when no reference data is available. A null auction reference does not show whether the wine has sold; use closed auction lots to answer sale-history questions.
 - Link a wine with `wineapp_wine_url` and an offer with `wineapp_url`, and an offer's own page with `url`.
 - Field meanings for every tool are in `references/`: [evaluate_offers](references/evaluate_offers.md), [list_offers](references/list_offers.md), [list_auctions](references/list_auctions.md), [list_retail_stores](references/list_retail_stores.md), [list_restaurants](references/list_restaurants.md).

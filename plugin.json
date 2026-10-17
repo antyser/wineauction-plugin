@@ -1,8 +1,8 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "wineauction",
-  "version": "1.1.0",
-  "description": "Check supplied wine offers against market references, find current auction and merchant deals, and discover wines by producer or region.",
+  "version": "1.1.1",
+  "description": "Compare presented wine offers with market prices, and find wine prices, auction sales, available offers and reviews.",
   "author": {
     "name": "LemonCube LLC",
     "url": "https://wineauction.ai"
@@ -15,8 +15,8 @@
     "com.openai": {
       "interface": {
         "displayName": "WineAuction",
-        "shortDescription": "Wine prices and live offers",
-        "longDescription": "Check wine prices from a merchant email, price list or restaurant list against retail and auction references. Find current offers for named wines, producers or regions, and discover live or closed auction sales and their lots. Results link to seller pages and WineAuction. The connector is research-only: it cannot bid, buy, list, message sellers or move money. A WineAuction account is required; sign in with OAuth.",
+        "shortDescription": "Wine offers, prices, reviews",
+        "longDescription": "Check a presented wine offer from a promotion, newsletter, restaurant list, offer sheet, auction lot or quoted price against retail and auction market references. Find retail and auction prices, current offers, closed auction sales and available professional reviews for wines, producers, vintages and regions. Results use returned WineAuction data and link to seller pages. The connector is research-only: it cannot bid, buy, list, message sellers or move money. A WineAuction account is required; sign in with OAuth.",
         "developerName": "LemonCube LLC",
         "category": "Data & Analytics",
         "capabilities": ["Read"],
@@ -26,7 +26,7 @@
         "termsOfServiceURL": "https://wineauction.ai/terms",
         "defaultPrompt": [
           "Check this wine newsletter for value.",
-          "Find Roulot white Burgundy offers under $600.",
+          "What prices, reviews and recent auction sales are available for Roulot wines?",
           "List live Acker auctions ending soonest."
         ],
         "composerIcon": "./assets/logo.png",
@@ -90,7 +90,7 @@
       },
       "publication": {
         "countries": ["US"],
-        "release_notes": "Version 1.1.0 improves live versus closed auction selection, adds OpenAI review metadata and test cases, and includes a reproducible portable package and renderer verification."
+        "release_notes": "Version 1.1.1 broadens wine-question routing and supports standalone market-price, historical-sale and professional-review requests without requiring a deal threshold."
       }
     }
   }
