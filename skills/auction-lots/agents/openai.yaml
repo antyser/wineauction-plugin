@@ -1,7 +1,7 @@
 interface:
-  display_name: "Find Wine"
-  short_description: "Wine prices, past sales, offers and reviews"
-  default_prompt: "What is white Burgundy from Roulot going for right now?"
+  display_name: "Auction Lots"
+  short_description: "Auction lots against market prices"
+  default_prompt: "Which live Acker lots are at least 20% below retail?"
 dependencies:
   tools:
     - type: "mcp"

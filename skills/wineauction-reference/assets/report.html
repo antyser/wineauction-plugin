@@ -15,6 +15,7 @@
   --ok-bg: rgba(111,175,79,.12); --ok-fg: #4d8a35; --ok-bd: rgba(111,175,79,.3);
   --bad-bg: rgba(196,74,58,.12); --bad-fg: #a03020; --bad-bd: rgba(196,74,58,.3);
   --warn-bg: #fbf0e8; --warn-fg: #9a4a1b;
+  --mid-bg: rgba(214,150,40,.16); --mid-fg: #8a5a0c; --mid-bd: rgba(214,150,40,.4);
   --font-sans: 'Geist', ui-sans-serif, system-ui, -apple-system, sans-serif;
   --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-mono: 'Geist Mono', ui-monospace, Menlo, monospace;
@@ -27,7 +28,8 @@
   --good-bg: rgba(111,175,79,.15); --good-fg: #8fd06e; --good-bd: rgba(111,175,79,.3);
   --ok-bg: rgba(111,175,79,.1); --ok-fg: #7dc05a; --ok-bd: rgba(111,175,79,.25);
   --bad-bg: rgba(196,74,58,.15); --bad-fg: #e06858; --bad-bd: rgba(196,74,58,.3);
-  --warn-bg: oklch(0.275 0.03 50); --warn-fg: #e8a070; color-scheme: dark; } }
+  --warn-bg: oklch(0.275 0.03 50); --warn-fg: #e8a070;
+  --mid-bg: rgba(214,150,40,.16); --mid-fg: #e8b85a; --mid-bd: rgba(214,150,40,.35); color-scheme: dark; } }
 :root[data-theme="dark"] {
   --background: oklch(0.14 0.012 28); --foreground: oklch(0.96 0.008 75); --card: oklch(0.2 0.012 28);
   --primary: oklch(0.7 0.13 32); --secondary: oklch(0.275 0.012 28); --muted: oklch(0.275 0.012 28); --muted-fg: oklch(0.698 0.008 32);
@@ -35,7 +37,8 @@
   --good-bg: rgba(111,175,79,.15); --good-fg: #8fd06e; --good-bd: rgba(111,175,79,.3);
   --ok-bg: rgba(111,175,79,.1); --ok-fg: #7dc05a; --ok-bd: rgba(111,175,79,.25);
   --bad-bg: rgba(196,74,58,.15); --bad-fg: #e06858; --bad-bd: rgba(196,74,58,.3);
-  --warn-bg: oklch(0.275 0.03 50); --warn-fg: #e8a070; color-scheme: dark; }
+  --warn-bg: oklch(0.275 0.03 50); --warn-fg: #e8a070;
+  --mid-bg: rgba(214,150,40,.16); --mid-fg: #e8b85a; --mid-bd: rgba(214,150,40,.35); color-scheme: dark; }
 body { background: var(--background); color: var(--foreground); font-family: var(--font-sans); font-size: 14px; line-height: 1.5; }
 .wrap { max-width: 1180px; margin: 0 auto; padding-block: 32px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 28px; }
 h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(30px, 5vw, 42px); line-height: 1.05; margin: 0; text-wrap: balance; }
@@ -63,6 +66,7 @@ h2 { font-family: var(--font-display); font-weight: 600; font-size: 24px; margin
 .b { display: inline-flex; align-items: center; height: 20px; padding: 0 6px; border-radius: 6px; font-size: 11px; font-weight: 500; border: 1px solid var(--border); background: var(--muted); color: var(--muted-fg); white-space: nowrap; font-variant-numeric: tabular-nums; }
 .b.g3 { background: var(--good-bg); color: var(--good-fg); border-color: var(--good-bd); }
 .b.g2 { background: var(--ok-bg); color: var(--ok-fg); border-color: var(--ok-bd); }
+.b.am { background: var(--mid-bg); color: var(--mid-fg); border-color: var(--mid-bd); }
 .b.r { background: var(--bad-bg); color: var(--bad-fg); border-color: var(--bad-bd); }
 .b.flag { background: var(--warn-bg); color: var(--warn-fg); border-color: transparent; }
 .controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
@@ -110,7 +114,7 @@ input[type="number"] { width: 96px; }
 
   <section id="picksSection">
     <h2>Best values</h2>
-    <p class="method">The rows furthest below, or closest to, their market references. Rows with a doubtful reference are left out.</p>
+    <p class="method" id="picksMethod"></p>
     <div class="picks" id="picks"></div>
   </section>
 
@@ -118,8 +122,8 @@ input[type="number"] { width: 96px; }
     <h2>All wines</h2>
     <div class="controls">
       <div class="seg" role="group" aria-label="Group" id="groups"></div>
-      <label class="ctl">Min discount
-        <select id="minDisc"><option value="">Any</option><option value="0">0%</option><option value="10">10%</option><option value="20">20%</option><option value="30">30%</option><option value="50">50%</option></select>
+      <label class="ctl"><span id="minLabel">Min discount</span>
+        <select id="minDisc"></select>
       </label>
       <label class="ctl">Max $/btl <input type="number" id="maxPrice" min="0" step="10" inputmode="numeric"></label>
       <label class="ctl">Sort
@@ -132,7 +136,7 @@ input[type="number"] { width: 96px; }
     <div class="tablebox">
       <table>
         <thead><tr>
-          <th>Ref</th><th>Wine</th><th class="n">Price / btl</th><th class="n">Retail</th><th class="n">Auction</th><th>vs Retail</th><th>vs Auction</th><th>Notes</th>
+          <th>Ref</th><th>Wine</th><th class="n">Price / btl</th><th class="n">Retail</th><th class="n">Auction</th><th id="thRetail">vs Retail</th><th id="thAuction">vs Auction</th><th>Notes</th>
         </tr></thead>
         <tbody id="tb"></tbody>
       </table>
@@ -154,6 +158,8 @@ input[type="number"] { width: 96px; }
 const DATA = __DATA__;
 const NOT_FOUND = __NOT_FOUND__;
 const SKIPPED = __SKIPPED__;
+const MODE = __MARKUP__ ? 'markup' : 'discount';
+const MARKUP = MODE === 'markup';
 const usd = n => n == null ? '–' : '$' + Math.round(n).toLocaleString('en-US');
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const rows = DATA.map(r => {
@@ -163,12 +169,46 @@ const rows = DATA.map(r => {
   const ds = [r.discount_vs_retail_pct, r.discount_vs_auction_pct].filter(x => x != null);
   return {...r, flags, doubt: flags.length > 0, best: r.discount_vs_retail_pct ?? r.discount_vs_auction_pct ?? null, both: ds.length === 2 ? Math.min(...ds) : null, text: (r.name + ' ' + (r.vintage || '') + ' ' + (r.seller || '')).toLowerCase()};
 });
-function size(r){ if (!r.bottles) return ''; const s = r.size_ml && r.size_ml !== 750 ? (r.size_ml === 1500 ? ' magnum' : ' ' + r.size_ml + 'ml') : ''; return r.bottles + ' bottle' + (r.bottles > 1 ? 's' : '') + s; }
-function badge(p){ if (p == null) return '<span class="b">–</span>'; const c = p >= 30 ? 'g3' : p >= 10 ? 'g2' : p <= -10 ? 'r' : ''; return `<span class="b ${c}">${p >= 0 ? p + '% below' : Math.abs(p) + '% above'}</span>`; }
+const SYMBOLS = {USD: '$', GBP: '£', EUR: '€'};
+function money(n, cur){ if (n == null) return ''; const c = cur || 'USD'; return (SYMBOLS[c] || c + ' ') + Number(n).toLocaleString('en-US', {maximumFractionDigits: 2}); }
+function size(r){
+  const ml = r.size_ml || 750, cur = r.quoted_currency || 'USD';
+  if (!(r.bottles > 1 || ml !== 750 || cur !== 'USD')) return r.bottles ? '1 bottle' : '';
+  const qty = (r.bottles || 1) + ' × ' + ml + ' ml';
+  if (r.quoted_price == null) return qty;
+  return qty + ' · ' + money(r.quoted_price, cur) + (r.bottles > 1 ? (/^lot/i.test(r.ref || '') ? ' lot' : ' total') : '');
+}
+function premium(r){ return r.premium_pct != null ? '+' + r.premium_pct + '% premium' : ''; }
+function estimate(r){ if (r.estimate_low == null && r.estimate_high == null) return ''; const cur = r.quoted_currency || 'USD'; if (r.estimate_low == null || r.estimate_high == null) return 'Est. ' + money(r.estimate_low ?? r.estimate_high, cur); return 'Est. ' + money(r.estimate_low, cur) + '–' + Number(r.estimate_high).toLocaleString('en-US', {maximumFractionDigits: 2}); }
+function sold(r){ if (!r.sold_at) return ''; const d = new Date(r.sold_at); return isNaN(d) ? '' : 'sold ' + d.toLocaleDateString('en-US', {month: 'short', day: 'numeric', timeZone: 'UTC'}); }
+function meta(r){ return [r.seller, size(r), premium(r), estimate(r), sold(r) || ends(r)].filter(Boolean); }
+function mixed(r){ return Array.isArray(r.mixed_items) && r.mixed_items.length > 0; }
+function mixedList(r){ return mixed(r) ? r.mixed_items.map(i => [i.vintage, i.name].filter(Boolean).join(' ') + (i.bottles > 1 ? ' ×' + i.bottles : '') + (i.bottle_size_ml && i.bottle_size_ml !== 750 ? ' (' + i.bottle_size_ml + ' ml)' : '')).join('; ') : ''; }
+function tags(r){
+  const t = [];
+  if (['sold', 'unsold', 'withdrawn'].includes(r.status)) t.push(r.status[0].toUpperCase() + r.status.slice(1));
+  if (mixed(r)) t.push('Mixed lot');
+  if (r.serving && String(r.serving).toLowerCase() !== 'bottle') t.push(String(r.serving)[0].toUpperCase() + String(r.serving).slice(1).toLowerCase());
+  if (r.pre_arrival === true) t.push('Pre-arrival');
+  if (r.in_stock === false) t.push('Out of stock');
+  return t;
+}
+function badge(p){
+  if (p == null) return '<span class="b">–</span>';
+  if (MARKUP) { const m = -p; return `<span class="b ${m <= 0 ? 'g3' : m <= 100 ? 'am' : 'r'}">${m > 0 ? '+' : ''}${m}%</span>`; }
+  const c = p >= 30 ? 'g3' : p >= 10 ? 'g2' : p <= -10 ? 'r' : ''; return `<span class="b ${c}">${p >= 0 ? p + '% below' : Math.abs(p) + '% above'}</span>`;
+}
 function ends(r){ if (!r.ends_at) return ''; const d = new Date(r.ends_at); return 'ends ' + d.toLocaleString(undefined, {month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'}); }
 function link(r, label){ const u = r.url || r.wineapp_url; return u ? `<a href="${esc(u)}" target="_blank" rel="noopener">${label}</a>` : label; }
 function title(r){ return esc((r.vintage ? r.vintage + ' ' : '') + r.name); }
 
+document.getElementById('picksMethod').textContent = MARKUP
+  ? 'The rows with the smallest markup over their market references. Rows with a doubtful reference are left out.'
+  : 'The rows furthest below, or closest to, their market references. Rows with a doubtful reference are left out.';
+document.getElementById('minLabel').textContent = MARKUP ? 'Max markup' : 'Min discount';
+document.getElementById('thRetail').textContent = MARKUP ? 'Markup vs retail' : 'vs Retail';
+document.getElementById('thAuction').textContent = MARKUP ? 'Markup vs auction' : 'vs Auction';
+document.getElementById('minDisc').innerHTML = '<option value="">Any</option>' + (MARKUP ? [0, 50, 100, 200, 300] : [0, 10, 20, 30, 50]).map(v => `<option value="${v}">${v}%</option>`).join('');
 document.getElementById('endsOpt').hidden = !rows.some(r => r.ends_at);
 const picks = rows.filter(r => r.best != null && !r.doubt).sort((a, b) => b.best - a.best).slice(0, 12);
 document.getElementById('notFoundSection').hidden = NOT_FOUND.length === 0 && !SKIPPED;
@@ -177,9 +217,10 @@ document.getElementById('notFound').innerHTML = NOT_FOUND.map(n => `<li>${esc(n.
 document.getElementById('picksSection').hidden = picks.length === 0;
 document.getElementById('picks').innerHTML = picks.map(r => `<div class="pick">
   ${link(r, `<span class="nm">${title(r)}</span>`)}
-  <div class="meta">${esc([r.seller, r.ref, size(r), ends(r)].filter(Boolean).join(' · '))}</div>
-  <div class="nums"><div><small>Price / btl</small>${usd(r.price_usd)}</div><div><small>Retail</small>${usd(r.retail_usd)}</div><div><small>Auction${r.auction_sales ? ' (' + r.auction_sales + ')' : ''}</small>${usd(r.auction_usd)}</div></div>
-  <div class="badges">${badge(r.discount_vs_retail_pct)} ${badge(r.discount_vs_auction_pct)}</div>
+  <div class="meta">${esc([r.ref, ...meta(r)].filter(Boolean).join(' · '))}</div>
+  ${mixed(r) ? `<div class="meta">${esc(mixedList(r))}</div>` : ''}
+  <div class="nums"><div><small>${esc(r.price_label || 'Price / btl')}</small>${usd(r.price_usd)}</div><div><small>Retail</small>${usd(r.retail_usd)}</div><div><small>Auction${r.auction_sales ? ' (' + r.auction_sales + ')' : ''}</small>${usd(r.auction_usd)}</div></div>
+  <div class="badges">${badge(r.discount_vs_retail_pct)} ${badge(r.discount_vs_auction_pct)}${tags(r).map(f => `<span class="b flag">${esc(f)}</span>`).join('')}</div>
   ${r.wineapp_url ? `<a class="note" href="${esc(r.wineapp_url)}" target="_blank" rel="noopener">Price history on WineAuction</a>` : ''}
 </div>`).join('');
 
@@ -196,7 +237,7 @@ function render(){
   const min = document.getElementById('minDisc').value, max = parseFloat(document.getElementById('maxPrice').value);
   const sort = document.getElementById('sort').value, showDoubt = document.getElementById('showDoubt').checked, q = document.getElementById('q').value.trim().toLowerCase();
   const list = rows.filter(r => (!state.group || r.group === state.group) && (showDoubt || !r.doubt) && (!q || r.text.includes(q))
-    && (min === '' || (r.best != null && r.best >= +min)) && (isNaN(max) || (r.price_usd != null && r.price_usd <= max)));
+    && (min === '' || (r.best != null && (MARKUP ? -r.best <= +min : r.best >= +min))) && (isNaN(max) || (r.price_usd != null && r.price_usd <= max)));
   const by = {deal: (a, b) => (b.best ?? -1e9) - (a.best ?? -1e9), price: (a, b) => (a.price_usd ?? 1e12) - (b.price_usd ?? 1e12), ends: (a, b) => (a.ends_at || '9').localeCompare(b.ends_at || '9'), name: (a, b) => a.name.localeCompare(b.name)};
   list.sort(by[sort]);
   document.getElementById('count').textContent = list.length.toLocaleString('en-US') + ' of ' + rows.length.toLocaleString('en-US');
@@ -204,12 +245,12 @@ function render(){
   document.getElementById('more').parentElement.hidden = list.length <= state.shown;
   document.getElementById('tb').innerHTML = list.slice(0, state.shown).map(r => `<tr>
     <td class="lotno">${esc(r.ref || '')}</td>
-    <td>${link(r, title(r))}<div class="sub">${esc([r.seller, size(r), ends(r)].filter(Boolean).join(' · '))}</div></td>
-    <td class="n">${usd(r.price_usd)}</td>
+    <td>${link(r, title(r))}<div class="sub">${esc(meta(r).join(' · '))}</div>${mixed(r) ? `<div class="sub">${esc(mixedList(r))}</div>` : ''}</td>
+    <td class="n">${usd(r.price_usd)}${r.price_label ? `<div class="sub">${esc(r.price_label)}</div>` : ''}</td>
     <td class="n">${usd(r.retail_usd)}${r.retail_live ? `<div class="sub">${r.retail_live} on sale</div>` : ''}</td>
     <td class="n">${usd(r.auction_usd)}${r.auction_sales ? `<div class="sub">${r.auction_sales} sale${r.auction_sales > 1 ? 's' : ''}</div>` : ''}</td>
     <td>${badge(r.discount_vs_retail_pct)}</td><td>${badge(r.discount_vs_auction_pct)}</td>
-    <td><div class="badges">${r.flags.map(f => `<span class="b flag">${esc(f)}</span>`).join('')}${r.wineapp_url ? `<a class="sub" href="${esc(r.wineapp_url)}" target="_blank" rel="noopener">history</a>` : ''}</div></td>
+    <td><div class="badges">${tags(r).map(f => `<span class="b flag">${esc(f)}</span>`).join('')}${r.flags.map(f => `<span class="b flag">${esc(f)}</span>`).join('')}${r.wineapp_url ? `<a class="sub" href="${esc(r.wineapp_url)}" target="_blank" rel="noopener">history</a>` : ''}</div></td>
   </tr>`).join('');
 }
 render();

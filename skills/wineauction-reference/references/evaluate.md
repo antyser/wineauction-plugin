@@ -1,0 +1,49 @@
+# Evaluating rows with evaluate_offers
+
+Fields: [tools/evaluate_offers.md](tools/evaluate_offers.md).
+
+## Calls
+
+1. Call `evaluate_offers` with `offers` (the rows from [parse-list.md](parse-list.md)) and `source` (`{merchant_name, document_title, observed_at, merchant_url}`). The tool rejects any field it does not know, so send only the row fields.
+2. Send 25 rows per call, one call after another. Larger responses are too big for many clients to show. Save each response to disk (`results.json`) before the next call, and collect every batch before you report. A 1,000-row list takes about 40 calls and 20–30 minutes; say so before starting a list that large.
+3. If a call fails, keep the results you have, render a partial report from them, and say how many rows were evaluated and how many remain.
+
+## Checking each result
+
+- `outcome: unmatched`: no wine was found. Retry once, in one batch at the end, every unmatched row whose name you can make fuller (full producer name, cuvée, appellation) or correct. List what is still unmatched as not found. Never invent a price.
+- `outcome: not_computed`: identification failed; retry it once.
+- Compare `wine.display_name`, `wine.color` and `wine.vintage` with the line. Flag rather than trust a match that names a different wine, cuvée or colour (a "Blanc" line matched to the red, a Chardonnay matched to the Pinot Noir), a different vintage, or NV against a vintage.
+- Apply the doubtful-reference rules in [prices.md](prices.md).
+
+## Report rows
+
+Mixed lots come back with `unit_price.reason: mixed_lot`; price them with [mixed-lots.md](mixed-lots.md) and add them to `rows.json` as that file says.
+
+Write `rows.json` with one object per matched row that has a unit price:
+
+| key | from |
+| --- | --- |
+| `name` | wine name with producer (no vintage) |
+| `vintage` | vintage |
+| `group`, `ref` | from `refs.json` |
+| `seller` | the restaurant or merchant |
+| `bottles`, `size_ml` | `quantity` and `format_ml` |
+| `price_usd` | the result's `unit_price.amount` (per 750 ml) |
+| `retail_usd`, `retail_live` | `retail.price_usd`, `retail.live_offer_count` |
+| `auction_usd`, `auction_sales` | `auction.price_usd`, `auction.sale_count` |
+| `discount_vs_retail_pct`, `discount_vs_auction_pct` | as returned |
+| `wineapp_url` | `wineapp_wine_url` |
+| `flags` | short strings for every doubt, and "Printed $99 for 375 ml" on half bottles and large formats |
+| `price_label` | text above the price; "Quoted price", or "List price" for restaurant rows |
+| `quoted_price`, `quoted_currency` | `price` and `currency` as sent; shown when `bottles` > 1, `size_ml` is not 750 or the currency is not USD |
+| `premium_pct` | buyer's premium, shown "+25% premium" |
+| `estimate_low`, `estimate_high` | house estimate in `quoted_currency` |
+| `status` | live / sold / unsold / withdrawn; badge for the last three |
+| `sold_at` | ISO date of a closed lot, shown "sold Oct 3" |
+| `serving` | glass / half / magnum; badge unless bottle |
+| `pre_arrival`, `in_stock` | booleans; "Out of stock" shows only when `in_stock` is false |
+| `mixed_items` | list of `{name, vintage, bottles, bottle_size_ml}`; "Mixed lot" badge and the items under the title |
+
+Optional keys left out are filled from the result's `input` (`price`, `currency`, `serving_type`, `is_pre_arrival`, `is_out_of_stock`).
+
+Write `not_found.json` as a list of `{name, hint}` for the rows still unmatched. Then present with [report.md](report.md).

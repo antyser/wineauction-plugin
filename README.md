@@ -5,11 +5,15 @@ Compare presented wine offers with retail and auction market prices, and find wi
 ## What it adds
 
 - **WineAuction connector** (`https://wineauction.ai/api/mcp`): you sign in with your WineAuction account the first time you use it.
-- **Skills**, organised by what you want:
-  - `check-offers`: use when an offer is presented in a retail promotion, merchant newsletter, restaurant wine list, offer sheet, auction lot, or quoted price. Compare it with retail and auction market prices, with an HTML report for long lists.
-  - `find-wine`: use when someone wants information about a wine, producer, vintage, region, or appellation, including market prices, historical auction sales, available offers, and professional reviews when returned by WineAuction.
+- **Skills**, one per use case:
+  - `restaurant-wine-list`: a restaurant wine list you bring (photo, PDF, link or text), or a named restaurant. Shows the markup of each bottle over retail and auction prices.
+  - `merchant-offer-check`: a merchant email, newsletter, futures offer, price list or a single quoted price. Judges each price against the market.
+  - `auction-lots`: an auction sheet or lots you bring, or a named auction or house. Lots below market, lots ending soon, sale results, and a recurring watch.
+  - `wine-info`: a wine, producer, vintage or region: retail and auction prices, past sales, critic reviews and where it is currently offered.
+  - `cellar-valuation`: a list of bottles you own. Value per bottle and in total, at auction and at retail.
+  - `wineauction-reference`: shared tool fields, price-reading rules, list parsing and the HTML report renderer that the skills above link to.
 
-Version 1.1.2 clarifies that HTML offer reports treat wine images as optional and omit empty image slots.
+Version 1.2.0 reorganises the skills by use case. The tools are unchanged.
 
 ## Install
 
@@ -50,7 +54,7 @@ Open an issue at [github.com/antyser/wineauction-plugin/issues](https://github.c
 
 Both versioned manifests use the same release version. The portable package keeps `plugin.json`, `mcp.json`, `skills/` and `assets/` at the repository root; the Claude marketplace manifests remain available alongside them. The 30-row newsletter under `review/fixtures/` is synthetic supplied-price input for workflow review, not a set of real merchant offers or market references.
 
-Natural-language skill-routing examples are kept separately in `review/trigger-cases.json`; the OpenAI review cases continue to cover the six connector tools and the existing workflow examples.
+Natural-language skill-routing examples are kept separately in `review/trigger-cases.json`, one per task skill; the OpenAI review cases continue to cover the six connector tools and the existing workflow examples.
 
 After committing the release candidate, build the ZIP from tracked files with:
 
@@ -58,7 +62,7 @@ After committing the release candidate, build the ZIP from tracked files with:
 python3 scripts/build_release.py
 ```
 
-The default output is `~/Downloads/wineauction-plugin-1.1.2.zip`. To verify a candidate commit and its packaged renderer, run:
+The default output is `~/Downloads/wineauction-plugin-1.2.0.zip`. To verify a candidate commit and its packaged renderer, run:
 
 ```
 scripts/local_ci.sh "$(git rev-parse HEAD)"

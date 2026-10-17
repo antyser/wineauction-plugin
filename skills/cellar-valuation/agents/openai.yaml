@@ -1,7 +1,7 @@
 interface:
-  display_name: "Check Offers"
-  short_description: "Compare wine offers with retail and auction prices"
-  default_prompt: "Check this wine list or merchant email and show me the best values."
+  display_name: "Cellar Valuation"
+  short_description: "What a wine collection is worth"
+  default_prompt: "What is this cellar list worth at auction and at retail?"
 dependencies:
   tools:
     - type: "mcp"

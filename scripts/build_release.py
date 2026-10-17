@@ -19,7 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "wineauction-plugin/"
-VERSION = "1.1.2"
+VERSION = "1.2.0"
 FIXTURE_ATTACHMENT = (
     "https://github.com/antyser/wineauction-plugin/releases/download/"
     "v1.1.0/newsletter-30-rows.txt"
@@ -33,6 +33,13 @@ SECRET = re.compile(
     rb"\bxox[baprs]-[A-Za-z0-9-]{20,}|-----BEGIN [A-Z ]*PRIVATE KEY-----)",
     re.IGNORECASE,
 )
+TASK_SKILLS = {
+    "restaurant-wine-list",
+    "merchant-offer-check",
+    "auction-lots",
+    "wine-info",
+    "cellar-valuation",
+}
 ROW = re.compile(r"^.+ — \d+ ml × \d+ — \$[\d,]+(?:\.\d{2})?$")
 
 
@@ -145,7 +152,7 @@ def check_manifest(files: dict[str, bytes]) -> None:
     }
     require(required_tools <= tools, "positive cases do not cover all six MCP tools")
     require(positive[0].get("tools_triggered") == "list_auctions, list_offers", "auction discovery case changed")
-    require("max_price_usd 600" in positive[2].get("expected_behavior", ""), "find-wine price filter is missing")
+    require("max_price_usd 600" in positive[2].get("expected_behavior", ""), "wine price filter is missing")
     require("$950 per bottle" in positive[3].get("expected_behavior", ""), "Lafite price calculation is missing")
     batch_case = positive[4]
     require(batch_case.get("file_attachment_urls") == [FIXTURE_ATTACHMENT], "newsletter fixture attachment URL changed")
@@ -171,7 +178,8 @@ def check_trigger_cases(files: dict[str, bytes]) -> None:
     positive = cases.get("positive", [])
     negative = cases.get("negative", [])
     require(len(positive) == 6 and len(negative) == 3, "trigger matrix must contain six positive and three negative cases")
-    require(all(case.get("prompt") and case.get("expected_skill") in {"check-offers", "find-wine"} for case in positive), "positive trigger cases need prompts and expected skills")
+    require({case.get("expected_skill") for case in positive} == TASK_SKILLS, "trigger matrix must cover every task skill")
+    require(all(case.get("prompt") and case.get("expected_skill") in TASK_SKILLS for case in positive), "positive trigger cases need prompts and expected skills")
     require(all(case.get("prompt") and case.get("expected_skill") is None for case in negative), "negative trigger cases need prompts and a null expected skill")
 
 
@@ -189,16 +197,32 @@ def check_archive(archive_path: Path, revision: str) -> None:
         ".claude-plugin/marketplace.json",
         ".agents/plugins/marketplace.json",
         "README.md",
-        "skills/check-offers/SKILL.md",
-        "skills/check-offers/assets/report.html",
-        "skills/check-offers/scripts/render.py",
-        "skills/check-offers/references/evaluate_offers.md",
-        "skills/check-offers/references/list_auctions.md",
-        "skills/check-offers/references/list_offers.md",
-        "skills/check-offers/references/list_retail_stores.md",
-        "skills/check-offers/references/list_restaurants.md",
-        "skills/find-wine/SKILL.md",
-        "skills/find-wine/references/search_wines.md",
+        "skills/restaurant-wine-list/SKILL.md",
+        "skills/restaurant-wine-list/agents/openai.yaml",
+        "skills/merchant-offer-check/SKILL.md",
+        "skills/merchant-offer-check/agents/openai.yaml",
+        "skills/auction-lots/SKILL.md",
+        "skills/auction-lots/agents/openai.yaml",
+        "skills/wine-info/SKILL.md",
+        "skills/wine-info/agents/openai.yaml",
+        "skills/cellar-valuation/SKILL.md",
+        "skills/cellar-valuation/agents/openai.yaml",
+        "skills/wineauction-reference/SKILL.md",
+        "skills/wineauction-reference/agents/openai.yaml",
+        "skills/wineauction-reference/assets/report.html",
+        "skills/wineauction-reference/scripts/render.py",
+        "skills/wineauction-reference/references/prices.md",
+        "skills/wineauction-reference/references/parse-list.md",
+        "skills/wineauction-reference/references/evaluate.md",
+        "skills/wineauction-reference/references/mixed-lots.md",
+        "skills/wineauction-reference/references/report.md",
+        "skills/wineauction-reference/references/design-system.md",
+        "skills/wineauction-reference/references/tools/search_wines.md",
+        "skills/wineauction-reference/references/tools/list_offers.md",
+        "skills/wineauction-reference/references/tools/evaluate_offers.md",
+        "skills/wineauction-reference/references/tools/list_auctions.md",
+        "skills/wineauction-reference/references/tools/list_retail_stores.md",
+        "skills/wineauction-reference/references/tools/list_restaurants.md",
         "assets/logo.png",
         "review/fixtures/newsletter-30-rows.txt",
         "review/trigger-cases.json",
@@ -243,6 +267,35 @@ def exercise_renderer(files: dict[str, bytes]) -> None:
                         "flags": ["No market data returned"],
                     },
                     {
+                        "name": "Six-bottle lot",
+                        "vintage": 2015,
+                        "ref": "Lot 12",
+                        "bottles": 6,
+                        "size_ml": 750,
+                        "price_usd": 950,
+                        "quoted_price": 5700,
+                        "quoted_currency": "USD",
+                        "price_label": "Hammer incl. premium",
+                        "premium_pct": 25,
+                        "status": "sold",
+                        "sold_at": "2026-10-03T18:00:00Z",
+                        "retail_usd": 1200,
+                        "discount_vs_retail_pct": 21,
+                        "flags": [],
+                    },
+                    {
+                        "name": "Mixed Bordeaux case",
+                        "mixed_items": [
+                            {"name": "Latour <b>", "vintage": 2010, "bottles": 3, "bottle_size_ml": 750},
+                            {"name": "Mouton", "vintage": 2009, "bottles": 3, "bottle_size_ml": 750},
+                        ],
+                        "bottles": 6,
+                        "price_usd": 400,
+                        "retail_usd": 300,
+                        "discount_vs_retail_pct": -33,
+                        "flags": [],
+                    },
+                    {
                         "name": "No reference sample",
                         "vintage": 2020,
                         "price_usd": 80,
@@ -262,7 +315,7 @@ def exercise_renderer(files: dict[str, bytes]) -> None:
         subprocess.run(
             [
                 sys.executable,
-                str(root / "skills/check-offers/scripts/render.py"),
+                str(root / "skills/wineauction-reference/scripts/render.py"),
                 str(rows_path),
                 str(report_path),
                 "--title",
@@ -275,7 +328,24 @@ def exercise_renderer(files: dict[str, bytes]) -> None:
         )
         rendered = report_path.read_text(encoding="utf-8")
         require("Renderer &lt;script&gt;alert(&#x27;x&#x27;)&lt;/script&gt;" in rendered, "renderer failed to escape report title")
-        subprocess.run([node, str(root / "scripts/test_renderer.mjs"), str(report_path)], check=True)
+        subprocess.run([node, str(root / "scripts/test_renderer.mjs"), str(report_path), "discount"], check=True)
+        markup_path = Path(directory) / "report-markup.html"
+        subprocess.run(
+            [
+                sys.executable,
+                str(root / "skills/wineauction-reference/scripts/render.py"),
+                str(rows_path),
+                str(markup_path),
+                "--title",
+                "Markup",
+                "--markup",
+                "--not-found",
+                str(not_found_path),
+            ],
+            check=True,
+            cwd=root,
+        )
+        subprocess.run([node, str(root / "scripts/test_renderer.mjs"), str(markup_path), "markup"], check=True)
 
 
 def main() -> None:
