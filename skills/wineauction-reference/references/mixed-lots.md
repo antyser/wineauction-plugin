@@ -5,7 +5,7 @@ A mixed lot (or mixed case) is one price for several different wines. The tools 
 ## 1. List every wine in it
 
 - From `list_offers`: `auction_lot_items[]` gives `{name, vintage, bottles, bottle_size_ml}` per wine.
-- When the items are missing or only the first wine is named (the listing name often shows one wine), read the full lot description on the seller's page (`url`) or in the user's sheet.
+- When `auction_lot_items` is null, only the first wine is named: the listing name and `bottles` describe the lot, not that wine, and `bottle_size_ml` may be null. Read the full contents from the user's sheet, the seller's lot page (`url`) or the lot page on wineauction.ai (`wineapp_url`).
 - Keep the counts exactly as stated. If the contents still cannot be read in full, say which part is unknown and do not price the lot.
 
 ## 2. Price each wine
