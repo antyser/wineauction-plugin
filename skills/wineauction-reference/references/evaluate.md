@@ -17,6 +17,8 @@ Fields: [tools/evaluate_offers.md](tools/evaluate_offers.md).
 
 ## Report rows
 
+Mixed lots come back with `unit_price.reason: mixed_lot`; price them with [mixed-lots.md](mixed-lots.md) and add them to `rows.json` as that file says.
+
 Write `rows.json` with one object per matched row that has a unit price:
 
 | key | from |

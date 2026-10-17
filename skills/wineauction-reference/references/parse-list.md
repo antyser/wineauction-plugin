@@ -29,7 +29,7 @@ Keep what the source states; do not guess missing facts.
 - `section`: the list heading, on restaurant rows only.
 - `producer`: on retail rows, when the source names it separately.
 - `is_pre_arrival` (retail): true when the line says pre-arrival or pre-sale. `is_future` (retail): true for en primeur or futures.
-- `is_mixed_lot`: true when one price covers different wines (a mixed case). It still gets matched, but has no per-bottle price; list it in the reply and leave it out of the report.
+- `is_mixed_lot`: true when one price covers different wines (a mixed case). Keep its contents with the row in `refs.json`; it gets no per-bottle price from the tool, so price it with [mixed-lots.md](mixed-lots.md).
 - A line with several vintages becomes one row per vintage; a wine in two sizes becomes one row per size. A wine listed twice at different prices stays twice.
 
 Skip by-the-glass and carafe prices, Coravin pours, flights, cocktails, beer, cider, sake and spirits. Also skip sherry, vermouth, port and dessert-wine sections when their prices are clearly per pour: far below any bottle on the list, or a section that gives a pour size. Where a line shows glass and bottle prices side by side, keep only the bottle price. When unsure, keep the row and flag it. Count what you skipped, by kind.

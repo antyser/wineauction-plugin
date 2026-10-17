@@ -214,6 +214,7 @@ def check_archive(archive_path: Path, revision: str) -> None:
         "skills/wineauction-reference/references/prices.md",
         "skills/wineauction-reference/references/parse-list.md",
         "skills/wineauction-reference/references/evaluate.md",
+        "skills/wineauction-reference/references/mixed-lots.md",
         "skills/wineauction-reference/references/report.md",
         "skills/wineauction-reference/references/design-system.md",
         "skills/wineauction-reference/references/tools/search_wines.md",

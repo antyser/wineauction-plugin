@@ -11,6 +11,7 @@ The task skills link here for the parts they share. Read only the file a task sk
 | --- | --- |
 | [references/prices.md](references/prices.md) | The two reference prices, discounts and markups, when to flag a reference as doubtful, links. Every task skill relies on it. |
 | [references/parse-list.md](references/parse-list.md) | Turning a PDF, web page, photo or pasted list into priced rows. |
+| [references/mixed-lots.md](references/mixed-lots.md) | Splitting a mixed lot or mixed case into its wines and pricing the whole. |
 | [references/evaluate.md](references/evaluate.md) | Sending rows to `evaluate_offers` in batches and checking each match. |
 | [references/report.md](references/report.md) | Report rows, the HTML renderer, and what to say in chat. |
 | [references/design-system.md](references/design-system.md) | Colours, type and layout for any HTML view. |

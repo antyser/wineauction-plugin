@@ -21,6 +21,7 @@ The references are market prices, not offers. Never say a wine is in stock or ca
 ## Flag a reference as doubtful when
 
 - `auction.sale_count` is 1 or 2: one or two sales are weak evidence.
+- `retail.live_offer_count` is 0: the retail reference is stale, not a current price.
 - The retail and auction references are more than 3× apart.
 - The retail reference is below a third of a retail list price on the same line.
 - The bottle is a half bottle or a large format: references are per 750 ml and large formats usually cost more per 750 ml. Show the printed price and size, such as "Printed $99 for 375 ml".
@@ -31,7 +32,7 @@ The references are market prices, not offers. Never say a wine is in stock or ca
 
 - `_usd` fields are per 750 ml. Auction prices include the buyer's premium.
 - Offers are rarely a single bottle. A case, OWC or 6-pack price covers 12 or 6 bottles, an auction lot covers its `bottles` of `bottle_size_ml`, and a mixed lot covers several wines. Compare per 750 ml, but always show the quantity and the price as quoted next to it: "6 × 750 ml, $5,700 lot ($950 per bottle)".
-- A mixed lot has no per-bottle price. Show its wines (`auction_lot_items[]`) and the lot price; do not quote a discount for it.
+- A mixed lot has no per-bottle price from the tools. Split it into its wines and price it with [mixed-lots.md](mixed-lots.md); never quote the first wine's reference for the whole lot.
 
 ## Links
 

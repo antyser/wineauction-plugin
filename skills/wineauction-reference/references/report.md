@@ -4,7 +4,7 @@
 
 ## Rows from list_offers or search_wines
 
-Build `rows.json` with one row per offer (rows from `evaluate_offers` are described in [evaluate.md](evaluate.md)). Multi-bottle lots, cases and mixed lots are rows like any other; their per-750 price is shown beside the quoted lot total.
+Build `rows.json` with one row per offer (rows from `evaluate_offers` are described in [evaluate.md](evaluate.md)). Multi-bottle lots, cases and mixed lots are rows like any other; their per-750 price is shown beside the quoted lot total. A mixed lot's prices and discounts come from [mixed-lots.md](mixed-lots.md).
 
 | key | from |
 | --- | --- |
