@@ -10,11 +10,7 @@
   "homepage": "https://wineauction.ai",
   "repository": "https://github.com/antyser/wineauction-plugin",
   "license": "MIT",
-  "keywords": [
-    "wine",
-    "auction",
-    "pricing"
-  ],
+  "keywords": ["wine", "auction", "pricing"],
   "extensions": {
     "com.openai": {
       "interface": {
@@ -23,9 +19,7 @@
         "longDescription": "Wine market price research across retail and auction data. Check a restaurant wine list's markup, judge a merchant's quoted prices, scan auction lots against market references, look up a wine's retail and auction value, past sales and available critic reviews, value a cellar list, and see where a wine is currently offered. Results use returned WineAuction data and link to seller pages. The connector is research-only: it cannot bid, buy, list, message sellers or move money. A WineAuction account is required; sign in with OAuth.",
         "developerName": "LemonCube LLC",
         "category": "Data & Analytics",
-        "capabilities": [
-          "Read"
-        ],
+        "capabilities": ["Read"],
         "websiteURL": "https://wineauction.ai",
         "supportURL": "https://wineauction.ai/contact",
         "privacyPolicyURL": "https://wineauction.ai/privacy",
@@ -95,9 +89,7 @@
         "commerce_description": "Research data and citations only. The plugin cannot bid, buy, check out or initiate a transaction. Links go to the seller's own page."
       },
       "publication": {
-        "countries": [
-          "US"
-        ],
+        "countries": ["US"],
         "release_notes": "Version 1.2.0 reorganises the skills by use case (restaurant wine list, merchant offer check, auction lots, wine value, cellar valuation, where to buy) over one shared reference skill. The tools are unchanged."
       }
     }

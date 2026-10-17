@@ -8,6 +8,7 @@ Work in a folder of your own and keep every intermediate file there.
 - Web page or saved HTML: strip it to text with a short Python script (`html.parser`). Shops often hold the real product data in embedded JSON (`application/ld+json`, or a Shopify `product` object); prefer that over the visible text. If the page shows only part of the results ("24 of 42"), say so in the reply.
 - URL: download it first, then treat it as a PDF or a web page.
 - Photo or screenshot: read it as an image.
+- Spreadsheet or CSV (a cellar export, a price list): read it with a short Python script (`csv`, or `openpyxl` for .xlsx when installed; otherwise ask for a CSV). Map its columns to the row fields and say which column you used for each.
 - Pasted text: use it as is.
 
 For a long list, parse with a script rather than by hand, then check a sample of rows from several pages against the page images, especially where columns sit side by side.
@@ -23,7 +24,8 @@ Keep what the source states; do not guess missing facts.
 - `price`, `currency`: the price as printed. USD unless the source says otherwise. Every row needs a price.
 - `quantity`: the bottles the price covers. A case, OWC or 6-pack price covers 12 or 6 ("From $X / OWC6" is a 6-bottle price). Restaurant rows default to 1.
 - `format_ml`: 375, 750, 1500 and so on, from a "Half bottles", "Demi" or "Magnum" heading or a size in the line; default 750. A heading's size applies to every line under it until the next heading.
-- `offer_type`: `restaurant` for a wine list; `retail` for a shop, newsletter, futures offer or price list.
+- `offer_type`: `restaurant` for a wine list; `retail` for a shop, newsletter, futures offer or price list; `other` for an auction lot or catalog.
+- `buyers_premium`: on an auction row whose price is a hammer price, the premium as a fraction (0.25 for 25%), so the unit price includes it.
 - `section`: the list heading, on restaurant rows only.
 - `producer`: on retail rows, when the source names it separately.
 - `is_pre_arrival` (retail): true when the line says pre-arrival or pre-sale. `is_future` (retail): true for en primeur or futures.

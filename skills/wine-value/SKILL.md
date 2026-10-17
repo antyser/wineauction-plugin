@@ -1,6 +1,6 @@
 ---
 name: wine-value
-description: "Look up what a wine is worth: retail and auction reference prices, past auction sales, vintage-by-vintage prices and available critic reviews. Use when the user asks what a named wine, producer, vintage, region or appellation costs or sells for, how vintages compare on price, what it fetched at auction, or what critics said, without bringing a price of their own."
+description: "Look up what a wine is worth: retail and auction reference prices, past auction sales, vintage-by-vintage prices and available critic reviews. Use when the user asks what a named wine, producer, vintage, region or appellation costs or sells for, how vintages compare on price, what a named wine fetched at auction, or what critics said, without bringing a price of their own."
 ---
 
 # Wine value
@@ -9,7 +9,7 @@ description: "Look up what a wine is worth: retail and auction reference prices,
 
 1. Turn the request into wine filters: names or `lwin7`, `producer`, `region`, `appellation`, `color`, vintage or vintage range. Up to 10 named wines go in one `wines` list. `search_wines` filters only on wine attributes, never on price or seller ([fields](../wineauction-reference/references/tools/search_wines.md)).
 2. Call `search_wines`. Each wine carries both references, `reviews[]` when available, and a two-offer sample. Page with `cursor` when more wines are wanted. Check `resolved_wines` and say which names were not found.
-3. Past sales: call `list_offers` with the wine's `wine_id`, `offer_type: auction`, `status: closed`, `sort: recent`, and `vintage` when asked ([fields](../wineauction-reference/references/tools/list_offers.md)). Only `auction_status: sold` rows are sales. Give the date, house, price per 750 ml with premium, and the lot link.
+3. Past sales: call `list_offers` with the wine's `wine_id`, `offer_type: auction`, `status: closed`, `sort: recent`, and `vintage` when asked ([fields](../wineauction-reference/references/tools/list_offers.md)). Only `auction_status: sold` rows are sales. Give the date, house, `price_per_bottle_usd` (per 750 ml, premium included; `price` is the lot's hammer without premium) and the lot link. Save each page to disk.
 4. Read prices with [prices.md](../wineauction-reference/references/prices.md).
 
 ## In chat

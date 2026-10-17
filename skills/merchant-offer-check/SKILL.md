@@ -1,6 +1,6 @@
 ---
 name: merchant-offer-check
-description: "Judge prices a merchant has quoted against retail and auction market prices. Use when the user shares a merchant email, newsletter, promotion, futures or en primeur offer, price list or offer sheet, names a wine shop and asks about its prices, or asks whether a quoted price for a wine is good."
+description: "Judge prices a merchant has quoted against retail and auction market prices. Use when the user shares a merchant email, newsletter, promotion, futures or en primeur offer, price list or offer sheet, asks whether a shop's or seller's quoted price for a wine is good, or wants a named wine shop's whole listing checked against the market. A price on a restaurant list belongs to restaurant-wine-list; a price at auction belongs to auction-lots."
 ---
 
 # Merchant offer check
@@ -21,3 +21,4 @@ The question is whether each quoted price is below, at or above the market for t
 
 - For one quote: the per-bottle price, both references, both discounts, and a plain verdict naming the reference it rests on.
 - For a list: the five rows furthest below a reference, leaving out flagged rows; anything clearly above both references; pre-arrival and futures rows marked as such.
+- When the user also asks about reviews, call `search_wines` with the matched `lwin7` and `vintage` and quote `reviews[]` as the wine-value skill does.

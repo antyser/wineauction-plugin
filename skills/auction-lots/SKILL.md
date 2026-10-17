@@ -1,6 +1,6 @@
 ---
 name: auction-lots
-description: "Scan wine auction lots against retail and auction reference prices, and report past auction results. Use when the user names a wine auction or auction house (Acker, Sotheby's, Christie's, Zachys, K&L and others), asks which live lots are below market or ending soon, asks what lots sold for, or wants a recurring watch on upcoming sales."
+description: "Scan wine auction lots against retail and auction reference prices, and report past auction results. Use when the user names a wine auction or auction house (Acker, Sotheby's, Christie's, Zachys, K&L and others), asks which live lots are below market or ending soon, asks for the results of a named sale or house, shares auction lots or a catalog and asks whether the estimates or prices are good, or wants a recurring watch on upcoming sales. Past sales of one named wine belong to wine-value."
 ---
 
 # Auction lots
@@ -19,6 +19,10 @@ description: "Scan wine auction lots against retail and auction reference prices
    - Page with `cursor` and save each page. Keep a price range exactly as given; if it is inverted, say so instead of swapping it.
 4. Read prices with [prices.md](../wineauction-reference/references/prices.md): live discounts are at the current or opening bid.
 5. Present with [report.md](../wineauction-reference/references/report.md). Label results from different sales or houses separately and link each lot.
+
+## Lots the user brings
+
+For a catalog, a pasted lot or a hammer price ("is \$4,000 hammer for lot 123 good?"), parse with [parse-list.md](../wineauction-reference/references/parse-list.md) using `offer_type: other` and `buyers_premium` for a hammer price, then evaluate with [evaluate.md](../wineauction-reference/references/evaluate.md). Quote an estimate as an estimate, not a price.
 
 ## Recurring watch
 

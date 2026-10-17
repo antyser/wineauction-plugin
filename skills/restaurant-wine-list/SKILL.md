@@ -1,6 +1,6 @@
 ---
 name: restaurant-wine-list
-description: "Compare the bottles on a restaurant wine list with retail and auction prices to show the markup on each. Use when the user shares a restaurant wine list (photo, PDF, link or pasted text), names a restaurant and asks about its list, or asks which bottle on a list is the best value or least marked up."
+description: "Compare the bottles on a restaurant wine list with retail and auction prices to show the markup on each. Use when the user shares a restaurant wine list (photo, PDF, link or pasted text), names a restaurant and asks about its list, asks whether one bottle's price on a restaurant list is fair, or asks which bottle on a list is the best value or least marked up."
 ---
 
 # Restaurant wine list
@@ -20,5 +20,7 @@ The question is markup: how far each bottle's list price sits above what the sam
 - The five bottles with the smallest markup over retail, leaving out flagged rows, with list price, retail reference and markup.
 - Anything priced far above the rest of the list relative to retail.
 - If the user gave a budget, a style or a dish, the best-value bottles that fit it.
+- For one bottle the user asks about: its list price, both references and the markup.
+- When the user also asks about reviews, call `search_wines` with the matched `lwin7` and `vintage` and quote `reviews[]` as the wine-value skill does.
 
 Restaurant offers need a plan with Restaurant access. When a tool returns a notice that they were skipped, say so; a list the user brings can still be evaluated.

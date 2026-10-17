@@ -18,6 +18,6 @@ The user has no prices, only bottles. Value each at the auction median (what sim
 
 - Totals: auction-based value and retail-based value, each with how many bottles it covers, plus bottles not valued.
 - The ten most valuable rows, and the flagged ones.
-- More than about 10 rows: an HTML page per [report.md](../wineauction-reference/references/report.md), with `price_usd` left empty and the references filled, and a `--method` line saying values are references, not offers.
+- More than about 10 rows: also write `valuation.csv` (name, vintage, bottles, size, auction per 750 ml, sale count, auction value, retail per 750 ml, retail value, flags, wineauction.ai link) and give the user the file. The offer report page is built for priced offers, so do not use it here.
 
 These are market references, not an appraisal; say so when the user mentions insurance or an estate.
