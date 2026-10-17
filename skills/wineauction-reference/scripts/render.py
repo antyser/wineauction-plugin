@@ -51,6 +51,8 @@ def normalize(row: dict) -> dict:
     out.setdefault("quoted_price", first(row.get("price"), inp.get("price")))
     out.setdefault("quoted_currency", first(row.get("currency"), inp.get("currency")))
     out.setdefault("premium_pct", row.get("auction_buyers_premium_pct"))
+    if out.get("premium_pct") is None and isinstance(inp.get("buyers_premium"), (int, float)):
+        out["premium_pct"] = round(inp["buyers_premium"] * 100, 2)
     out.setdefault("estimate_low", row.get("auction_estimate_low"))
     out.setdefault("estimate_high", row.get("auction_estimate_high"))
     out.setdefault("status", status)

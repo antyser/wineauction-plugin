@@ -54,6 +54,6 @@ The rows in `list_offers.offers[]` and in `search_wines` `best_offers[]`. Inside
 | `auction_end_time` | When the auction ends. |
 | `auction_estimate_low`, `auction_estimate_high` | House estimate for the whole lot, in `currency`. |
 | `auction_buyers_premium_pct` | Premium in percent, e.g. 25. |
-| `auction_lot_items[]` | Mixed lots only: `{name, vintage, bottles, bottle_size_ml}` per wine. |
+| `auction_lot_items[]` | Mixed lots only: `{name, vintage, bottles, bottle_size_ml}` per wine. Null for some houses (Acker); the row's `wine_name` and `listing_name` then name only the first wine, and `bottles` counts the whole lot. |
 | `retail_in_stock`, `retail_pre_arrival`, `retail_last_seen_at` | Retail: in stock, pre-arrival, last time seen on sale. |
 | `restaurant_serving`, `restaurant_section` | Restaurant: bottle / glass, section of the list. |

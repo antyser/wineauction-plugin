@@ -20,7 +20,7 @@ Build `rows.json` with one row per offer (rows from `evaluate_offers` are descri
 | `wineapp_url` | the offer's `wineapp_url`, else the wine's |
 | `ends_at` | `auction_end_time` |
 | `flags` | doubts, such as "Retail from 2008 vintage" |
-| `price_label` | text above the price: "Current or opening bid", "Hammer incl. premium", "List price", "Quoted price", "Low estimate" |
+| `price_label` | text above the price: "Current or opening bid", "Hammer incl. premium", "Low estimate incl. premium", "List price", "Quoted price", "Price" |
 | `quoted_price`, `quoted_currency` | the price as quoted for the whole row (lot, case or bottle); shown when `bottles` > 1, `size_ml` is not 750 or the currency is not USD |
 | `premium_pct` | buyer's premium, shown "+25% premium" |
 | `estimate_low`, `estimate_high` | house estimate in `quoted_currency` |

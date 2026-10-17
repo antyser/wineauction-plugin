@@ -29,7 +29,7 @@ Keep what the source states; do not guess missing facts.
 - `section`: the list heading, on restaurant rows only.
 - `producer`: on retail rows, when the source names it separately.
 - `is_pre_arrival` (retail): true when the line says pre-arrival or pre-sale. `is_future` (retail): true for en primeur or futures.
-- `is_mixed_lot`: true when one price covers different wines (a mixed case). Keep its contents with the row in `refs.json`; it gets no per-bottle price from the tool, so price it with [mixed-lots.md](mixed-lots.md).
+- `is_mixed_lot`: true when one price covers different wines (a mixed case). Keep its contents as `mixed_items` in `refs.json`; it gets no per-bottle price from the tool, so price it with [mixed-lots.md](mixed-lots.md).
 - A line with several vintages becomes one row per vintage; a wine in two sizes becomes one row per size. A wine listed twice at different prices stays twice.
 
 Skip by-the-glass and carafe prices, Coravin pours, flights, cocktails, beer, cider, sake and spirits. Also skip sherry, vermouth, port and dessert-wine sections when their prices are clearly per pour: far below any bottle on the list, or a section that gives a pour size. Where a line shows glass and bottle prices side by side, keep only the bottle price. When unsure, keep the row and flag it. Count what you skipped, by kind.
@@ -41,5 +41,6 @@ Keep `refs.json`, in the same order as the rows, with what the report needs but 
 - `ref`: a short locator: the bin number, else the SKU, else page and line ("p15 #3"), never the whole line.
 - `group`: a short tab name, at most about 12 distinct values per report: the broad section on a restaurant list ("Champagne", "White Burgundy", "Half bottles"), else the region.
 - `printed_price` and any flag you already have.
+- `mixed_items`: for a mixed lot, `{name, vintage, bottles, bottle_size_ml}` per wine.
 
 Write the rows to `rows_in.json` before calling any tool, so a failed call can be retried without re-parsing.

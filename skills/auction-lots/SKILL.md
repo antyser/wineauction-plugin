@@ -31,9 +31,9 @@ Read prices with [prices.md](../wineauction-reference/references/prices.md).
 A live lot's price is its current bid, else the opening bid, and bidding raises it. Houses such as Acker open far below their estimates, so the current-bid discount overstates the deal. For live lots, compute both, each with premium and per 750 ml:
 
 - at the current or opening bid (the tool's discounts);
-- at the low estimate: `auction_estimate_low` × (1 + premium) ÷ bottle-equivalents, against the same references.
+- at the low estimate: `price_per_bottle_usd × auction_estimate_low ÷ price` (the tool's per-bottle figure already carries the premium, currency conversion and bottle size), against the same references.
 
-Rank by the low-estimate discount unless the user asks otherwise, say which one you rank by, and show both. In the report, set `price_usd` to the low-estimate price with `price_label` "Low estimate incl. premium" and put the current-bid discount in `flags`.
+Rank by the low-estimate discount unless the user asks otherwise, say which one you rank by, and show both. In the report, set `price_usd` to the low-estimate price with `price_label` "Low estimate incl. premium", recompute `discount_vs_retail_pct` and `discount_vs_auction_pct` from that price against `retail.price_usd` and `auction.price_usd`, set `quoted_price` to `auction_estimate_low`, and put the current-bid discounts in `flags`.
 
 For each highlighted lot also give the auction median for that wine and vintage with its sale count and last sale date, and how the low estimate compares with it.
 
