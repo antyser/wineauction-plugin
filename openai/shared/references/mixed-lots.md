@@ -10,14 +10,14 @@ A mixed lot (or mixed case) is one price for several different wines. The tools 
 
 ## 2. Price each wine
 
-Call `search_wines` with a `wines` list of up to 10 `{query, vintage}` (or `lwin7`) per call and take each wine's `retail` and `auction` views. Apply [prices.md](prices.md) to each part: a part with 1–2 sales, a stale retail reference (`live_offer_count` 0) or references more than 3× apart is weak. List any part that was not found.
+Call `search_wines` with a `wines` list of up to 10 `{query, vintage}` (or `lwin7`) per call and take each wine's `retail` and `auction` views. Apply [prices.md](prices.md) to each part: a part with 1–2 sales, a stale retail reference (`live_offer_count` 0), references more than 3× apart, or a half bottle or large format (references are per 750 ml) is weak. List any part that was not found.
 
 ## 3. Add up the lot
 
 - Bottle-equivalents per part: `bottles × bottle_size_ml / 750`.
 - Lot retail value: Σ part retail per 750 ml × its bottle-equivalents. Lot auction value: the same with the auction view. Compute each only when every part has that reference; otherwise give the covered share ("auction value covers 9 of 12 bottles").
-- Lot price: the price with buyer's premium (listed price, final price or estimate, saying which).
-- Lot discount vs retail = 1 − lot price ÷ lot retail value; the same for auction.
+- Lot price in USD: `price` (or the estimate) × (1 + `auction_buyers_premium_pct` ÷ 100), converted from `currency` to USD when it is not USD, saying which price and which exchange rate you used. Without a rate, do not price a non-USD lot. Say whether it is the listed price, final price or estimate.
+- Lot discount vs retail, in percent = (1 − lot price ÷ lot retail value) × 100, rounded to one decimal; the same for auction.
 - For the report: `price_usd` = lot price ÷ total bottle-equivalents, `retail_usd` and `auction_usd` = lot value ÷ total bottle-equivalents, the two discounts as computed, `mixed_items` with every part, and a flag for any weak or missing part.
 
 Show the breakdown in chat for the lots you highlight: each part with bottles, size and reference, then the totals.

@@ -19,11 +19,11 @@ REFERENCE_SKILL = "skills/wineauction-reference/"
 REFERENCE_LINK = "../wineauction-reference/"
 SHARED_LINK = "../../shared/"
 DROPPED_SKILL = "skills/auction-lots/"
-NOT_SHIPPED = {"scripts/build_openai_package.py"}
+SHIPPED = ("plugin.json", "mcp.json", "LICENSE", "README.md", "assets/", "skills/", "shared/")
 APP_NAME = "app-6a3f607100d48191814734d4a44e75c0"
 MARKDOWN_LINK = re.compile(r"\]\(([^)\s]+)\)")
 RETIRED_NAME = re.compile(rb"auction-lots|wineauction-reference")
-RETIRED_NAME_ALLOWED = ("README.md", "review/", "scripts/")
+RELATIVE_PATH = re.compile(r"(?<![\w.])(\.\./[\w./-]*\w)")
 ZIP_TIME = (2026, 1, 1, 0, 0, 0)
 
 
@@ -43,14 +43,16 @@ def build_files(revision: str) -> dict[str, tuple[bytes, int]]:
     tracked = read_tracked(revision)
     files: dict[str, tuple[bytes, int]] = {}
     for path, (content, mode) in tracked.items():
-        if path.startswith(OVERLAY) or path in NOT_SHIPPED or path.startswith(DROPPED_SKILL):
+        if path.startswith(DROPPED_SKILL):
             continue
         if path.startswith(REFERENCE_SKILL):
             relative = path.removeprefix(REFERENCE_SKILL)
             if relative == "SKILL.md" or relative.startswith("agents/"):
                 continue
             path = "shared/" + relative
-        if path.endswith(".md"):
+        if not path.startswith(SHIPPED):
+            continue
+        if path.endswith(".md") and path.startswith(("skills/", "shared/")):
             content = content.replace(REFERENCE_LINK.encode(), SHARED_LINK.encode())
         files[path] = (content, mode)
     overlay = {p.removeprefix(OVERLAY): v for p, v in tracked.items() if p.startswith(OVERLAY)}
@@ -77,9 +79,9 @@ def check_links(files: dict[str, tuple[bytes, int]]) -> None:
     for path, (content, _) in files.items():
         if not path.endswith(".md"):
             continue
-        for target in MARKDOWN_LINK.findall(content.decode("utf-8")):
-            if re.match(r"[a-z][a-z0-9+.-]*:|#", target):
-                continue
+        text = content.decode("utf-8")
+        local_links = [t for t in MARKDOWN_LINK.findall(text) if not re.match(r"[a-z][a-z0-9+.-]*:|#", t)]
+        for target in local_links + RELATIVE_PATH.findall(text):
             resolved = (Path(path).parent / target.split("#")[0]).as_posix()
             parts: list[str] = []
             for part in resolved.split("/"):
@@ -99,8 +101,7 @@ def check_package(files: dict[str, tuple[bytes, int]]) -> None:
     require(not any(p.startswith(OVERLAY) for p in paths), "overlay folder leaked into the package")
     for path, (content, _) in files.items():
         require(SECRET.search(content) is None, f"secret-like material found in {path}")
-        if not path.startswith(RETIRED_NAME_ALLOWED):
-            require(RETIRED_NAME.search(content) is None, f"{path} still references a removed skill")
+        require(RETIRED_NAME.search(content) is None, f"{path} still references a removed skill")
     check_links(files)
 
     import json

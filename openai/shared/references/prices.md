@@ -34,7 +34,6 @@ The references are market prices, not listings.
 - Offers are rarely a single bottle. A case, OWC or 6-pack price covers 12 or 6 bottles, an auction lot covers its `bottles` of `bottle_size_ml`, and a mixed lot covers several wines. Compare per 750 ml, but always show the quantity and the price as quoted next to it: "6 × 750 ml, $5,700 lot ($950 per bottle)".
 - A mixed lot has no per-bottle price from the tools. Split it into its wines and price it with [mixed-lots.md](mixed-lots.md); never quote the first wine's reference for the whole lot.
 
-
 ## Access
 
 Retail offers and stores need a signed-in WineAuction account. Restaurant offers need a plan with Restaurant access; when it is missing, the tools skip them and return a `notice`. Pass the notice on in plain words; do not fill the gap from other websites.
