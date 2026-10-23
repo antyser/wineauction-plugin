@@ -23,7 +23,8 @@ tmp_dir=$(mktemp -d "${TMPDIR:-/tmp}/wineauction-local-ci.XXXXXX")
 trap 'rm -rf "$tmp_dir"' EXIT
 archive="$tmp_dir/wineauction-plugin-1.2.0.zip"
 python3 scripts/build_release.py --output "$archive" --expected-head "$candidate_head"
+python3 scripts/build_openai_package.py --output "$tmp_dir/wineauction-plugin-1.2.0-openai.zip" --expected-head "$candidate_head"
 
 printf 'LOCAL CI SUMMARY: PASS\n'
 printf 'Head: %s\n' "$candidate_head"
-printf 'Checks: portable manifests and versions; OAuth DCR; review metadata (five workflow positives and three negatives) and trigger-matrix structure (one positive per task skill and three negatives); tracked ZIP completeness and reproducibility; packaged renderer behavior.\n'
+printf 'Checks: portable manifests and versions; OAuth DCR; review metadata (five workflow positives and three negatives) and trigger-matrix structure (one positive per task skill and three negatives); tracked ZIP completeness and reproducibility; packaged renderer behavior; OpenAI package build (overlay applied, no removed-skill references, no broken links, no secrets, reproducible).\n'

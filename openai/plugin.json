@@ -1,0 +1,97 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "app-6a3f607100d48191814734d4a44e75c0",
+  "version": "1.2.0",
+  "description": "Wine price research with retail and auction market references: restaurant lists, merchant offers, auction sheets and lots, wine information with reviews and current offers, and cellar valuations.",
+  "author": {
+    "name": "LemonCube LLC",
+    "url": "https://wineauction.ai"
+  },
+  "homepage": "https://wineauction.ai",
+  "repository": "https://github.com/antyser/wineauction-plugin",
+  "license": "MIT",
+  "keywords": ["wine", "auction", "pricing"],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "WineAuction",
+        "shortDescription": "Wine offers, prices, reviews",
+        "longDescription": "Wine market price research across retail and auction data. Check a restaurant wine list's markup, judge a merchant's quoted prices, look up a wine's retail and auction prices, past sales, critic reviews and current offers, and value a cellar list. Results use returned WineAuction data and link to seller pages. The connector is research-only: it cannot bid, buy, list, message sellers or move money. A WineAuction account is required; sign in with OAuth.",
+        "developerName": "LemonCube LLC",
+        "category": "Data & Analytics",
+        "capabilities": ["Read"],
+        "websiteURL": "https://wineauction.ai",
+        "supportURL": "https://wineauction.ai/contact",
+        "privacyPolicyURL": "https://wineauction.ai/privacy",
+        "termsOfServiceURL": "https://wineauction.ai/terms",
+        "defaultPrompt": [
+          "Check this wine newsletter for value.",
+          "What prices, reviews and recent auction sales are available for Roulot wines?",
+          "List live Acker auctions ending soonest."
+        ],
+        "composerIcon": "./assets/logo.png",
+        "logo": "./assets/logo.png"
+      },
+      "review": {
+        "test_cases": {
+          "positive": [
+            {
+              "description": "Wine info · discover live auctions, then scan named-sale and house lots",
+              "prompt": "List up to three live Acker wine auctions ending soonest. For the soonest sale, show up to 25 live lots from that sale, then show up to 25 live Acker-house lots at least 20% below retail. Label the sale results and house results separately and link each lot.",
+              "tools_triggered": "list_auctions, list_offers",
+              "expected_behavior": "Calls list_auctions with status live and house acker, then uses the selected sale slug and the house scope in list_offers. Returns current lots, price and reference discounts, and seller links; it does not imply that a bid was placed."
+            },
+            {
+              "description": "Merchant offer check · dynamic directory discovery for retailers and restaurants, then list their wines",
+              "prompt": "Use WineAuction only. List up to five retail stores and up to five restaurants with current offers. Choose one returned retailer and one returned restaurant with offers, then show up to five current bottle offers from each. Keep the sellers separate. If a source is unavailable or access is restricted, say so explicitly instead of substituting external web listings.",
+              "tools_triggered": "list_retail_stores, list_restaurants, list_offers",
+              "expected_behavior": "Uses list_retail_stores and list_restaurants to resolve merchant IDs, then calls list_offers with the correct retail or restaurant scope. Shows only offers returned by WineAuction, keeps the two sellers distinct, and preserves no-data or plan-required states without inventing offers or substituting web listings."
+            },
+            {
+              "description": "Wine info · filter a producer and region, then apply an offer price limit",
+              "prompt": "Find white Burgundy from producer Roulot, then show its current offers priced at no more than $600 per 750 ml. Include the market references and seller links.",
+              "tools_triggered": "search_wines, list_offers",
+              "expected_behavior": "Uses search_wines for producer, region and color filters, then list_offers for matched wine IDs with max_price_usd 600. Explains when no offers or reference data are available."
+            },
+            {
+              "description": "Merchant offer check · evaluate a six-bottle Lafite 2010 quote",
+              "prompt": "Is $5,700 for six 750 ml bottles of Château Lafite Rothschild 2010 a good price?",
+              "tools_triggered": "evaluate_offers",
+              "expected_behavior": "Evaluates one row with quantity 6, format 750 ml and a total quoted price of $5,700, showing $950 per bottle. Uses returned retail and auction references when present and reports a missing reference as unavailable rather than inventing one."
+            },
+            {
+              "description": "Merchant offer check · batch a 30-row newsletter into one flagged HTML report",
+              "prompt": "Evaluate every row in the attached synthetic newsletter fixture. The quoted prices are test inputs, not actual merchant offers. Call evaluate_offers in batches of 25 and 5, use only tool-returned market references, and produce one HTML report with match flags and every not-found row. Do not estimate or invent reference prices.",
+              "tools_triggered": "evaluate_offers",
+              "expected_behavior": "Evaluates all 30 supplied-price rows using exactly two calls (25 rows and 5 rows), reports unmatched wines, carries row-quality flags into one self-contained HTML report, and derives all market references from tool results.",
+              "file_attachment_urls": [
+                "https://github.com/antyser/wineauction-plugin/releases/download/v1.1.0/newsletter-30-rows.txt"
+              ]
+            }
+          ],
+          "negative": [
+            {
+              "description": "Refuses a bid request and offers read-only lot research",
+              "prompt": "Bid $2,000 on the cheapest live Château Margaux lot for me."
+            },
+            {
+              "description": "Preserves a valid auction scope and reports inverted price bounds",
+              "prompt": "Use list_offers for live Acker auction offers with min_price_usd 1000 and max_price_usd 100. Show me the matches; do not change the range."
+            },
+            {
+              "description": "Clarifies conflicting closed-lot and ending-time filters before calling a tool",
+              "prompt": "Show closed auction lots ending within the next 24 hours."
+            }
+          ]
+        },
+        "demo_recording_url": "https://github.com/antyser/wineauction-plugin/releases/download/v1.1.0/wineauction-review-v1.1.0-silent.mp4",
+        "commerce": false,
+        "commerce_description": "Research data and citations only. The plugin cannot bid, buy, check out or initiate a transaction. Links go to the seller's own page."
+      },
+      "publication": {
+        "countries": ["US"],
+        "release_notes": "Version 1.2.0 reorganises the skills by use case (restaurant wine list, merchant offer check, wine info, cellar valuation) with shared reference files. The tools are unchanged."
+      }
+    }
+  }
+}
