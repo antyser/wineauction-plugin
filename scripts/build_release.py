@@ -184,11 +184,8 @@ def check_trigger_cases(files: dict[str, bytes]) -> None:
 
 
 def check_archive(archive_path: Path, revision: str) -> None:
-    expected = {
-        path
-        for path in git("ls-tree", "-r", "--name-only", revision).splitlines()
-        if not path.startswith("openai/")
-    }
+    require(".gitattributes" not in git("ls-tree", "-r", "--name-only", revision).splitlines(), "the Claude directory rejects .gitattributes export rules")
+    expected = set(git("ls-tree", "-r", "--name-only", revision).splitlines())
     with zipfile.ZipFile(archive_path) as archive:
         files = archive_files(archive)
     actual = set(files)
