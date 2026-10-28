@@ -21,9 +21,9 @@ fi
 
 tmp_dir=$(mktemp -d "${TMPDIR:-/tmp}/wineauction-local-ci.XXXXXX")
 trap 'rm -rf "$tmp_dir"' EXIT
-archive="$tmp_dir/wineauction-plugin-1.2.0.zip"
+archive="$tmp_dir/wineauction-plugin-1.2.1.zip"
 python3 scripts/build_release.py --output "$archive" --expected-head "$candidate_head"
-python3 scripts/build_openai_package.py --output "$tmp_dir/wineauction-plugin-1.2.0-openai.zip" --expected-head "$candidate_head"
+python3 scripts/build_openai_package.py --output "$tmp_dir/wineauction-plugin-1.2.1-openai.zip" --expected-head "$candidate_head"
 
 printf 'LOCAL CI SUMMARY: PASS\n'
 printf 'Head: %s\n' "$candidate_head"
