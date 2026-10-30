@@ -177,7 +177,7 @@ def check_trigger_cases(files: dict[str, bytes]) -> None:
     cases = read_json(files, "review/trigger-cases.json")
     positive = cases.get("positive", [])
     negative = cases.get("negative", [])
-    require(len(positive) == 6 and len(negative) == 3, "trigger matrix must contain six positive and three negative cases")
+    require(len(positive) == 26 and len(negative) == 6, "trigger matrix must contain 26 positive and six negative cases")
     require({case.get("expected_skill") for case in positive} == TASK_SKILLS, "trigger matrix must cover every task skill")
     require(all(case.get("prompt") and case.get("expected_skill") in TASK_SKILLS for case in positive), "positive trigger cases need prompts and expected skills")
     require(all(case.get("prompt") and case.get("expected_skill") is None for case in negative), "negative trigger cases need prompts and a null expected skill")

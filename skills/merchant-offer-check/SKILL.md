@@ -1,6 +1,6 @@
 ---
 name: merchant-offer-check
-description: "Judge the prices a merchant has quoted, for one wine or a whole list, per bottle or per 6-pack or case, against retail and auction market prices. Use when the user shares a merchant email, newsletter, promotion, futures or en primeur offer, price list or offer sheet, asks whether a shop's or seller's quoted price for a wine is good, or wants a named wine shop's whole listing checked against the market. A price on a restaurant list belongs to restaurant-wine-list; a price at auction belongs to auction-lots."
+description: "Judge the prices a merchant has quoted, for one wine or a whole list, per bottle or per 6-pack or case, against retail and auction market prices. Use when the user shares a merchant email, newsletter, promotion, futures or en primeur offer, price list or offer sheet, wants a named wine shop's whole listing checked against the market, or gives a single price for a named wine and asks whether it is expensive, fair, a good deal or worth paying, at a shop, from a seller or online: \"is $300 for Pingus 2019 expensive?\", \"should I buy Harlan 2019 at $1,100?\", \"店里卖 $200，划算吗\". A price on a restaurant list belongs to restaurant-wine-list; a price at auction belongs to auction-lots; bottles the user already owns belong to cellar-valuation."
 ---
 
 # Merchant offer check

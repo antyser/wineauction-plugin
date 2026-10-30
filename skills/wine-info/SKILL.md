@@ -1,6 +1,6 @@
 ---
 name: wine-info
-description: "Look up one wine or many at once: their retail and auction reference prices, past auction sales, vintage-by-vintage prices, available critic reviews, and where it is currently offered, such as \"what does 2019 Roulot Meursault Perrières go for, what did critics say, and who has it?\" Use when the user asks about a named wine, producer, vintage, region or appellation (what it costs or sells for, how vintages compare, what it fetched at auction, its reviews, or where it is available now) without bringing a price or list of their own."
+description: "Look up one wine or many at once: their retail and auction reference prices, past auction sales, vintage-by-vintage prices, available critic reviews, and where it is currently offered, such as \"what does 2019 Roulot Meursault Perrières go for, what did critics say, and who has it?\" Use when the user asks in ordinary words what a named wine, producer, vintage, region or appellation costs, sells for or is worth, with or without a vintage, in any language: \"how much is Sassicaia 2016\", \"price of Krug 2008\", \"what's DRC La Tâche worth\", \"Opus One 2018 多少钱\", \"2015 Lafite 现在什么价\", \"Petrus 2010 贵不贵\", \"which Meursault vintage is the best value\", or asks how vintages compare, what it fetched at auction, its reviews or where it is available now. Read it before calling the WineAuction tools for such a question. The user brings no price they were quoted, no bottles they own and no list of their own."
 ---
 
 # Wine info

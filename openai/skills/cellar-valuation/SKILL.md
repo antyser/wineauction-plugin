@@ -1,6 +1,6 @@
 ---
 name: cellar-valuation
-description: "Value a collection of wines the user owns, any number of wines and bottles each, per wine and in total, from retail and auction reference prices. Use when the user shares a cellar list, inventory spreadsheet, CellarTracker or Vivino export, or a list of bottles they own and asks what it is worth, for insurance, resale or estate purposes."
+description: "Value wines the user owns, from one bottle to a whole collection, per wine and in total, from retail and auction reference prices. Use when the user says they own, hold or want to sell bottles and asks what they are worth or would fetch, such as \"what would my 6 bottles of Margaux 2005 fetch at auction\" or \"我有一瓶 2010 Lafite，值多少钱\", or shares a cellar list, inventory spreadsheet, CellarTracker or Vivino export and asks what it is worth, for insurance, resale or estate purposes."
 ---
 
 # Cellar valuation

@@ -1,6 +1,6 @@
 ---
 name: merchant-offer-check
-description: "Compare a merchant's printed prices, for one wine or a whole price list, per bottle or per 6-pack or case, with retail and auction market reference prices, per 750 ml. Use when the user shares a merchant email, newsletter, futures or en primeur offer, price list or offer sheet, or one quoted price, and asks how the prices compare with the market. A price on a restaurant list belongs to restaurant-wine-list."
+description: "Compare a merchant's printed prices, for one wine or a whole price list, per bottle or per 6-pack or case, with retail and auction market reference prices, per 750 ml. Use when the user shares a merchant email, newsletter, futures or en primeur offer, price list or offer sheet, or gives a single price for a named wine and asks whether it is high, fair or low against the market: \"is $300 for Pingus 2019 expensive?\", \"店里卖 $200，划算吗\". A price on a restaurant list belongs to restaurant-wine-list; bottles the user already owns belong to cellar-valuation."
 ---
 
 # Merchant price comparison
