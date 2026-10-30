@@ -30,6 +30,106 @@
       "case": "wine-info-current-offers",
       "prompt": "Where can I find 2010 Château Lafite Rothschild right now, and who has the lowest price?",
       "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-opus-one-chinese",
+      "prompt": "Opus One 2018 多少钱",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-sassicaia-how-much",
+      "prompt": "how much is a bottle of Sassicaia 2016",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-quoted-price-expensive",
+      "prompt": "is $300 for Pingus 2019 expensive?",
+      "expected_skill": "merchant-offer-check"
+    },
+    {
+      "case": "casual-lafite-chinese-price",
+      "prompt": "2015 Lafite 现在什么价",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-la-tache-worth",
+      "prompt": "what's DRC La Tâche worth",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-grange-chinese-worth",
+      "prompt": "这瓶酒值多少钱：Penfolds Grange 2010",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-krug-price",
+      "prompt": "price of Krug 2008",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-owned-margaux-auction",
+      "prompt": "what would my 6 bottles of Margaux 2005 fetch at auction",
+      "expected_skill": "cellar-valuation"
+    },
+    {
+      "case": "casual-roulot-vintage-value",
+      "prompt": "Roulot Meursault 哪年份性价比高",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-buy-at-quoted-price",
+      "prompt": "should I buy Harlan 2019 at $1,100?",
+      "expected_skill": "merchant-offer-check"
+    },
+    {
+      "case": "casual-screaming-eagle-chinese-market",
+      "prompt": "Screaming Eagle 2015 现在市场价大概多少",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-shop-price-good-deal",
+      "prompt": "Is Ridge Monte Bello 2016 a good deal at $180 a bottle? My local shop is selling it.",
+      "expected_skill": "merchant-offer-check"
+    },
+    {
+      "case": "casual-dom-perignon-cost",
+      "prompt": "how much does Dom Perignon 2012 cost",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-owned-cellar-twelve",
+      "prompt": "I have 12 bottles of Vega Sicilia Unico 2009 in my cellar, what are they worth?",
+      "expected_skill": "cellar-valuation"
+    },
+    {
+      "case": "casual-petrus-chinese-expensive",
+      "prompt": "Petrus 2010 贵不贵",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-margaux-birthday-gift",
+      "prompt": "Chateau Margaux 2000 go for how much these days? thinking of buying one for a birthday",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-restaurant-chinese-markup",
+      "prompt": "餐厅酒单上 Opus One 2018 卖 $450，划算吗？",
+      "expected_skill": "restaurant-wine-list"
+    },
+    {
+      "case": "casual-restaurant-fair-price",
+      "prompt": "the restaurant is charging $380 for a Sassicaia 2016, is that a fair price?",
+      "expected_skill": "restaurant-wine-list"
+    },
+    {
+      "case": "casual-monfortino-value",
+      "prompt": "Barolo Monfortino 2013 value",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-leoville-chinese-price",
+      "prompt": "Leoville Las Cases 2016 怎么卖的，大概什么价位",
+      "expected_skill": "wine-info"
     }
   ],
   "negative": [
@@ -46,6 +146,21 @@
     {
       "case": "unrelated-currency-conversion",
       "prompt": "Convert 500 euros to US dollars.",
+      "expected_skill": null
+    },
+    {
+      "case": "wine-pairing",
+      "prompt": "What wine goes well with grilled salmon?",
+      "expected_skill": null
+    },
+    {
+      "case": "how-champagne-is-made",
+      "prompt": "How is champagne made?",
+      "expected_skill": null
+    },
+    {
+      "case": "unrelated-price",
+      "prompt": "how much does an iPhone 16 cost",
       "expected_skill": null
     }
   ]

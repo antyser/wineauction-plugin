@@ -27,4 +27,4 @@ python3 scripts/build_openai_package.py --output "$tmp_dir/wineauction-plugin-1.
 
 printf 'LOCAL CI SUMMARY: PASS\n'
 printf 'Head: %s\n' "$candidate_head"
-printf 'Checks: portable manifests and versions; OAuth DCR; review metadata (five workflow positives and three negatives) and trigger-matrix structure (one positive per task skill and three negatives); tracked ZIP completeness and reproducibility; packaged renderer behavior; OpenAI package build (overlay applied, no removed-skill references, no broken links, no secrets, reproducible).\n'
+printf 'Checks: portable manifests and versions; OAuth DCR; review metadata (five workflow positives and three negatives) and trigger-matrix structure (26 positives covering every task skill, six negatives); tracked ZIP completeness and reproducibility; packaged renderer behavior; OpenAI package build (overlay applied, no removed-skill references, no broken links, no secrets, reproducible).\n'
