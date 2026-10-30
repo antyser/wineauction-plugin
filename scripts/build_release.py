@@ -19,7 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "wineauction-plugin/"
-VERSION = "1.2.0"
+VERSION = "1.2.1"
 FIXTURE_ATTACHMENT = (
     "https://github.com/antyser/wineauction-plugin/releases/download/"
     "v1.1.0/newsletter-30-rows.txt"

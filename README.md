@@ -13,7 +13,7 @@ Compare presented wine offers with retail and auction market prices, and find wi
   - `cellar-valuation`: a list of bottles you own. Value per bottle and in total, at auction and at retail.
   - `wineauction-reference`: shared tool fields, price-reading rules, list parsing and the HTML report renderer that the skills above link to.
 
-Version 1.2.0 reorganises the skills by use case. The tools are unchanged.
+Version 1.2.1 explains the auction reference's fallback: the exact vintage when it has sales, otherwise all vintages pooled, with `vintage_basis` saying which.
 
 ## Install
 
@@ -62,7 +62,7 @@ After committing the release candidate, build the ZIP from tracked files with:
 python3 scripts/build_release.py
 ```
 
-The default output is `~/Downloads/wineauction-plugin-1.2.0.zip`. To verify a candidate commit and its packaged renderer, run:
+The default output is `~/Downloads/wineauction-plugin-1.2.1.zip`. To verify a candidate commit and its packaged renderer, run:
 
 ```
 scripts/local_ci.sh "$(git rev-parse HEAD)"
@@ -75,6 +75,6 @@ The local check requires a clean checkout at the supplied commit, validates the 
 OpenAI's plugin review blocks two skills, so the ZIP uploaded to OpenAI is a variant of the full plugin, built from the same commit:
 
 - `python3 scripts/build_release.py` builds the full plugin for Claude and Codex (all five task skills and `skills/wineauction-reference`).
-- `python3 scripts/build_openai_package.py` builds `~/Downloads/wineauction-plugin-1.2.0-openai.zip`. It drops `skills/auction-lots`, moves `skills/wineauction-reference` to a root `shared/` folder without its `SKILL.md` and `agents/`, rewrites the `../wineauction-reference/` links to `../../shared/`, keeps only `plugin.json`, `mcp.json`, `LICENSE`, `assets/`, `skills/` and `shared/`, and applies the files under `openai/` over the result (same paths as in the package): the app-name `plugin.json`, an `mcp.json` without its own OAuth block, an OpenAI-specific `README.md`, the four task `SKILL.md` files and the shared references that use neutral price-research wording. The full plugin ZIP also carries `openai/`; the repo has no `.gitattributes` export rules because the Claude directory rejects them.
+- `python3 scripts/build_openai_package.py` builds `~/Downloads/wineauction-plugin-1.2.1-openai.zip`. It drops `skills/auction-lots`, moves `skills/wineauction-reference` to a root `shared/` folder without its `SKILL.md` and `agents/`, rewrites the `../wineauction-reference/` links to `../../shared/`, keeps only `plugin.json`, `mcp.json`, `LICENSE`, `assets/`, `skills/` and `shared/`, and applies the files under `openai/` over the result (same paths as in the package): the app-name `plugin.json`, an `mcp.json` without its own OAuth block, an OpenAI-specific `README.md`, the four task `SKILL.md` files and the shared references that use neutral price-research wording. The full plugin ZIP also carries `openai/`; the repo has no `.gitattributes` export rules because the Claude directory rejects them.
 
 The OpenAI build checks that no file links to a missing path, that nothing still references `auction-lots` or `wineauction-reference`, and that no secret-like material is packaged. Both builds run in `scripts/local_ci.sh`. Edit the `openai/` copy, not the tracked file, to change what OpenAI receives.
