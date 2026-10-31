@@ -10,8 +10,8 @@ No inputs. Returns `{preference, updated_at}`: the note as text and its last cha
 
 | Input | Type | Notes |
 | --- | --- | --- |
-| `preference` | string, required | The whole note, at most 5,000 characters. Replaces the saved note; an empty string clears it. |
+| `preference` | string, required | The whole note, at most 5,000 characters (an emoji counts as 2). Replaces the saved note; an empty string clears it. |
 
-Returns the saved `{preference, updated_at}`. Call only after the user agrees to the exact text.
+Returns the saved `{preference, updated_at}`, with leading and trailing spaces trimmed; after a clear both are `null`. Show the user the returned text. Call only after the user agrees to the exact text.
 
-Both tools need a signed-in account; without one they return `AUTH_REQUIRED`. A note over the limit returns `invalid_input`.
+Both tools need a signed-in account; without one they return `AUTH_REQUIRED`. A note over the limit returns `invalid_input`. `PREFERENCE_UNAVAILABLE` means the store failed: try once more, then tell the user it could not be saved and that they can paste the note at https://wineauction.ai/settings.
