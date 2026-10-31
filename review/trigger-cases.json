@@ -130,6 +130,26 @@
       "case": "casual-leoville-chinese-price",
       "prompt": "Leoville Las Cases 2016 怎么卖的，大概什么价位",
       "expected_skill": "wine-info"
+    },
+    {
+      "case": "setup-first-run",
+      "prompt": "I just installed WineAuction. Set it up for me.",
+      "expected_skill": "setup"
+    },
+    {
+      "case": "setup-chinese",
+      "prompt": "帮我设置一下 WineAuction，记住我平时喜欢喝什么酒",
+      "expected_skill": "setup"
+    },
+    {
+      "case": "setup-remember-preference",
+      "prompt": "Remember that I mostly buy white Burgundy under $150 a bottle, usually at retail.",
+      "expected_skill": "setup"
+    },
+    {
+      "case": "inbox-deal-watch",
+      "prompt": "Every morning, check my inbox for new wine merchant newsletters and tell me if any offer is a good deal.",
+      "expected_skill": "merchant-offer-check"
     }
   ],
   "negative": [
