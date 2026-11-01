@@ -19,7 +19,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 PREFIX = "wineauction-plugin/"
-VERSION = "1.2.0"
+VERSION = "1.3.0"
 FIXTURE_ATTACHMENT = (
     "https://github.com/antyser/wineauction-plugin/releases/download/"
     "v1.1.0/newsletter-30-rows.txt"
@@ -39,6 +39,7 @@ TASK_SKILLS = {
     "auction-lots",
     "wine-info",
     "cellar-valuation",
+    "setup",
 }
 ROW = re.compile(r"^.+ — \d+ ml × \d+ — \$[\d,]+(?:\.\d{2})?$")
 
@@ -177,7 +178,7 @@ def check_trigger_cases(files: dict[str, bytes]) -> None:
     cases = read_json(files, "review/trigger-cases.json")
     positive = cases.get("positive", [])
     negative = cases.get("negative", [])
-    require(len(positive) == 26 and len(negative) == 6, "trigger matrix must contain 26 positive and six negative cases")
+    require(len(positive) == 30 and len(negative) == 6, "trigger matrix must contain 30 positive and six negative cases")
     require({case.get("expected_skill") for case in positive} == TASK_SKILLS, "trigger matrix must cover every task skill")
     require(all(case.get("prompt") and case.get("expected_skill") in TASK_SKILLS for case in positive), "positive trigger cases need prompts and expected skills")
     require(all(case.get("prompt") and case.get("expected_skill") is None for case in negative), "negative trigger cases need prompts and a null expected skill")
@@ -208,6 +209,9 @@ def check_archive(archive_path: Path, revision: str) -> None:
         "skills/wine-info/agents/openai.yaml",
         "skills/cellar-valuation/SKILL.md",
         "skills/cellar-valuation/agents/openai.yaml",
+        "skills/setup/SKILL.md",
+        "skills/setup/agents/openai.yaml",
+        "skills/wineauction-reference/references/tools/preference.md",
         "skills/wineauction-reference/SKILL.md",
         "skills/wineauction-reference/agents/openai.yaml",
         "skills/wineauction-reference/assets/report.html",

@@ -1,6 +1,6 @@
 ---
 name: merchant-offer-check
-description: "Judge the prices a merchant has quoted, for one wine or a whole list, per bottle or per 6-pack or case, against retail and auction market prices. Use when the user shares a merchant email, newsletter, promotion, futures or en primeur offer, price list or offer sheet, wants a named wine shop's whole listing checked against the market, or gives a single price for a named wine and asks whether it is expensive, fair, a good deal or worth paying, at a shop, from a seller or online: \"is $300 for Pingus 2019 expensive?\", \"should I buy Harlan 2019 at $1,100?\", \"店里卖 $200，划算吗\". A price on a restaurant list belongs to restaurant-wine-list; a price at auction belongs to auction-lots; bottles the user already owns belong to cellar-valuation."
+description: "Judge the prices a merchant has quoted, for one wine or a whole list, per bottle or per 6-pack or case, against retail and auction market prices. Use when the user shares a merchant email, newsletter, promotion, futures or en primeur offer, price list or offer sheet, wants a named wine shop's whole listing checked against the market, or gives a single price for a named wine and asks whether it is expensive, fair, a good deal or worth paying, at a shop, from a seller or online: \"is $300 for Pingus 2019 expensive?\", \"should I buy Harlan 2019 at $1,100?\", \"店里卖 $200，划算吗\". A price on a restaurant list belongs to restaurant-wine-list; a price at auction belongs to auction-lots; bottles the user already owns belong to cellar-valuation. Also use when the user wants a recurring check of their inbox for new merchant offers that are good deals."
 ---
 
 # Merchant offer check
@@ -22,3 +22,14 @@ The question is whether each quoted price is below, at or above the market for t
 - For one quote: the per-bottle price, both references, both discounts, and a plain verdict naming the reference it rests on.
 - For a list: the five rows furthest below a reference, leaving out flagged rows; anything clearly above both references; pre-arrival and futures rows marked as such.
 - When the user also asks about reviews, call `search_wines` with the matched `lwin7` and `vintage` and quote `reviews[]` as the wine-info skill does.
+
+## Inbox deal watch
+
+When the user wants new merchant emails checked on a schedule (often offered by the setup skill) and the client has both an email connector it can search and a scheduled-task tool, create a recurring task whose prompt does this on each run:
+
+1. Search the inbox for wine merchant emails and newsletters received since the previous run (first run: the last 7 days). Skip emails already checked in an earlier run.
+2. Parse each email's offers into rows as in step 1 above and evaluate them with `evaluate_offers`, 25 rows per call.
+3. Keep only rows that meet the user's threshold (default: `discount_vs_retail_pct` at least 20), leaving out flagged rows and weak matches. Rank by discount, then by fit with the user's saved preference note (`get_preference`) when there is one.
+4. Report only deals not reported in an earlier run: wine and vintage, merchant, price per 750 ml, both references and discounts, and the email's subject and date. Nothing new → a one-line "no new deals" or no notification, as the client allows.
+
+Only the wine names and prices go to WineAuction; the emails stay with the user's agent. Do not store the watch anywhere else, and say how to pause or delete the task.
