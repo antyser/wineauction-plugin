@@ -35,7 +35,7 @@ A live lot's price is its current bid, else the opening bid, and bidding raises 
 
 Rank by the low-estimate discount unless the user asks otherwise, say which one you rank by, and show both. In the report, set `price_usd` to the low-estimate price with `price_label` "Low estimate incl. premium", recompute `discount_vs_retail_pct` and `discount_vs_auction_pct` from that price against `retail.price_usd` and `auction.price_usd`, set `quoted_price` to `auction_estimate_low`, and put the current-bid discounts in `flags`.
 
-For each highlighted lot also give the auction median for that wine and vintage with its sale count and last sale date, and how the low estimate compares with it.
+For each highlighted lot also give the auction median with its sale count and last sale date, and how the low estimate compares with it. The median is for the lot's exact vintage when that vintage has sales, otherwise for all vintages pooled; when `auction.vintage_basis` is `any_vintage`, say the median pools every vintage.
 
 ## Recurring watch
 

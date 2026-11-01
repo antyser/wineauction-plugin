@@ -5,9 +5,9 @@
 Every wine and offer carries two reference views, in US dollars per 750 ml:
 
 - `retail`: the lowest current retail price (`price_usd`) and how many retail offers are on sale (`live_offer_count`).
-- `auction`: the median hammer price with buyer's premium for this exact vintage (`price_usd`), with `sale_count` and `last_sale_at`.
+- `auction`: the median hammer price with buyer's premium (`price_usd`), with `sale_count`, `last_sale_at` and `vintage_basis`. It is the median for the exact vintage when that vintage has sales, otherwise for all vintages of the wine pooled; `vintage_basis` says which (`exact` or `any_vintage`). A wine without a vintage always gets the pooled figure.
 
-Either view is null when there is no data. A null auction view means this vintage has no recorded sales in the data; it does not prove the wine never sold. Answer sale-history questions from closed lots (`list_offers` with `status: closed`).
+Either view is null when there is no data. A null auction view means no vintage of the wine has recorded sales in the data; it does not prove the wine never sold. Answer sale-history questions from closed lots (`list_offers` with `status: closed`).
 
 The references are market prices, not listings.
 
@@ -21,6 +21,7 @@ The references are market prices, not listings.
 ## Flag a reference as doubtful when
 
 - `auction.sale_count` is 1 or 2: one or two sales are weak evidence.
+- `auction.vintage_basis` is `any_vintage`: the median pools every vintage of the wine, not this vintage's sales, and `discount_vs_auction_pct` is set against that pooled median. Tell the user whenever you quote it.
 - `retail.live_offer_count` is 0: the retail reference is stale, not a current price.
 - The retail and auction references are more than 3× apart.
 - The retail reference is below a third of a retail list price on the same line.

@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "wineauction",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Wine price research with retail and auction market references: restaurant lists, merchant offers, auction sheets and lots, wine information with reviews and current offers, and cellar valuations.",
   "author": {
     "name": "LemonCube LLC",
@@ -90,7 +90,7 @@
       },
       "publication": {
         "countries": ["US"],
-        "release_notes": "Version 1.2.0 reorganises the skills by use case (restaurant wine list, merchant offer check, auction lots, wine info, cellar valuation) over one shared reference skill. The tools are unchanged."
+        "release_notes": "Version 1.2.1 explains that the auction reference falls back to all vintages pooled when the exact vintage has no sales, and that vintage_basis marks which one was used."
       }
     }
   }
