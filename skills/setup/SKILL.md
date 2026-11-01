@@ -13,7 +13,7 @@ Use the client's own question tool when it has one: `AskUserQuestion` in Claude 
 
 ## Steps
 
-0. Call `get_preference` ([fields](../wineauction-reference/references/tools/preference.md)). If a note is saved, show it and ask: keep it, update it, or start over. Keep → go to step 4. Update → ask only what the user wants to change. `AUTH_REQUIRED` → tell the user to sign in to the WineAuction connector (Claude Code: `/mcp`) and stop.
+0. Call `get_preference` ([fields](../wineauction-reference/references/tools/preference.md)). If a note is saved, show it and ask: keep it, update it, or start over. Keep → go to step 5. Update → ask only what the user wants to change. `AUTH_REQUIRED` → tell the user to sign in to the WineAuction connector (Claude Code: `/mcp`) and stop.
 1. How they buy wine (several allowed):
    - Retail: shops and online stores
    - Restaurants
