@@ -21,7 +21,7 @@ Find wines: price a list of named wines, follow a watch list, or find wines by r
 | `wines[]` | One entry per wine and vintage. |
 | `wines[].wine_id`, `wine_name`, `producer`, `vintage`, `region`, `appellation`, `color`, `lwin7` | The catalog wine. Pass `wine_id` to `list_offers` for every offer of the wine; pass `lwin7` to `evaluate_offers` or `list_offers`. |
 | `wines[].wineapp_url` | The wine's page on wineauction.ai for this vintage. |
-| `wines[].retail`, `wines[].auction` | The two reference views. |
+| `wines[].retail`, `wines[].auction` | The two reference views. Their fields (`offer_count`, `window`, `vintage_basis`, `sale_count`) and how to check a thin one are in [prices.md](../prices.md). |
 | `wines[].offer_count` | Current offers for this wine, counted before Wine-Searcher duplicates are hidden, so it can exceed what `list_offers` returns. |
 | `notice` | Present when there is something the caller should know, such as a skipped restaurant offer type or reviews that could not be loaded. |
 | `wines[].best_offers[]` | Up to 2 offer rows, largest discount first, without the wine fields and views already given above. |
