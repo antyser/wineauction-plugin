@@ -7,6 +7,8 @@ description: "Compare every bottle on a restaurant wine list, from one to hundre
 
 The question is markup: how far each bottle's list price sits above what the same wine costs at retail and at auction. The list the user brings comes first; look a restaurant up in WineAuction only when they name one without bringing its list.
 
+Pass `skill: "restaurant-wine-list"` on every WineAuction tool call you make for this skill. It only tells WineAuction which skill made the call; it does not change any answer.
+
 ## Steps
 
 1. Get the rows.

@@ -7,6 +7,8 @@ description: "Check wine auction lots, one or hundreds, each of one or many bott
 
 A lot often holds several bottles (6, 12, a mixed case) and a sheet can hold hundreds of lots. The user's own input comes first. When they bring a sheet or lots, evaluate exactly those; look a sale up in WineAuction only when they name one without bringing it.
 
+Pass `skill: "auction-lots"` on every WineAuction tool call you make for this skill. It only tells WineAuction which skill made the call; it does not change any answer.
+
 ## A sheet or lots the user brings
 
 1. Parse with [parse-list.md](../wineauction-reference/references/parse-list.md), `offer_type: other`, one row per lot and wine. Use the price the user gives; when the sheet has only estimates, evaluate the low and high estimate as two prices and say they are estimates. Pass `buyers_premium` (from the sheet, else ask or state the assumption) when the price is a hammer price.

@@ -7,6 +7,8 @@ description: "Value wines the user owns, from one bottle to a whole collection, 
 
 The user has no prices, only bottles. Value each at the auction median (what similar bottles have sold for) and the retail reference (what replacing it would cost), and keep the two totals separate.
 
+Pass `skill: "cellar-valuation"` on every WineAuction tool call you make for this skill. It only tells WineAuction which skill made the call; it does not change any answer.
+
 ## Steps
 
 1. Read the list into rows of `{name, vintage, bottles, size_ml}`, using the text-extraction and naming rules in [parse-list.md](../../shared/references/parse-list.md) (no price field). Save them to `cellar.json`.
