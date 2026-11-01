@@ -39,7 +39,7 @@ Likes: white Burgundy (Roulot, Coche-Dury), Champagne; not much New World red
 Updated: 2026-10-31 (WineAuction setup)
 ```
 
-Leave out a line the user skipped. `save_preference` replaces the whole note, so when updating, send the full note with the change applied. An empty string clears it, only when the user asks to clear it.
+Put today's date on the Updated line, not the example's. Leave out a line the user skipped. `save_preference` replaces the whole note, so when updating, send the full note with the change applied. An empty string clears it, only when the user asks to clear it.
 
 ## Deal watch
 
