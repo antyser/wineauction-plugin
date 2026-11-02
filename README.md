@@ -58,7 +58,7 @@ Open an issue at [github.com/antyser/wineauction-plugin/issues](https://github.c
 
 ## Build and verify a release
 
-Both versioned manifests use the same release version. The portable package keeps `plugin.json`, `mcp.json`, `skills/` and `assets/` at the repository root; the Claude marketplace manifests remain available alongside them. The 30-row newsletter under `review/fixtures/` is synthetic supplied-price input for workflow review, not a set of real merchant offers or market references.
+Both versioned manifests and `server.json` use the same release version. `server.json` is the official MCP Registry entry; `.github/workflows/mcp-registry.yml` publishes it when it changes on `main`, and the registry only accepts a new version. The portable package keeps `plugin.json`, `mcp.json`, `skills/` and `assets/` at the repository root; the Claude marketplace manifests remain available alongside them. The 30-row newsletter under `review/fixtures/` is synthetic supplied-price input for workflow review, not a set of real merchant offers or market references.
 
 Natural-language skill-routing examples are kept separately in `review/trigger-cases.json`, one per task skill; the OpenAI review cases continue to cover the six connector tools and the existing workflow examples.
 
