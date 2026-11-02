@@ -109,6 +109,8 @@ def check_manifest(files: dict[str, bytes]) -> None:
     require(portable.get("version") == VERSION, f"portable manifest version is not {VERSION}")
     require(claude.get("name") == portable["name"], "Claude and portable package identities differ")
     require(claude.get("version") == portable["version"], "versioned manifests are out of sync")
+    registry = read_json(files, "server.json")
+    require(registry.get("version") == portable["version"], "server.json version is out of sync")
     require(portable.get("author", {}).get("name") == "LemonCube LLC", "publisher is not LemonCube LLC")
 
     extension = portable.get("extensions", {}).get("com.openai", {})

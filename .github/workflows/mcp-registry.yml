@@ -9,6 +9,10 @@ on:
     paths: [server.json]
   workflow_dispatch:
 
+concurrency:
+  group: mcp-registry
+  cancel-in-progress: false
+
 jobs:
   publish:
     runs-on: ubuntu-latest
