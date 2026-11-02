@@ -1,0 +1,62 @@
+# Publishes server.json to the official MCP Registry (registry.modelcontextprotocol.io).
+# GitHub OIDC proves ownership of the io.github.antyser/* namespace; no secret is needed.
+# The registry rejects a version it already has, so bump "version" in server.json to republish.
+name: Publish to MCP Registry
+
+on:
+  push:
+    branches: [main]
+    paths: [server.json]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write
+      contents: read
+    env:
+      MCP_PUBLISHER_VERSION: v1.8.1
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Install cosign
+        uses: sigstore/cosign-installer@6f9f17788090df1f26f669e9d70d6ae9567deba6 # v4.1.2
+
+      - name: Download and verify mcp-publisher
+        run: |
+          set -euo pipefail
+          os="$(uname -s | tr '[:upper:]' '[:lower:]')"
+          arch="$(uname -m | sed 's/x86_64/amd64/;s/aarch64/arm64/')"
+          archive="mcp-publisher_${os}_${arch}.tar.gz"
+          base_url="https://github.com/modelcontextprotocol/registry/releases/download/${MCP_PUBLISHER_VERSION}"
+          curl --fail --location --silent --show-error --output "$archive" "$base_url/$archive"
+          curl --fail --location --silent --show-error --output "$archive.sigstore.json" "$base_url/$archive.sigstore.json"
+          cosign verify-blob \
+            --bundle "$archive.sigstore.json" \
+            --certificate-identity "https://github.com/modelcontextprotocol/registry/.github/workflows/release.yml@refs/tags/${MCP_PUBLISHER_VERSION}" \
+            --certificate-oidc-issuer "https://token.actions.githubusercontent.com" \
+            "$archive"
+          tar xzf "$archive" mcp-publisher
+          rm -f "$archive" "$archive.sigstore.json"
+
+      - name: Skip if this version is already published
+        id: check
+        run: |
+          set -euo pipefail
+          name="$(jq -r .name server.json)"
+          version="$(jq -r .version server.json)"
+          if curl --fail --silent --get "https://registry.modelcontextprotocol.io/v0/servers" \
+              --data-urlencode "search=${name}" --data-urlencode "version=${version}" \
+              | jq -e --arg n "$name" --arg v "$version" \
+                  '.servers[] | select(.server.name == $n and .server.version == $v)' >/dev/null; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Authenticate to MCP Registry
+        if: steps.check.outputs.published != 'true'
+        run: ./mcp-publisher login github-oidc
+
+      - name: Publish server to MCP Registry
+        if: steps.check.outputs.published != 'true'
+        run: ./mcp-publisher publish

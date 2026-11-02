@@ -1,0 +1,25 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-12-11/server.schema.json",
+  "name": "io.github.antyser/wineauction",
+  "title": "WineAuction",
+  "description": "Wine prices: retail, auction and restaurant references; check any quoted price. OAuth.",
+  "version": "1.2.1",
+  "websiteUrl": "https://wineauction.ai/mcp",
+  "repository": {
+    "url": "https://github.com/antyser/wineauction-plugin",
+    "source": "github"
+  },
+  "icons": [
+    {
+      "src": "https://wineauction.ai/wineauction-logo.png",
+      "mimeType": "image/png",
+      "sizes": ["256x256"]
+    }
+  ],
+  "remotes": [
+    {
+      "type": "streamable-http",
+      "url": "https://wineauction.ai/api/mcp"
+    }
+  ]
+}
