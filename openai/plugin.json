@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "app-6a3f607100d48191814734d4a44e75c0",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Wine price research with retail and auction market references: restaurant lists, merchant offers, auction sheets and lots, wine information with reviews and current offers, and cellar valuations.",
   "author": {
     "name": "LemonCube LLC",
@@ -15,7 +15,7 @@
     "com.openai": {
       "interface": {
         "displayName": "WineAuction",
-        "shortDescription": "Wine offers, prices, reviews",
+        "shortDescription": "Is this wine a good price?",
         "longDescription": "Wine market price research across retail and auction data. Check a restaurant wine list's markup, judge a merchant's quoted prices, look up a wine's retail and auction prices, past sales, critic reviews and current offers, and value a cellar list. Results use returned WineAuction data and link to seller pages. The connector is research-only: it cannot bid, buy, list, message sellers or move money. A WineAuction account is required; sign in with OAuth.",
         "developerName": "LemonCube LLC",
         "category": "Data & Analytics",
@@ -25,9 +25,9 @@
         "privacyPolicyURL": "https://wineauction.ai/privacy",
         "termsOfServiceURL": "https://wineauction.ai/terms",
         "defaultPrompt": [
-          "Check this wine newsletter for value.",
-          "What prices, reviews and recent auction sales are available for Roulot wines?",
-          "List live Acker auctions ending soonest."
+          "Is $780 a good price for Château Margaux 2015?",
+          "How marked up is this restaurant wine list?",
+          "What is my wine cellar worth?"
         ],
         "composerIcon": "./assets/logo.png",
         "logo": "./assets/logo.png"
@@ -90,7 +90,7 @@
       },
       "publication": {
         "countries": ["US"],
-        "release_notes": "Version 1.2.1 explains that the auction reference falls back to all vintages pooled when the exact vintage has no sales, and that vintage_basis marks which one was used."
+        "release_notes": "Version 1.2.2 rewrites the short description and starter prompts in the words people use to ask about wine prices. Tools and skills are unchanged."
       }
     }
   }
