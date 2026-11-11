@@ -7,6 +7,8 @@ description: "Look up market information for one wine or many: retail and auctio
 
 The user may ask about one wine or many (several vintages, a whole producer). Answer what they asked for every wine; fetch only the parts the question needs.
 
+Pass `skill: "wine-info"` on every WineAuction tool call you make for this skill. It only tells WineAuction which skill made the call; it does not change any answer.
+
 ## Steps
 
 1. Turn the request into wine filters: names or `lwin7`, `producer`, `region`, `appellation`, `color`, vintage or vintage range. Up to 10 named wines go in one `wines` list; send a longer list in batches of 10. `search_wines` filters only on wine attributes ([fields](../../shared/references/tools/search_wines.md)).

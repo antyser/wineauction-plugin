@@ -40,7 +40,7 @@ The rows in `list_offers.offers[]` and in `search_wines` `best_offers[]`. Inside
 | `offer_type`, `offer_id` | auction / retail / restaurant; `offer_id` for de-duplication. |
 | `wine_id`, `wine_name`, `producer`, `vintage`, `region`, `appellation`, `color`, `lwin7` | The identified wine; all but `wine_name` are null when unidentified. |
 | `wineapp_wine_url` | The wine's page on wineauction.ai for this vintage. |
-| `retail`, `auction` | The two reference views; null for a mixed lot. |
+| `retail`, `auction` | The two reference views; null for a mixed lot. Their fields (`offer_count`, `window`, `vintage_basis`, `sale_count`) and how to check a thin one are in [prices.md](../prices.md). |
 | `listing_name` | The seller's own name for it. |
 | `bottles`, `bottle_size_ml` | Bottle count and size in ml. |
 | `price`, `currency` | The seller's price and currency. For an auction it covers the whole lot: current bid, else opening bid, else the hammer price once closed; premium excluded. |

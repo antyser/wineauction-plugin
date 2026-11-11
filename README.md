@@ -27,15 +27,21 @@ Claude Code:
 
 Then run `/mcp` and sign in to `wineauction`, and say "Set up WineAuction" to save your preferences.
 
-Codex and ChatGPT:
+Codex:
 
 ```
 codex plugin marketplace add antyser/wineauction-plugin
 ```
 
-Then install **WineAuction** from the plugin directory in the app and sign in when asked. The repo carries both manifests: `.claude-plugin/` and `.mcp.json` for Claude, `plugin.json`, `mcp.json` and `.agents/plugins/` for OpenAI. The skills in `skills/` are shared.
+Then install **WineAuction** from the plugin directory and sign in when asked. The repo carries both manifests: `.claude-plugin/` and `.mcp.json` for Claude, `plugin.json`, `mcp.json` and `.agents/plugins/` for OpenAI. The skills in `skills/` are shared.
 
-Claude (web and desktop) and Cowork: go to Customize > Plugins, add the marketplace `antyser/wineauction-plugin`, then install **WineAuction**. Open the plugin's Connectors tab and connect the WineAuction connector, signing in with your WineAuction account.
+Claude (web, desktop and Cowork), connector only: open Customize > Connectors, search for **WineAuction** in the directory, click Connect and sign in with your WineAuction account.
+
+Claude with the skills: go to Customize > Plugins, add the marketplace `antyser/wineauction-plugin`, then install **WineAuction**. Open the plugin's Connectors tab and connect the WineAuction connector, signing in with your WineAuction account.
+
+ChatGPT (connector only, until the plugin is listed in ChatGPT's directory): open chatgpt.com/plugins, click Add, then Add custom MCP server. Name it WineAuction, paste `https://wineauction.ai/api/mcp`, keep Authentication on OAuth, tick "I understand and want to continue", click Create as a plugin, and sign in with your WineAuction account.
+
+Step-by-step instructions for every app are at [wineauction.ai/mcp](https://wineauction.ai/mcp).
 
 ## Data
 
@@ -53,7 +59,7 @@ Open an issue at [github.com/antyser/wineauction-plugin/issues](https://github.c
 
 ## Build and verify a release
 
-Both versioned manifests use the same release version. The portable package keeps `plugin.json`, `mcp.json`, `skills/` and `assets/` at the repository root; the Claude marketplace manifests remain available alongside them. The 30-row newsletter under `review/fixtures/` is synthetic supplied-price input for workflow review, not a set of real merchant offers or market references.
+Both versioned manifests and `server.json` use the same release version. `server.json` is the official MCP Registry entry; `.github/workflows/mcp-registry.yml` publishes it when it changes on `main`, and the registry only accepts a new version. The portable package keeps `plugin.json`, `mcp.json`, `skills/` and `assets/` at the repository root; the Claude marketplace manifests remain available alongside them. The 30-row newsletter under `review/fixtures/` is synthetic supplied-price input for workflow review, not a set of real merchant offers or market references.
 
 Natural-language skill-routing examples are kept separately in `review/trigger-cases.json`, one per task skill; the OpenAI review cases continue to cover the six connector tools and the existing workflow examples.
 

@@ -7,6 +7,8 @@ description: "Check wine auction lots, one or hundreds, each of one or many bott
 
 A lot often holds several bottles (6, 12, a mixed case) and a sheet can hold hundreds of lots. The user's own input comes first. When they bring a sheet or lots, evaluate exactly those; look a sale up in WineAuction only when they name one without bringing it.
 
+Pass `skill: "auction-lots"` on every WineAuction tool call you make for this skill. It only tells WineAuction which skill made the call; it does not change any answer.
+
 ## A sheet or lots the user brings
 
 1. Parse with [parse-list.md](../wineauction-reference/references/parse-list.md), `offer_type: other`, one row per lot and wine. Use the price the user gives; when the sheet has only estimates, evaluate the low and high estimate as two prices and say they are estimates. Pass `buyers_premium` (from the sheet, else ask or state the assumption) when the price is a hammer price.
@@ -35,7 +37,7 @@ A live lot's price is its current bid, else the opening bid, and bidding raises 
 
 Rank by the low-estimate discount unless the user asks otherwise, say which one you rank by, and show both. In the report, set `price_usd` to the low-estimate price with `price_label` "Low estimate incl. premium", recompute `discount_vs_retail_pct` and `discount_vs_auction_pct` from that price against `retail.price_usd` and `auction.price_usd`, set `quoted_price` to `auction_estimate_low`, and put the current-bid discounts in `flags`.
 
-For each highlighted lot also give the auction median for that wine and vintage with its sale count and last sale date, and how the low estimate compares with it.
+For each highlighted lot also give the auction median with its sale count and last sale date, and how the low estimate compares with it. The median is for the lot's exact vintage when that vintage has sales, otherwise for all vintages pooled; when `auction.vintage_basis` is `any_vintage`, say the median pools every vintage.
 
 ## Recurring watch
 

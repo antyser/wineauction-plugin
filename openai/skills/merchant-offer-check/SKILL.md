@@ -7,6 +7,8 @@ description: "Compare a merchant's printed prices, for one wine or a whole price
 
 For each printed price, report how it compares with the retail and auction references for that exact wine and vintage. The input may be one wine or a long list, and a price may cover one bottle, a 6-pack, a case or a mixed case; always work from the bottles and size the price covers.
 
+Pass `skill: "merchant-offer-check"` on every WineAuction tool call you make for this skill. It only tells WineAuction which skill made the call; it does not change any answer.
+
 ## Steps
 
 1. Get the rows.
