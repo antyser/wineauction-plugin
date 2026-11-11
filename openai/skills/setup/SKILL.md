@@ -9,19 +9,19 @@ Show value first: one question, a real answer, then an offer to remember. Write 
 
 ## Asking
 
-Use the client's own question tool when it has one: `AskUserQuestion` in Claude Code and Cowork (options plus the automatic "Other" free-text answer), `request_user_input` in Codex. Without one, ask in plain text with numbered options and accept a free answer.
+Use the client's own question tool when it has one: for example `request_user_input` in Codex. Without one, ask in plain text with numbered options and accept a free answer.
 
 ## Steps
 
-0. Call `get_preference` ([fields](../../shared/references/tools/preference.md)) without announcing it. A saved note shapes the example and the suggestions below. `AUTH_REQUIRED` → tell the user to sign in to the WineAuction connector (Claude Code: `/mcp`) and stop.
+0. Call `get_preference` ([fields](../../shared/references/tools/preference.md)) without announcing it. A saved note shapes the example and the suggestions below. `AUTH_REQUIRED` → tell the user to sign in to the WineAuction connector in their client's connector settings and stop.
    - When the user only wants to see, change or clear their saved preferences, skip to [Saved preferences](#saved-preferences).
 1. Ask one question: "What wine, price or list are you looking at? Paste it, attach a photo, or I can show you an example." Options:
    - Show me an example
    - A wine and a price I was quoted
    - A restaurant wine list
    - Bottles I own
-2. Answer right away with a tool call; do not ask anything else first.
-   - **Example**: call `list_offers` with `offer_type: auction`, `house: klwines`, `status: live`, `max_price_usd: 100`, `min_discount_pct: 20`, `mixed_lot: exclude`, `sort: discount_vs_auction` ([fields](../../shared/references/tools/list_offers.md)). If the saved note names a colour or region, pass it too. Pick the first lot below both references whose retail rests on at least 2 offers and whose auction median on at least 3 sales; nothing qualifies → the first lot below the auction median. No live K&L lots → take the soonest live auction from `list_auctions` and use its `auction_slug`. Show that one lot: wine and vintage, bottles, price per 750 ml with the buyer's premium, both references with their counts, when it ends, and the `wineapp_url` and seller `url`. Say in one line that the price can still change before the sale ends. Then add one line: "Send me any wine, price or list and I'll compare it the same way."
+2. Answer right away with a tool call; do not ask anything else first. If the user picked a kind of input without giving it (no wine, price, list or photo yet), ask in one line for the paste or photo, then answer.
+   - **Example**: call `list_offers` with `offer_type: auction`, `house: klwines`, `status: live`, `max_price_usd: 100`, `min_discount_pct: 20`, `mixed_lot: exclude`, `sort: discount_vs_auction` ([fields](../../shared/references/tools/list_offers.md)). If the saved note names a colour or region, pass it too. Pick the first lot below both references whose retail rests on at least 2 offers and whose auction median on at least 3 sales; nothing qualifies → the first lot below the auction median. No qualifying K&L lot (an empty result) → take the soonest live auction from `list_auctions` and repeat the call with its `auction_slug` in place of `house`, keeping the other filters; still nothing → say in one line that no example is live right now and go to step 3. Show that one lot: wine and vintage, bottles, price per 750 ml with the buyer's premium, both references with their counts, when it ends, and the `wineapp_url` and seller `url`. Say in one line that the price can still change before the sale ends. Then add one line: "Send me any wine, price or list and I'll compare it the same way."
    - **A wine and a price, or a merchant email**: follow [merchant-offer-check](../merchant-offer-check/SKILL.md).
    - **A wine without a price**: follow [wine-info](../wine-info/SKILL.md).
    - **A restaurant list**: follow [restaurant-wine-list](../restaurant-wine-list/SKILL.md).
@@ -33,7 +33,7 @@ Use the client's own question tool when it has one: `AskUserQuestion` in Claude 
      - Usual price per bottle: under $50, $50 to $150, $150 to $500, over $500. They may add a split, such as "restaurants up to $200, auctions up to $1,000".
    - Add what the user said in this conversation about wines they like or avoid, in their words. Write the note (format below), show it, and call `save_preference` only after they agree. Then say it is saved and can be edited at https://wineauction.ai/settings.
    - On no or skip, move on without asking again.
-4. End with exactly three suggested next questions the user can send as written, fitted to what they asked, the saved note and today's live data. Mix the jobs, for example:
+4. End with exactly three suggested next questions the user can send as written, fitted to what they asked, the saved note and today's live data, and not repeating the question just answered. Mix the jobs, for example:
    - "Is $120 a fair price for Barolo 2016 at my shop?"
    - "Which bottles on this list are least marked up?" (with a photo of a list)
    - "Show me auction lots under $100 ending today that are below retail."
