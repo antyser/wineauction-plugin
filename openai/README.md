@@ -12,7 +12,7 @@ Compare presented wine offers with retail and auction market prices, and find wi
 
 ## Data
 
-The plugin does not collect anything itself. Each tool call sends your query (wine names, filters, or the prices you ask it to evaluate) to `https://wineauction.ai/api/mcp` and returns results. All tools only read data, except `save_preference`, which saves the preference note you approve in setup; you can view or edit it at https://wineauction.ai/settings. The HTML report is generated locally and loads Google Fonts when viewed with network access; without it, system fonts are used. See the [privacy policy](https://wineauction.ai/privacy) and [terms](https://wineauction.ai/terms).
+The plugin does not collect anything itself. Each tool call sends your query (wine names, filters, or the prices you ask it to evaluate) to `https://wineauction.ai/api/mcp` and returns results. All tools only read data, except `save_preference`, which saves the preference note you approve; you can view or edit it at https://wineauction.ai/settings. The HTML report is generated locally and loads Google Fonts when viewed with network access; without it, system fonts are used. See the [privacy policy](https://wineauction.ai/privacy) and [terms](https://wineauction.ai/terms).
 
 ## Support
 
