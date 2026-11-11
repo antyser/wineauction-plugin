@@ -16,7 +16,7 @@
       "interface": {
         "displayName": "WineAuction",
         "shortDescription": "Is this wine a good price?",
-        "longDescription": "Wine market price research across retail and auction data. Check a restaurant wine list's markup, judge a merchant's quoted prices, check an auction sheet or a sale's lots against market references, look up a wine's retail and auction prices, past sales, critic reviews and current offers, and value a cellar list. Results use returned WineAuction data and link to seller pages. The connector is research-only: it cannot bid, buy, list, message sellers or move money. A WineAuction account is required; sign in with OAuth.",
+        "longDescription": "Wine market price research across retail and auction data. Check a restaurant wine list's markup, judge a merchant's quoted prices, check an auction sheet or a sale's lots against market references, look up a wine's retail and auction prices, past sales, critic reviews and current offers, and value a cellar list. Results use returned WineAuction data and link to seller pages. The connector is research-only: it cannot bid, buy, list, message sellers or move money. The only thing it saves is the user's own wine preference note, after they agree. A WineAuction account is required; sign in with OAuth.",
         "developerName": "LemonCube LLC",
         "category": "Data & Analytics",
         "capabilities": ["Read"],
@@ -32,6 +32,7 @@
         "composerIcon": "./assets/logo.png",
         "logo": "./assets/logo.png"
       },
+      "onboardingSkill": "./skills/setup/SKILL.md",
       "review": {
         "test_cases": {
           "positive": [
@@ -90,7 +91,7 @@
       },
       "publication": {
         "countries": ["US"],
-        "release_notes": "Version 1.3.0 adds a setup skill that asks how the user buys wine, their price range and the wines they like, saves that as their preference note with the new get_preference and save_preference tools, and offers a recurring inbox check for good merchant deals run by the user's own client."
+        "release_notes": "Version 1.3.0 adds a setup skill that runs after install: it asks what wine, price or list the user is looking at or shows a live example, answers with market prices, offers to save their buying channel and budget as a preference note with the new get_preference and save_preference tools, and suggests three next questions. It can also set up an inbox deal watch in the user's own client."
       }
     }
   }
