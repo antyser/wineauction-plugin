@@ -142,9 +142,19 @@
       "expected_skill": "setup"
     },
     {
-      "case": "setup-remember-preference",
+      "case": "preferences-remember",
       "prompt": "Remember that I mostly buy white Burgundy under $150 a bottle, usually at retail.",
-      "expected_skill": "setup"
+      "expected_skill": "wine-preferences"
+    },
+    {
+      "case": "preferences-show",
+      "prompt": "What preferences have you saved for me?",
+      "expected_skill": "wine-preferences"
+    },
+    {
+      "case": "preferences-chinese",
+      "prompt": "记住我喜欢香槟，预算一般在一千块以内",
+      "expected_skill": "wine-preferences"
     },
     {
       "case": "inbox-deal-watch",

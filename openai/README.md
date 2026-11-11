@@ -8,7 +8,7 @@ Compare presented wine offers with retail and auction market prices, and find wi
 - `merchant-offer-check`: a merchant email, newsletter, futures offer, price list or a single quoted price. Judges each price against the market.
 - `wine-info`: a wine, producer, vintage or region: retail and auction prices, past sales and critic reviews.
 - `cellar-valuation`: a list of bottles you own. Value per bottle and in total, at auction and at retail.
-- `setup`: runs when you tap setup after installing. It asks what wine, price or list you are looking at, or shows a live example, answers with market prices, offers to remember how you buy wine and your budget, and suggests three next questions.
+- `wine-preferences`: remembers how you buy wine, your usual budget and the wines you like or avoid so answers fit you, and lets you show, change or clear the saved note.
 
 ## Data
 

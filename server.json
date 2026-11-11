@@ -3,7 +3,7 @@
   "name": "io.github.antyser/wineauction",
   "title": "WineAuction",
   "description": "Wine prices: retail, auction and restaurant references; check any quoted price.",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "websiteUrl": "https://wineauction.ai/mcp",
   "repository": {
     "url": "https://github.com/antyser/wineauction-plugin",

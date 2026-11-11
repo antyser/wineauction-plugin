@@ -11,10 +11,11 @@ Compare presented wine offers with retail and auction market prices, and find wi
   - `auction-lots`: an auction sheet or lots you bring, or a named auction or house. Lots below market, lots ending soon, sale results, and a recurring watch.
   - `wine-info`: a wine, producer, vintage or region: retail and auction prices, past sales, critic reviews and where it is currently offered.
   - `cellar-valuation`: a list of bottles you own. Value per bottle and in total, at auction and at retail.
+  - `wine-preferences`: remember, show, change or clear your saved wine preference note: how you buy wine, your usual budget and the wines you like or avoid.
   - `setup`: run it once after installing ("Set up WineAuction"). It asks what wine, price or list you are looking at, or shows a live auction lot below market, answers with real prices, offers to remember how you buy wine and your budget as your preference note, and suggests three next questions. On request it sets up a recurring check of your inbox for good merchant deals in your own client.
   - `wineauction-reference`: shared tool fields, price-reading rules, list parsing and the HTML report renderer that the skills above link to.
 
-Version 1.3.0 adds the `setup` skill and two tools, `get_preference` and `save_preference`, for your wine preference note.
+Version 1.3.1 adds the `wine-preferences` skill. Version 1.3.0 added the `setup` skill and two tools, `get_preference` and `save_preference`, for your wine preference note.
 
 ## Install
 
@@ -69,7 +70,7 @@ After committing the release candidate, build the ZIP from tracked files with:
 python3 scripts/build_release.py
 ```
 
-The default output is `~/Downloads/wineauction-plugin-1.3.0.zip`. To verify a candidate commit and its packaged renderer, run:
+The default output is `~/Downloads/wineauction-plugin-1.3.1.zip`. To verify a candidate commit and its packaged renderer, run:
 
 ```
 scripts/local_ci.sh "$(git rev-parse HEAD)"
@@ -79,9 +80,9 @@ The local check requires a clean checkout at the supplied commit, validates the 
 
 ### OpenAI package
 
-OpenAI's plugin review blocks two skills, so the ZIP uploaded to OpenAI is a variant of the full plugin, built from the same commit:
+OpenAI's plugin review does not accept two skills, so the ZIP uploaded to OpenAI is a variant of the full plugin, built from the same commit:
 
-- `python3 scripts/build_release.py` builds the full plugin for Claude and Codex (all five task skills and `skills/wineauction-reference`).
-- `python3 scripts/build_openai_package.py` builds `~/Downloads/wineauction-plugin-1.3.0-openai.zip`. It drops `skills/auction-lots`, moves `skills/wineauction-reference` to a root `shared/` folder without its `SKILL.md` and `agents/`, rewrites the `../wineauction-reference/` links to `../../shared/`, keeps only `plugin.json`, `mcp.json`, `LICENSE`, `assets/`, `skills/` and `shared/`, and applies the files under `openai/` over the result (same paths as in the package): the app-name `plugin.json`, an `mcp.json` without its own OAuth block, an OpenAI-specific `README.md`, the five task `SKILL.md` files (including `setup`, which `onboardingSkill` in `plugin.json` points to, so ChatGPT and Codex run it when the user taps setup after installing) and the shared references that use neutral price-research wording. The full plugin ZIP also carries `openai/`; the repo has no `.gitattributes` export rules because the Claude directory rejects them.
+- `python3 scripts/build_release.py` builds the full plugin for Claude and Codex (all six task skills and `skills/wineauction-reference`).
+- `python3 scripts/build_openai_package.py` builds `~/Downloads/wineauction-plugin-1.3.1-openai.zip`. It drops `skills/auction-lots` and `skills/setup` (app onboarding is not accepted for broad discovery; `wine-preferences` carries the preference note instead), moves `skills/wineauction-reference` to a root `shared/` folder without its `SKILL.md` and `agents/`, rewrites the `../wineauction-reference/` links to `../../shared/`, keeps only `plugin.json`, `mcp.json`, `LICENSE`, `assets/`, `skills/` and `shared/`, and applies the files under `openai/` over the result (same paths as in the package): the app-name `plugin.json`, an `mcp.json` without its own OAuth block, an OpenAI-specific `README.md`, the task `SKILL.md` files that need neutral wording (the overlay never holds a dropped skill, and its `plugin.json` has no `onboardingSkill`) and the shared references that use neutral price-research wording. The full plugin ZIP also carries `openai/`; the repo has no `.gitattributes` export rules because the Claude directory rejects them.
 
 The OpenAI build checks that no file links to a missing path, that nothing still references `auction-lots` or `wineauction-reference`, and that no secret-like material is packaged. Both builds run in `scripts/local_ci.sh`. Edit the `openai/` copy, not the tracked file, to change what OpenAI receives.
