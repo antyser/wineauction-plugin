@@ -1,0 +1,11 @@
+interface:
+  display_name: "Setup"
+  short_description: "Save your wine preferences and watch your inbox for deals"
+  default_prompt: "Set up WineAuction for me."
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "wineauction"
+      description: "WineAuction wine catalog, offers, price references and your preference note"
+      transport: "streamable_http"
+      url: "https://wineauction.ai/api/mcp"

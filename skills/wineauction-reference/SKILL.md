@@ -15,8 +15,8 @@ The task skills link here for the parts they share. Read only the file a task sk
 | [references/evaluate.md](references/evaluate.md) | Sending rows to `evaluate_offers` in batches and checking each match. |
 | [references/report.md](references/report.md) | Report rows, the HTML renderer, and what to say in chat. |
 | [references/design-system.md](references/design-system.md) | Colours, type and layout for any HTML view. |
-| [references/tools/](references/tools/) | Inputs and outputs of each tool: [search_wines](references/tools/search_wines.md), [list_offers](references/tools/list_offers.md), [evaluate_offers](references/tools/evaluate_offers.md), [list_auctions](references/tools/list_auctions.md), [list_retail_stores](references/tools/list_retail_stores.md), [list_restaurants](references/tools/list_restaurants.md). |
+| [references/tools/](references/tools/) | Inputs and outputs of each tool: [search_wines](references/tools/search_wines.md), [list_offers](references/tools/list_offers.md), [evaluate_offers](references/tools/evaluate_offers.md), [list_auctions](references/tools/list_auctions.md), [list_retail_stores](references/tools/list_retail_stores.md), [list_restaurants](references/tools/list_restaurants.md), [get_preference and save_preference](references/tools/preference.md). |
 
 The renderer is [scripts/render.py](scripts/render.py); it reads its template from `assets/report.html`.
 
-The tools only read data. They cannot bid, buy, check out, list or contact a seller.
+The tools cannot bid, buy, check out, list or contact a seller. The only thing they write is the user's own preference note (`save_preference`).

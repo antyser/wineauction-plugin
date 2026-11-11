@@ -8,10 +8,11 @@ Compare presented wine offers with retail and auction market prices, and find wi
 - `merchant-offer-check`: a merchant email, newsletter, futures offer, price list or a single quoted price. Judges each price against the market.
 - `wine-info`: a wine, producer, vintage or region: retail and auction prices, past sales and critic reviews.
 - `cellar-valuation`: a list of bottles you own. Value per bottle and in total, at auction and at retail.
+- `setup`: runs when you tap setup after installing. It asks what wine, price or list you are looking at, or shows a live example, answers with market prices, offers to remember how you buy wine and your budget, and suggests three next questions.
 
 ## Data
 
-The plugin does not collect anything itself. Each tool call sends your query (wine names, filters, or the prices you ask it to evaluate) to `https://wineauction.ai/api/mcp` and returns results. All tools are read-only. The HTML report is generated locally and loads Google Fonts when viewed with network access; without it, system fonts are used. See the [privacy policy](https://wineauction.ai/privacy) and [terms](https://wineauction.ai/terms).
+The plugin does not collect anything itself. Each tool call sends your query (wine names, filters, or the prices you ask it to evaluate) to `https://wineauction.ai/api/mcp` and returns results. All tools only read data, except `save_preference`, which saves the preference note you approve in setup; you can view or edit it at https://wineauction.ai/settings. The HTML report is generated locally and loads Google Fonts when viewed with network access; without it, system fonts are used. See the [privacy policy](https://wineauction.ai/privacy) and [terms](https://wineauction.ai/terms).
 
 ## Support
 

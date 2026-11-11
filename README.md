@@ -11,9 +11,10 @@ Compare presented wine offers with retail and auction market prices, and find wi
   - `auction-lots`: an auction sheet or lots you bring, or a named auction or house. Lots below market, lots ending soon, sale results, and a recurring watch.
   - `wine-info`: a wine, producer, vintage or region: retail and auction prices, past sales, critic reviews and where it is currently offered.
   - `cellar-valuation`: a list of bottles you own. Value per bottle and in total, at auction and at retail.
+  - `setup`: run it once after installing ("Set up WineAuction"). It asks what wine, price or list you are looking at, or shows a live auction lot below market, answers with real prices, offers to remember how you buy wine and your budget as your preference note, and suggests three next questions. On request it sets up a recurring check of your inbox for good merchant deals in your own client.
   - `wineauction-reference`: shared tool fields, price-reading rules, list parsing and the HTML report renderer that the skills above link to.
 
-Version 1.2.2 rewrites the ChatGPT listing's short description and starter prompts in the words people use to ask about wine prices; tools and skills are unchanged.
+Version 1.3.0 adds the `setup` skill and two tools, `get_preference` and `save_preference`, for your wine preference note.
 
 ## Install
 
@@ -24,7 +25,7 @@ Claude Code:
 /plugin install wineauction@wineauction
 ```
 
-Then run `/mcp` and sign in to `wineauction`.
+Then run `/mcp` and sign in to `wineauction`, and say "Set up WineAuction" to save your preferences.
 
 Codex:
 
@@ -44,7 +45,7 @@ Step-by-step instructions for every app are at [wineauction.ai/mcp](https://wine
 
 ## Data
 
-The plugin does not collect anything itself. Each tool call sends your query (wine names, filters, or the prices you ask it to evaluate) to `https://wineauction.ai/api/mcp` and returns results. All tools are read-only. The HTML report is generated locally and loads Google Fonts when viewed with network access; without it, system fonts are used. See the [privacy policy](https://wineauction.ai/privacy) and [terms](https://wineauction.ai/terms).
+The plugin does not collect anything itself. Each tool call sends your query (wine names, filters, or the prices you ask it to evaluate) to `https://wineauction.ai/api/mcp` and returns results. All tools only read data, except `save_preference`, which saves the preference note you approve in the setup skill; you can view or edit it at https://wineauction.ai/settings. The inbox deal watch runs in your own client: your emails are not sent to WineAuction, only the wine names and prices being compared. The HTML report is generated locally and loads Google Fonts when viewed with network access; without it, system fonts are used. See the [privacy policy](https://wineauction.ai/privacy) and [terms](https://wineauction.ai/terms).
 
 ## Support
 
@@ -54,7 +55,7 @@ Open an issue at [github.com/antyser/wineauction-plugin/issues](https://github.c
 
 - Prices are USD per 750 ml. Auction prices include the buyer's premium.
 - `evaluate_offers` judges up to 25 rows per call in the skills; long lists are sent in batches.
-- The tools only read data. They cannot bid, buy or contact anyone.
+- The tools cannot bid, buy or contact anyone. The only thing they write is your preference note.
 
 ## Build and verify a release
 
@@ -68,7 +69,7 @@ After committing the release candidate, build the ZIP from tracked files with:
 python3 scripts/build_release.py
 ```
 
-The default output is `~/Downloads/wineauction-plugin-1.2.2.zip`. To verify a candidate commit and its packaged renderer, run:
+The default output is `~/Downloads/wineauction-plugin-1.3.0.zip`. To verify a candidate commit and its packaged renderer, run:
 
 ```
 scripts/local_ci.sh "$(git rev-parse HEAD)"
@@ -81,6 +82,6 @@ The local check requires a clean checkout at the supplied commit, validates the 
 OpenAI's plugin review blocks two skills, so the ZIP uploaded to OpenAI is a variant of the full plugin, built from the same commit:
 
 - `python3 scripts/build_release.py` builds the full plugin for Claude and Codex (all five task skills and `skills/wineauction-reference`).
-- `python3 scripts/build_openai_package.py` builds `~/Downloads/wineauction-plugin-1.2.2-openai.zip`. It drops `skills/auction-lots`, moves `skills/wineauction-reference` to a root `shared/` folder without its `SKILL.md` and `agents/`, rewrites the `../wineauction-reference/` links to `../../shared/`, keeps only `plugin.json`, `mcp.json`, `LICENSE`, `assets/`, `skills/` and `shared/`, and applies the files under `openai/` over the result (same paths as in the package): the app-name `plugin.json`, an `mcp.json` without its own OAuth block, an OpenAI-specific `README.md`, the four task `SKILL.md` files and the shared references that use neutral price-research wording. The full plugin ZIP also carries `openai/`; the repo has no `.gitattributes` export rules because the Claude directory rejects them.
+- `python3 scripts/build_openai_package.py` builds `~/Downloads/wineauction-plugin-1.3.0-openai.zip`. It drops `skills/auction-lots`, moves `skills/wineauction-reference` to a root `shared/` folder without its `SKILL.md` and `agents/`, rewrites the `../wineauction-reference/` links to `../../shared/`, keeps only `plugin.json`, `mcp.json`, `LICENSE`, `assets/`, `skills/` and `shared/`, and applies the files under `openai/` over the result (same paths as in the package): the app-name `plugin.json`, an `mcp.json` without its own OAuth block, an OpenAI-specific `README.md`, the five task `SKILL.md` files (including `setup`, which `onboardingSkill` in `plugin.json` points to, so ChatGPT and Codex run it when the user taps setup after installing) and the shared references that use neutral price-research wording. The full plugin ZIP also carries `openai/`; the repo has no `.gitattributes` export rules because the Claude directory rejects them.
 
 The OpenAI build checks that no file links to a missing path, that nothing still references `auction-lots` or `wineauction-reference`, and that no secret-like material is packaged. Both builds run in `scripts/local_ci.sh`. Edit the `openai/` copy, not the tracked file, to change what OpenAI receives.

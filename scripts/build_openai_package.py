@@ -18,7 +18,7 @@ OVERLAY = "openai/"
 REFERENCE_SKILL = "skills/wineauction-reference/"
 REFERENCE_LINK = "../wineauction-reference/"
 SHARED_LINK = "../../shared/"
-DROPPED_SKILL = "skills/auction-lots/"
+DROPPED_SKILLS = ("skills/auction-lots/",)
 SHIPPED = ("plugin.json", "mcp.json", "LICENSE", "README.md", "assets/", "skills/", "shared/")
 APP_NAME = "app-6a3f607100d48191814734d4a44e75c0"
 MARKDOWN_LINK = re.compile(r"\]\(([^)\s]+)\)")
@@ -43,7 +43,7 @@ def build_files(revision: str) -> dict[str, tuple[bytes, int]]:
     tracked = read_tracked(revision)
     files: dict[str, tuple[bytes, int]] = {}
     for path, (content, mode) in tracked.items():
-        if path.startswith(DROPPED_SKILL):
+        if path.startswith(DROPPED_SKILLS):
             continue
         if path.startswith(REFERENCE_SKILL):
             relative = path.removeprefix(REFERENCE_SKILL)
@@ -95,7 +95,7 @@ def check_links(files: dict[str, tuple[bytes, int]]) -> None:
 
 def check_package(files: dict[str, tuple[bytes, int]]) -> None:
     paths = set(files)
-    require(not any(p.startswith(DROPPED_SKILL) for p in paths), "auction-lots skill is still packaged")
+    require(not any(p.startswith(DROPPED_SKILLS) for p in paths), "auction-lots skill is still packaged")
     require(not any(p.startswith(REFERENCE_SKILL) for p in paths), "wineauction-reference is still packaged")
     require("shared/SKILL.md" not in paths and not any(p.startswith("shared/agents/") for p in paths), "shared/ kept skill files")
     require(not any(p.startswith(OVERLAY) for p in paths), "overlay folder leaked into the package")
@@ -114,7 +114,13 @@ def check_package(files: dict[str, tuple[bytes, int]]) -> None:
     require(server.get("url") == "https://wineauction.ai/api/mcp", "MCP URL changed")
     require("extensions" not in server, "OpenAI MCP config must not declare its own auth")
     skills = {p.split("/")[1] for p in paths if p.startswith("skills/")}
-    require(skills == {"restaurant-wine-list", "merchant-offer-check", "wine-info", "cellar-valuation"}, f"unexpected skills: {sorted(skills)}")
+    require(
+        skills == {"restaurant-wine-list", "merchant-offer-check", "wine-info", "cellar-valuation", "setup"},
+        f"unexpected skills: {sorted(skills)}",
+    )
+    onboarding = plugin.get("extensions", {}).get("com.openai", {}).get("onboardingSkill")
+    require(onboarding == "./skills/setup/SKILL.md", "OpenAI manifest must point onboardingSkill at the setup skill")
+    require(onboarding.removeprefix("./") in paths, "onboardingSkill points to a file that is not packaged")
     for skill in skills:
         require(f"skills/{skill}/SKILL.md" in paths, f"{skill} has no SKILL.md")
 
