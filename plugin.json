@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "wineauction",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Wine price research with retail and auction market references: restaurant lists, merchant offers, auction sheets and lots, wine information with reviews and current offers, and cellar valuations.",
   "author": {
     "name": "LemonCube LLC",
@@ -91,7 +91,7 @@
       },
       "publication": {
         "countries": ["US"],
-        "release_notes": "Version 1.3.1 adds a wine-preferences skill to remember, show, change or clear the user's buying habits, budget and likes. Version 1.3.0 adds a setup skill that runs after install: it asks what wine, price or list the user is looking at or shows a live example, answers with market prices, offers to save their buying channel and budget as a preference note with the new get_preference and save_preference tools, and suggests three next questions. It can also set up an inbox deal watch in the user's own client."
+        "release_notes": "Version 1.3.2 makes the skills trigger on wine price, value and where-to-buy questions that do not name WineAuction, and the wine-info skill lists where a wine is offered now, cheapest first. Version 1.3.1 adds a wine-preferences skill to remember, show, change or clear the user's buying habits, budget and likes. Version 1.3.0 adds a setup skill that runs after install: it asks what wine, price or list the user is looking at or shows a live example, answers with market prices, offers to save their buying channel and budget as a preference note with the new get_preference and save_preference tools, and suggests three next questions. It can also set up an inbox deal watch in the user's own client."
       }
     }
   }
