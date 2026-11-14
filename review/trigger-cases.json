@@ -160,6 +160,31 @@
       "case": "inbox-deal-watch",
       "prompt": "Every morning, check my inbox for new wine merchant newsletters and tell me if any offer is a good deal.",
       "expected_skill": "merchant-offer-check"
+    },
+    {
+      "case": "casual-where-to-buy",
+      "prompt": "where can I buy 2019 Roulot Meursault?",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-cheapest-place",
+      "prompt": "cheapest place to get Krug Grande Cuvée",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-budget-buy-now",
+      "prompt": "good Barolo under $80 I can buy now",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-gift-under-budget",
+      "prompt": "recommend a Napa Cabernet under $100 as a gift",
+      "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-gift-is-it-expensive",
+      "prompt": "I'm getting a 2005 Vega Sicilia Unico as a gift, is it expensive?",
+      "expected_skill": "wine-info"
     }
   ],
   "negative": [
