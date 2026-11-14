@@ -185,6 +185,11 @@
       "case": "casual-gift-is-it-expensive",
       "prompt": "I'm getting a 2005 Vega Sicilia Unico as a gift, is it expensive?",
       "expected_skill": "wine-info"
+    },
+    {
+      "case": "casual-quoted-price-gift-expensive",
+      "prompt": "Vega Sicilia Unico 2005 for $450, is it expensive?",
+      "expected_skill": "merchant-offer-check"
     }
   ],
   "negative": [
