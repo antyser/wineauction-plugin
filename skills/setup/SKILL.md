@@ -38,6 +38,7 @@ Use the client's own question tool when it has one: `AskUserQuestion` in Claude 
    - "Which bottles on this list are least marked up?" (with a photo of a list)
    - "Show me lots under $100 ending today that sell below retail."
    When the client can search an email inbox and schedule a recurring task, make one of the three "Watch my inbox for good wine deals" (see [Deal watch](#deal-watch)).
+5. After the user has seen a real answer, offer the optional settings line in its own message, as [wine-preferences](../wine-preferences/SKILL.md#every-chat) describes.
 
 ## Deal watch
 
